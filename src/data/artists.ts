@@ -1,0 +1,82 @@
+import { Artist } from "@/types";
+
+export const artists: Artist[] = [
+  {
+    name: "Zara Osei",
+    slug: "zara-osei",
+    bio: "Genre-bending vocalist and producer from Lagos. Fuses Afrobeats with ambient electronics into a sonic landscape that ignores borders.",
+    portraitUrl: "/images/roster/zara.png",
+    genres: ["Afrobeats", "Electronic"],
+    socialLinks: [
+      { platform: "spotify", url: "https://open.spotify.com" },
+      { platform: "instagram", url: "https://instagram.com" },
+    ],
+    featured: true,
+    order: 1,
+  },
+  {
+    name: "Marcos Vidal",
+    slug: "marcos-vidal",
+    bio: "São Paulo's underground rap architect. Three albums deep, zero compromises. Production blends boom-bap with Brazilian funk rhythms.",
+    portraitUrl: "/images/roster/marcos.png",
+    genres: ["Hip-Hop", "Funk"],
+    socialLinks: [
+      { platform: "spotify", url: "https://open.spotify.com" },
+      { platform: "youtube", url: "https://youtube.com" },
+    ],
+    featured: true,
+    order: 2,
+  },
+  {
+    name: "Lena Kross",
+    slug: "lena-kross",
+    bio: "Berlin-based DJ and sound designer. Resident at Berghain. Sets move through techno, breaks and experimental noise with surgical precision.",
+    portraitUrl: "/images/roster/lena.png",
+    genres: ["Techno", "Experimental"],
+    socialLinks: [
+      { platform: "soundcloud", url: "https://soundcloud.com" },
+      { platform: "instagram", url: "https://instagram.com" },
+    ],
+    featured: true,
+    order: 3,
+  },
+  {
+    name: "Theo Mwangi",
+    slug: "theo-mwangi",
+    bio: "Nairobi singer-songwriter raised between Kenyan folk and American soul. His debut EP sold out every venue on the East African circuit.",
+    portraitUrl: "/images/roster/theo.png",
+    genres: ["Soul", "Afro-Folk"],
+    socialLinks: [
+      { platform: "spotify", url: "https://open.spotify.com" },
+      { platform: "apple-music", url: "https://music.apple.com" },
+    ],
+    featured: false,
+    order: 4,
+  },
+  {
+    name: "Yuki Tanaka",
+    slug: "yuki-tanaka",
+    bio: "Tokyo-born, London-raised producer blending J-pop sensibilities with UK garage. Her remix work has caught the attention of every major.",
+    portraitUrl: "/images/roster/yuki.png",
+    genres: ["Pop", "UK Garage"],
+    socialLinks: [
+      { platform: "spotify", url: "https://open.spotify.com" },
+      { platform: "twitter", url: "https://twitter.com" },
+    ],
+    featured: true,
+    order: 5,
+  },
+  {
+    name: "Dami Ade",
+    slug: "dami-ade",
+    bio: "Multi-instrumentalist and composer from Accra. Orchestral arrangements bridging classical training with contemporary African rhythms.",
+    portraitUrl: "/images/roster/dami.png",
+    genres: ["Neo-Classical", "World"],
+    socialLinks: [
+      { platform: "youtube", url: "https://youtube.com" },
+      { platform: "instagram", url: "https://instagram.com" },
+    ],
+    featured: true,
+    order: 6,
+  },
+];

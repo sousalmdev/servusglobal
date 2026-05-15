@@ -1,26 +1,415 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ── Color ───────────────────────────────────────────── */
+  --color-black: #0a0a0a;
+  --color-off-white: #f5f2eb;
+  --color-gold: hsl(44, 72%, 46%);
+  --color-gold-dim: hsl(40, 68%, 30%);
+  --color-gold-bright: hsl(46, 78%, 54%);
+  --color-dark-surface: #111111;
+  --color-dark-surface-2: #181818;
+  --color-overlay: rgba(10, 10, 10, 0.6);
+
+  /* ── Font stacks ──────────── */
+  --font-stack-display: var(--font-syne), "Syne", system-ui, sans-serif;
+  --font-stack-body: var(--font-inter), "Inter", system-ui, sans-serif;
+  --font-stack-serif: var(--font-playfair), "Playfair Display", "Georgia", serif;
+
+  /* ── Spacing ─────────────────────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* ── Border Radius ───────────────────────── */
+  --radius-sm: 2px;
+  --radius-card: 4px;
+  --radius-none: 0px;
+
+  /* ── Transitions ─────────────────────────── */
+  --ease-color: 600ms ease;
+  --ease-transform: 400ms ease;
+  --ease-entrance: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-entrance: 800ms;
+  --duration-fast: 300ms;
+  --duration-medium: 600ms;
 }
 
+/* ── Tailwind v4 Theme ─────────────────────── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--color-black);
+  --color-surface: var(--color-off-white);
+  --color-accent: var(--color-gold);
+  --color-accent-dim: var(--color-gold-dim);
+  --color-accent-bright: var(--color-gold-bright);
+  --color-dark: var(--color-dark-surface);
+  --color-dark-2: var(--color-dark-surface-2);
+
+  --font-display: var(--font-stack-display);
+  --font-body: var(--font-stack-body);
+  --font-serif: var(--font-stack-serif);
+
+  --text-eyebrow: 0.6875rem;
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.22em;
+  --text-eyebrow--font-weight: 600;
+
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.45;
+  --text-caption--letter-spacing: 0.01em;
+  --text-caption--font-weight: 500;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+  --text-body--letter-spacing: 0;
+  --text-body--font-weight: 400;
+
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.6;
+  --text-body-lg--font-weight: 400;
+
+  --text-lead: clamp(1.25rem, 1.6vw, 1.5rem);
+  --text-lead--line-height: 1.5;
+  --text-lead--font-weight: 400;
+
+  --text-h4: clamp(1.5rem, 2.2vw, 2rem);
+  --text-h4--line-height: 1.15;
+  --text-h4--letter-spacing: -0.01em;
+  --text-h4--font-weight: 700;
+
+  --text-h3: clamp(2rem, 3.6vw, 3rem);
+  --text-h3--line-height: 1.05;
+  --text-h3--letter-spacing: -0.02em;
+  --text-h3--font-weight: 700;
+
+  --text-h2: clamp(3rem, 6.5vw, 5.5rem);
+  --text-h2--line-height: 0.96;
+  --text-h2--letter-spacing: -0.03em;
+  --text-h2--font-weight: 800;
+
+  --text-h1: clamp(4rem, 9vw, 8rem);
+  --text-h1--line-height: 0.92;
+  --text-h1--letter-spacing: -0.035em;
+  --text-h1--font-weight: 800;
+
+  --text-display: clamp(5rem, 14vw, 14rem);
+  --text-display--line-height: 0.85;
+  --text-display--letter-spacing: -0.045em;
+  --text-display--font-weight: 800;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-black);
+  color: var(--color-off-white);
+  overflow-x: hidden;
+}
+
+/* ── Selection ────────────────────────────── */
+::selection {
+  background: var(--color-gold);
+  color: var(--color-black);
+}
+
+/* ── Scrollbar ────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold-dim);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold);
+}
+
+/* ── Focus States ─────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* ── Reduced Motion ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Utility Classes ──────────────────────── */
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  font-family: var(--font-stack-body);
+}
+
+/* ── Custom Cursor ────────────────────────── */
+.has-custom-cursor,
+.has-custom-cursor * {
+  cursor: none !important;
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 9999px;
+  mix-blend-mode: difference;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--color-off-white);
+}
+
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--color-gold);
+  opacity: 0.7;
+}
+
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring { display: none; }
+}
+
+/* ── Film Grain Overlay ──────────────────── */
+.grain-overlay::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ── Gradient Overlay ─────────────────────── */
+.gradient-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(10, 10, 10, 0.7) 0%,
+    rgba(10, 10, 10, 0.3) 40%,
+    transparent 100%
+  );
+}
+
+/* ── Clip Utilities ───────────────────────── */
+.clip-hidden {
+  clip-path: inset(0 0 100% 0);
+}
+.clip-visible {
+  clip-path: inset(0 0 0 0);
+}
+
+/* ── Text Stroke (Outlined Text) ──────────── */
+.text-stroke {
+  -webkit-text-stroke: 1.5px var(--color-off-white);
+  -webkit-text-fill-color: transparent;
+}
+.text-stroke-gold {
+  -webkit-text-stroke: 1.5px var(--color-gold);
+  -webkit-text-fill-color: transparent;
+}
+
+/* ── Marquee ──────────────────────────────── */
+@keyframes sg-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes sg-marquee-reverse {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.marquee-forward {
+  animation: sg-marquee 30s linear infinite;
+}
+
+.marquee-reverse {
+  animation: sg-marquee-reverse 30s linear infinite;
+}
+
+.marquee-slow {
+  animation-duration: 45s;
+}
+
+.marquee-fast {
+  animation-duration: 20s;
+}
+
+/* ── Section Divider ──────────────────────── */
+.section-divider {
+  height: 1px;
+  background: rgba(245, 242, 235, 0.08);
+  width: 100%;
+}
+
+/* ── Hover Link Underline ─────────────────── */
+.link-underline {
+  position: relative;
+  display: inline-block;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-gold);
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* ── Serif Italic Accent (for mixed typography) ── */
+.serif-italic {
+  font-family: var(--font-stack-serif);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* ── Image Treatments ─────────────────────── */
+.img-editorial {
+  filter: grayscale(0.15) contrast(1.08) brightness(0.85);
+}
+
+.img-bw {
+  filter: grayscale(1) contrast(1.1) brightness(0.8);
+}
+
+/* ── Service Card Hover ───────────────────── */
+.service-card {
+  transition: background 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.service-card:hover {
+  background: rgba(245, 242, 235, 0.03);
+}
+
+/* ── Accordion Expand ─────────────────────── */
+.accordion-content {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.accordion-content.open {
+  max-height: 500px;
+}
+
+/* ── Roster Chaos Grid ────────────────────── */
+.roster-card-inner {
+  transform: rotate(var(--rest-rotate, 0deg));
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.roster-card:hover .roster-card-inner {
+  transform: rotate(0deg) scale(1.02);
+}
+@media (max-width: 767px) {
+  .roster-grid {
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: minmax(360px, auto) !important;
+  }
+  .roster-card {
+    grid-area: auto !important;
+  }
+  .roster-card-inner {
+    transform: rotate(0deg);
+  }
+}
+
+/* ── Story Section ────────────────────────── */
+@media (max-width: 767px) {
+  .story-photo-mask {
+    flex-basis: auto !important;
+    max-width: 100% !important;
+  }
+}
+
+/* ── Releases Section ─────────────────────── */
+.release-card-inner {
+  transform: rotate(var(--rest-rotate, 0deg));
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.release-card:hover .release-card-inner {
+  transform: rotate(0deg) scale(1.015);
+}
+.release-platform-pill:hover {
+  background: var(--color-gold);
+  color: var(--color-black) !important;
+  border-color: var(--color-gold) !important;
+}
+.vinyl-disc {
+  animation: vinyl-spin 18s linear infinite;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+.release-card:hover .vinyl-disc,
+.feature-block:hover .vinyl-disc {
+  animation-play-state: paused;
+}
+@keyframes vinyl-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@media (max-width: 767px) {
+  .releases-grid {
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: minmax(360px, auto) !important;
+  }
+  .release-card {
+    grid-area: auto !important;
+  }
+  .release-card-inner {
+    transform: rotate(0deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vinyl-disc {
+    animation: none;
+  }
 }
