@@ -1,42 +1,14 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 import FleurIcon from "@/components/FleurIcon";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const ROTATE_DEG = -4;
 
-export default function DiagonalMarquee() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const reducedMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-    const ctx = gsap.context(() => {
-      gsap.from(".diag-band", {
-        opacity: 0,
-        y: 40,
-        duration: 1.1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 95%",
-          once: true,
-        },
-      });
-    }, containerRef);
-    return () => ctx.revert();
-  }, [reducedMotion]);
-
+export default function DiagonalMarquee({ dict }: { dict: any }) {
   const items = Array(10).fill(null);
 
   return (
     <div
-      ref={containerRef}
       aria-hidden="true"
       className="diag-host relative pointer-events-none"
     >
@@ -78,7 +50,7 @@ export default function DiagonalMarquee() {
                         color: "var(--color-black)",
                       }}
                     >
-                      SERVUS
+                      {dict.marquees.diagonal_word1}
                     </span>
                     <span
                       className="serif-italic px-2 md:px-5"
@@ -89,7 +61,7 @@ export default function DiagonalMarquee() {
                         fontWeight: 400,
                       }}
                     >
-                      global
+                      {dict.marquees.diagonal_word2}
                     </span>
                     <FleurIcon
                       className="mx-4 md:mx-8"

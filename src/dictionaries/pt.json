@@ -1,0 +1,168 @@
+{
+  "nav": {
+    "tagline": "A&R / MANAGEMENT / AGÊNCIA",
+    "roster": "Artistas",
+    "services": "Serviços",
+    "story": "História",
+    "contact": "Contato",
+    "workWithUs": "Trabalhe conosco"
+  },
+  "hero": {
+    "eyebrow": "Agenciamento e Gestão de Talentos",
+    "word1": "ARTISTAS",
+    "word2": "criam",
+    "word3": "CULTURA",
+    "subtitle": "Gestão de carreira para músicos focados a longo prazo. Lançamentos, marca, turnês e negócios."
+  },
+  "services": {
+    "word1": "NOSSOS",
+    "word2": "serviços",
+    "list": [
+      {
+        "number": "01",
+        "title": "Estratégia de Lançamento",
+        "description": "Planejamento, tempo e posicionamento. Cada lançamento tem um plano por trás."
+      },
+      {
+        "number": "02",
+        "title": "Desenvolvimento de Marca",
+        "description": "Identidade visual, história, crescimento de público. Construindo o mundo do artista sem ofuscar a música."
+      },
+      {
+        "number": "03",
+        "title": "Gerenciamento de Turnês",
+        "description": "Rotas, logística, contratos. Do circuito de clubes aos grandes festivais."
+      },
+      {
+        "number": "04",
+        "title": "A&R",
+        "description": "Descoberta de artistas, direção criativa, repertório. Focado no que o artista realmente quer criar."
+      },
+      {
+        "number": "05",
+        "title": "Distribuição Global",
+        "description": "Plataformas digitais, mídia física, masters prontas para sincronização. Todos os territórios, todos os formatos."
+      },
+      {
+        "number": "06",
+        "title": "Sincronização & Licenciamento",
+        "description": "Filmes, TV, jogos, publicidade. Colocações que pagam e viajam o mundo."
+      }
+    ]
+  },
+  "story": {
+    "eyebrow": "Como tudo começou",
+    "copy": "Seppe vinha construindo espaços para artistas australianos a partir de Perth por anos. William Hobbs, trabalhando como Nitrose em Miami, fazia movimentos paralelos do outro lado do oceano. A Servus nasceu quando eles uniram forças. A prática estabelecida encontrando a fome da juventude, com uma visão de longo prazo sobre o que isso significa e a paciência para fazer história no caminho."
+  },
+  "roles": {
+    "word1": "OS",
+    "word2": "papéis",
+    "hint": "Puxe uma linha para baixo",
+    "list": [
+      {
+        "title": "Artistas",
+        "description": "Você faz a música. Nós cuidamos da estratégia, distribuição e marca.",
+        "cta": "Envie seu trabalho"
+      },
+      {
+        "title": "Parceiros",
+        "description": "Gravadoras, marcas, festivais. Trabalhamos em parcerias duradouras.",
+        "cta": "Inicie uma conversa"
+      },
+      {
+        "title": "Investidores",
+        "description": "Construímos infraestrutura para carreiras de artistas a longo prazo.",
+        "cta": "Saiba mais"
+      },
+      {
+        "title": "Criativos",
+        "description": "Fotógrafos, diretores, designers. Se você molda como a música é vista, fale conosco.",
+        "cta": "Entre em contato"
+      }
+    ]
+  },
+  "contact": {
+    "word1": "INICIE",
+    "word2": "a conversa ",
+    "word3": "certa.",
+    "successMsg": "Aplicação recebida. Nossa equipe analisará e retornará em breve.",
+    "direct": "Direto",
+    "pathwaysTitle": "Selecione um caminho",
+    "pathways": {
+      "artist": "Tornar-se Cliente",
+      "investor": "Parceria",
+      "other": "Geral"
+    },
+    "form": {
+      "name": "Seu nome",
+      "email": "Email",
+      "messageInvestor": "Conte-nos sobre sua visão…",
+      "messageOther": "O que você tem em mente?",
+      "send": "Enviar mensagem",
+      "sending": "Enviando…",
+      "title": "Formulário de Integração de Clientes",
+      "subtitle": "Bem-vindo à Servus Global. Preencha o formulário abaixo.",
+      "fullName": "Nome Completo *",
+      "artistName": "Nome Artístico *",
+      "phone": "Telefone *",
+      "instagram": "Instagram *",
+      "links": "Outros Links *",
+      "contactMethod": "Método de Contato Preferido *",
+      "bestTime": "Melhor horário para contato *",
+      "country": "País de Residência *",
+      "servicesReq": "Serviços Necessários *",
+      "platform": "Plataforma mais importante *",
+      "budget": "Faixa de Orçamento *",
+      "shortTerm": "Objetivos a curto prazo? *",
+      "longTerm": "Visão a longo prazo? *",
+      "consentTitle": "Consentimento de Contato *",
+      "consentDesc": "Concordo que a Servus Global pode analisar minha submissão e me contatar.",
+      "back": "← Voltar",
+      "next": "Próxima Etapa",
+      "submit": "Enviar Aplicação",
+      "submitting": "Enviando…"
+    },
+    "pathwaysDesc": {
+      "artist": "Envie seu portfólio e música para consideração do A&R.",
+      "investor": "Consultas sobre parcerias e gravadoras.",
+      "other": "Dúvidas gerais e imprensa.",
+      "back": "← Alterar Opção"
+    }
+  },
+  "footer": {
+    "about": "Sobre",
+    "aboutText": "Agenciamento de talentos. Enraizado em Perth e nos EUA, trabalhando com artistas mundialmente.",
+    "navigate": "Navegar",
+    "direct": "Direto",
+    "social": "Social",
+    "rights": "Todos os direitos reservados",
+    "brand": "SERVUS"
+  },
+  "marquees": {
+    "diagonal_word1": "SERVUS",
+    "diagonal_word2": "global",
+    "work_word1": "TRABALHE",
+    "work_word2": "conosco"
+  },
+  "roster": {
+    "title1": "O",
+    "title2": "elenco",
+    "artistsCount": "artistas"
+  },
+  "releases": {
+    "title1": "Lançamentos",
+    "title2": "selecionados",
+    "titlesCount": "títulos"
+  },
+  "showcase": {
+    "stats": "850M+ Streams · 47 Países · 24 Artistas",
+    "heading1": "O som é seu.",
+    "heading2": "Nós amplificamos.",
+    "desc": "Construa a equipe, a estratégia e os negócios ao redor da música que você já faz."
+  },
+  "artistPage": {
+    "back": "← Voltar",
+    "tag": "Elenco · Artista",
+    "notFound": "Artista não encontrado."
+  }
+}

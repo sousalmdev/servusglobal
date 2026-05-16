@@ -7,18 +7,31 @@ import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 import Image from 'next/image'
 gsap.registerPlugin(ScrollTrigger);
 
-const NAV_LINKS = [
-  { label: "Roster", href: "#artists" },
-  { label: "Services", href: "#services" },
-  { label: "Story", href: "#story" },
-  { label: "Contact", href: "#contact" },
-];
+import { usePathname, useRouter } from "next/navigation";
 
-export default function Navbar() {
+export default function Navbar({ dict }: { dict: any }) {
   const navRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const switchLanguage = (locale: string) => {
+    if (!pathname) return;
+    const pathParts = pathname.split('/');
+    pathParts[1] = locale; // Assuming locale is always at index 1
+    router.push(pathParts.join('/'));
+  };
+
+  const currentLocale = pathname?.split('/')[1] || 'en';
+
+  const NAV_LINKS = [
+    { label: dict.nav.roster, href: `/${currentLocale}#artists` },
+    { label: dict.nav.services, href: `/${currentLocale}#services` },
+    { label: dict.nav.story, href: `/${currentLocale}#story` },
+    { label: dict.nav.contact, href: `/${currentLocale}#contact` },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
@@ -58,7 +71,7 @@ export default function Navbar() {
       <div className="flex items-center justify-between px-6 md:px-12 lg:px-16 py-5 md:py-6">
         {/* Logo */}
         <a
-          href="#"
+          href={`/${currentLocale}`}
           className="nav-item font-display text-lg md:text-xl tracking-tight"
           style={{
             color: "var(--color-off-white)",
@@ -66,7 +79,13 @@ export default function Navbar() {
             letterSpacing: "-0.03em",
           }}
         >
-          <Image src='/servuslogo.png' width={130} height={60} alt='Servus Logo'/>
+          <Image 
+            src='/servuslogo.png' 
+            width={130} 
+            height={60} 
+            alt='Servus Logo'
+            style={{ height: 'auto' }}
+          />
         </a>
 
         {/* Desktop Links */}
@@ -82,7 +101,7 @@ export default function Navbar() {
             </a>
           ))}
           <a
-            href="#contact"
+            href={`/${currentLocale}#contact`}
             className="nav-item font-body text-eyebrow eyebrow px-5 py-2.5 transition-all duration-300"
             style={{
               color: "var(--color-black)",
@@ -90,8 +109,27 @@ export default function Navbar() {
               fontWeight: 700,
             }}
           >
-            Work with us
+            {dict.nav.workWithUs}
           </a>
+          
+          <div className="relative group nav-item">
+            <button
+              className="font-body text-eyebrow eyebrow px-3 py-2.5 flex items-center gap-2 transition-all duration-300"
+              style={{
+                color: "var(--color-off-white)",
+                border: "1px solid rgba(245, 242, 235, 0.18)",
+              }}
+            >
+              {currentLocale.toUpperCase()}
+              <span className="text-[10px]">▼</span>
+            </button>
+            <div className="absolute right-0 top-full mt-2 w-28 bg-[#111] border border-[rgba(245,242,235,0.1)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col backdrop-blur-md shadow-xl overflow-hidden" style={{ zIndex: 1000 }}>
+              <button onClick={() => switchLanguage('en')} className="font-body text-eyebrow eyebrow px-4 py-3 text-left hover:bg-[var(--color-gold)] hover:text-black transition-colors" style={{ color: "var(--color-off-white)" }}>EN 🇺🇸</button>
+              <button onClick={() => switchLanguage('pt')} className="font-body text-eyebrow eyebrow px-4 py-3 text-left hover:bg-[var(--color-gold)] hover:text-black transition-colors" style={{ color: "var(--color-off-white)" }}>PT 🇧🇷</button>
+              <button onClick={() => switchLanguage('es')} className="font-body text-eyebrow eyebrow px-4 py-3 text-left hover:bg-[var(--color-gold)] hover:text-black transition-colors" style={{ color: "var(--color-off-white)" }}>ES 🇪🇸</button>
+              <button onClick={() => switchLanguage('ja')} className="font-body text-eyebrow eyebrow px-4 py-3 text-left hover:bg-[var(--color-gold)] hover:text-black transition-colors" style={{ color: "var(--color-off-white)" }}>JA 🇯🇵</button>
+            </div>
+          </div>
         </div>
 
         {/* Mobile Hamburger */}
@@ -155,7 +193,7 @@ export default function Navbar() {
               fontWeight: 700,
             }}
           >
-            Work with us
+            {dict.nav.workWithUs}
           </a>
         </div>
       </div>

@@ -7,7 +7,7 @@ import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function FooterEditorial() {
+export default function FooterEditorial({ dict }: { dict: any }) {
   const footerRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
 
@@ -62,7 +62,7 @@ export default function FooterEditorial() {
             className="footer-link font-body text-eyebrow eyebrow mb-4 inline-block"
             style={{ color: "var(--color-off-white)", opacity: 0.3 }}
           >
-            About
+            {dict.footer.about}
           </span>
           <p
             className="footer-link font-body text-pretty"
@@ -74,8 +74,7 @@ export default function FooterEditorial() {
               maxWidth: "320px",
             }}
           >
-            Artist and talent management. Rooted in Perth and the US,
-            working with artists worldwide.
+            {dict.footer.aboutText}
           </p>
         </div>
 
@@ -85,15 +84,15 @@ export default function FooterEditorial() {
             className="footer-link font-body text-eyebrow eyebrow mb-4 inline-block"
             style={{ color: "var(--color-off-white)", opacity: 0.3 }}
           >
-            Navigate
+            {dict.footer.navigate}
           </span>
           <div className="flex flex-col gap-3">
             {[
-              { label: "Roster", href: "#artists" },
-              { label: "Services", href: "#services" },
-              { label: "Our Story", href: "#story" },
-              { label: "Roles", href: "#roles" },
-              { label: "Contact", href: "#contact" },
+              { label: dict.nav.roster, href: "#artists" },
+              { label: dict.nav.services, href: "#services" },
+              { label: dict.nav.story, href: "#story" },
+              { label: dict.roles.word2, href: "#roles" },
+              { label: dict.nav.contact, href: "#contact" },
             ].map((link) => (
               <a
                 key={link.label}
@@ -117,7 +116,7 @@ export default function FooterEditorial() {
             className="footer-link font-body text-eyebrow eyebrow mb-4 inline-block"
             style={{ color: "var(--color-off-white)", opacity: 0.3 }}
           >
-            Direct
+            {dict.footer.direct}
           </span>
           <div className="flex flex-col gap-3">
             {[
@@ -147,7 +146,7 @@ export default function FooterEditorial() {
             className="footer-link font-body text-eyebrow eyebrow mb-4 inline-block"
             style={{ color: "var(--color-off-white)", opacity: 0.3 }}
           >
-            Social
+            {dict.footer.social}
           </span>
           <div className="flex flex-col gap-3">
             {[
@@ -189,7 +188,7 @@ export default function FooterEditorial() {
           className="footer-link font-body text-eyebrow eyebrow"
           style={{ color: "var(--color-off-white)", opacity: 0.2 }}
         >
-          All rights reserved
+          {dict.footer.rights}
         </span>
       </div>
       {/* Giant SERVUS wordmark — absolute, full viewport width */}
@@ -210,7 +209,7 @@ export default function FooterEditorial() {
             width: "100%",
           }}
         >
-          <span className="hero-word inline-block">SERVUS</span>
+          <span className="hero-word inline-block">{dict.footer.brand}</span>
         </h2>
       </div>
     </footer>

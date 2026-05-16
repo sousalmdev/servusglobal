@@ -7,46 +7,7 @@ import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const services = [
-  {
-    number: "01",
-    title: "Release Strategy",
-    description:
-      "Release planning, timing and positioning. Every drop has a plan behind it.",
-  },
-  {
-    number: "02",
-    title: "Brand Development",
-    description:
-      "Visual identity, story, audience growth. Building the artist's world without flattening the music.",
-  },
-  {
-    number: "03",
-    title: "Tour Management",
-    description:
-      "Routing, logistics, contracts. From club circuits up to festival slots.",
-  },
-  {
-    number: "04",
-    title: "A&R",
-    description:
-      "Artist discovery, creative direction, repertoire. Built around what the artist actually wants to make.",
-  },
-  {
-    number: "05",
-    title: "Global Distribution",
-    description:
-      "DSPs, physical, sync-ready masters. All territories, all formats.",
-  },
-  {
-    number: "06",
-    title: "Sync & Licensing",
-    description:
-      "Film, TV, games, ads. Placements that pay and travel.",
-  },
-];
-
-export default function Services() {
+export default function Services({ dict }: { dict: any }) {
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
 
@@ -109,12 +70,12 @@ export default function Services() {
         >
           <span className="block overflow-hidden">
             <span className="hero-word block" style={{ color: "var(--color-off-white)" }}>
-              OUR
+              {dict.services.word1}
             </span>
           </span>
           <span className="block overflow-hidden">
             <span className="hero-word block serif-italic" style={{ color: "var(--color-gold)" }}>
-              services
+              {dict.services.word2}
             </span>
           </span>
         </h2>
@@ -122,7 +83,7 @@ export default function Services() {
 
       {/* Services Grid */}
       <div className="services-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {services.map((service, i) => (
+        {dict.services.list.map((service: any, i: number) => (
           <div
             key={service.number}
             className="service-card group p-8 md:p-10"

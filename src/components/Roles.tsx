@@ -7,37 +7,10 @@ import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const roles = [
-  {
-    title: "Artists",
-    description:
-      "You make the music. We handle release strategy, distribution and brand, built around how you actually work.",
-    cta: "Submit your work",
-  },
-  {
-    title: "Partners",
-    description:
-      "Labels, venues, brands, festivals. We work on partnerships that come back the year after.",
-    cta: "Start a conversation",
-  },
-  {
-    title: "Investors",
-    description:
-      "We're building infrastructure for artist careers that run on long timelines. Open to talking numbers.",
-    cta: "Learn more",
-  },
-  {
-    title: "Creatives",
-    description:
-      "Photographers, directors, designers, producers. If you shape how music looks and feels, get in touch.",
-    cta: "Get in touch",
-  },
-];
-
 const OPEN_HEIGHT = 260;
 const DRAG_THRESHOLD = 6;
 
-type Role = (typeof roles)[number];
+type Role = { title: string; description: string; cta: string };
 
 function RoleRow({
   role,
@@ -258,7 +231,7 @@ function RoleRow({
   );
 }
 
-export default function Roles() {
+export default function Roles({ dict }: { dict: any }) {
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
 
@@ -315,7 +288,7 @@ export default function Roles() {
               className="hero-word block"
               style={{ color: "var(--color-off-white)" }}
             >
-              THE
+              {dict.roles.word1}
             </span>
           </span>
           <span className="block overflow-hidden">
@@ -323,7 +296,7 @@ export default function Roles() {
               className="hero-word block serif-italic"
               style={{ color: "var(--color-gold)" }}
             >
-              roles
+              {dict.roles.word2}
             </span>
           </span>
         </h2>
@@ -331,17 +304,17 @@ export default function Roles() {
           className="roles-hint mt-6 font-body text-eyebrow eyebrow"
           style={{ color: "var(--color-off-white)", opacity: 0.35 }}
         >
-          Grab a row and pull it down
+          {dict.roles.hint}
         </p>
       </div>
 
       <div>
-        {roles.map((role, i) => (
+        {dict.roles.list.map((role: any, i: number) => (
           <RoleRow
             key={role.title}
             role={role}
             index={i}
-            last={i === roles.length - 1}
+            last={i === dict.roles.list.length - 1}
             reducedMotion={reducedMotion}
           />
         ))}

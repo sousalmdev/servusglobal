@@ -10,7 +10,7 @@ import FleurIcon from "@/components/FleurIcon";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function ArtistGridEditorial() {
+export default function ArtistGridEditorial({ dict }: { dict?: any }) {
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
 
@@ -96,7 +96,7 @@ export default function ArtistGridEditorial() {
               className="hero-word block"
               style={{ color: "var(--color-off-white)" }}
             >
-              THE
+              {dict?.roster?.title1 || "THE"}
             </span>
           </span>
           <span className="block overflow-hidden">
@@ -104,7 +104,7 @@ export default function ArtistGridEditorial() {
               className="hero-word block serif-italic"
               style={{ color: "var(--color-gold)" }}
             >
-              roster
+              {dict?.roster?.title2 || "roster"}
             </span>
           </span>
         </h2>
@@ -112,7 +112,7 @@ export default function ArtistGridEditorial() {
           className="font-body text-eyebrow eyebrow hidden md:inline-block mb-2"
           style={{ color: "var(--color-off-white)", opacity: 0.3 }}
         >
-          {String(sorted.length).padStart(2, "0")} / artists
+          {String(sorted.length).padStart(2, "0")} / {dict?.roster?.artistsCount || "artists"}
         </span>
       </div>
 

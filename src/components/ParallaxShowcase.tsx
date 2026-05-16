@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 const showcaseArtist =
   artists.find((a) => a.slug === "marcos-vidal") || artists[1];
 
-export default function ParallaxShowcase() {
+export default function ParallaxShowcase({ dict }: { dict?: any }) {
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
 
@@ -100,7 +100,7 @@ export default function ParallaxShowcase() {
             className="showcase-text font-body text-eyebrow eyebrow mb-6"
             style={{ color: "var(--color-gold)", opacity: 0.7 }}
           >
-            850M+ Streams · 47 Countries · 24 Artists
+            {dict?.showcase?.stats || "850M+ Streams · 47 Countries · 24 Artists"}
           </span>
           <h2
             className="showcase-text font-display max-w-4xl"
@@ -112,10 +112,10 @@ export default function ParallaxShowcase() {
               fontWeight: 800,
             }}
           >
-            The sound is yours.
+            {dict?.showcase?.heading1 || "The sound is yours."}
             <br />
             <span className="serif-italic" style={{ color: "var(--color-gold)", fontWeight: 400 }}>
-              We amplify.
+              {dict?.showcase?.heading2 || "We amplify."}
             </span>
           </h2>
           <p
@@ -127,8 +127,7 @@ export default function ParallaxShowcase() {
               lineHeight: 1.7,
             }}
           >
-            Build the team, the rollout and the business around the music
-            you&apos;re already making.
+            {dict?.showcase?.desc || "Build the team, the rollout and the business around the music you're already making."}
           </p>
         </div>
       </div>

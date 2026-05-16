@@ -7,7 +7,7 @@ import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function WorkWithUsMarquee() {
+export default function WorkWithUsMarquee({ dict }: { dict: any }) {
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
 
@@ -60,7 +60,7 @@ export default function WorkWithUsMarquee() {
                       color: "var(--color-black)",
                     }}
                   >
-                    WORK
+                    {dict.marquees.work_word1}
                   </span>
                   <span
                     className="serif-italic px-2 md:px-4"
@@ -72,7 +72,7 @@ export default function WorkWithUsMarquee() {
                       fontWeight: 400,
                     }}
                   >
-                    with us
+                    {dict.marquees.work_word2}
                   </span>
                   <span
                     className="inline-block mx-4 md:mx-8"

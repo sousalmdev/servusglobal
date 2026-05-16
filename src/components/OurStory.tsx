@@ -7,7 +7,7 @@ import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function OurStory() {
+export default function OurStory({ dict }: { dict: any }) {
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
 
@@ -63,7 +63,7 @@ export default function OurStory() {
             className="story-eyebrow font-body text-eyebrow eyebrow inline-block mb-8"
             style={{ color: "var(--color-off-white)" }}
           >
-            How it started
+            {dict.story.eyebrow}
           </span>
 
           <p
@@ -75,12 +75,7 @@ export default function OurStory() {
               letterSpacing: "-0.005em",
             }}
           >
-            Seppe had been building rooms for Australian artists out of Perth
-            for years. William Hobbs, working as Nitrose out of Miami, was
-            making the parallel moves from the other side of the ocean. Servus
-            is what happened when they joined forces. Established practice
-            meeting young hunger, with a long view on what that means and the
-            patience to write history on the way there.
+            {dict.story.copy}
           </p>
         </div>
 

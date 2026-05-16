@@ -136,7 +136,7 @@ function ReleaseCard({
   );
 }
 
-export default function Releases() {
+export default function Releases({ dict }: { dict?: any }) {
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
 
@@ -257,7 +257,7 @@ export default function Releases() {
               className="hero-word block"
               style={{ color: "var(--color-off-white)" }}
             >
-              ON
+              {dict?.releases?.title1 || "ON"}
             </span>
           </span>
           <span className="block overflow-hidden">
@@ -265,7 +265,7 @@ export default function Releases() {
               className="hero-word block serif-italic"
               style={{ color: "var(--color-gold)" }}
             >
-              rotation
+              {dict?.releases?.title2 || "rotation"}
             </span>
           </span>
         </h2>
@@ -273,7 +273,7 @@ export default function Releases() {
           className="font-body text-eyebrow eyebrow hidden md:inline-block mb-2"
           style={{ color: "var(--color-off-white)", opacity: 0.3 }}
         >
-          {String(sorted.length).padStart(2, "0")} / releases
+          {String(sorted.length).padStart(2, "0")} / {dict?.releases?.titlesCount || "releases"}
         </span>
       </div>
 

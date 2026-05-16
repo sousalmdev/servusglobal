@@ -1,0 +1,168 @@
+{
+  "nav": {
+    "tagline": "A&R / MANAGEMENT / AGENCY",
+    "roster": "Roster",
+    "services": "Services",
+    "story": "Story",
+    "contact": "Contact",
+    "workWithUs": "Work with us"
+  },
+  "hero": {
+    "eyebrow": "Artist & Talent Management",
+    "word1": "ARTISTS",
+    "word2": "create",
+    "word3": "CULTURE",
+    "subtitle": "Artist and talent management for musicians building long careers. Releases, brand, touring, business."
+  },
+  "services": {
+    "word1": "OUR",
+    "word2": "services",
+    "list": [
+      {
+        "number": "01",
+        "title": "Release Strategy",
+        "description": "Release planning, timing and positioning. Every drop has a plan behind it."
+      },
+      {
+        "number": "02",
+        "title": "Brand Development",
+        "description": "Visual identity, story, audience growth. Building the artist's world without flattening the music."
+      },
+      {
+        "number": "03",
+        "title": "Tour Management",
+        "description": "Routing, logistics, contracts. From club circuits up to festival slots."
+      },
+      {
+        "number": "04",
+        "title": "A&R",
+        "description": "Artist discovery, creative direction, repertoire. Built around what the artist actually wants to make."
+      },
+      {
+        "number": "05",
+        "title": "Global Distribution",
+        "description": "DSPs, physical, sync-ready masters. All territories, all formats."
+      },
+      {
+        "number": "06",
+        "title": "Sync & Licensing",
+        "description": "Film, TV, games, ads. Placements that pay and travel."
+      }
+    ]
+  },
+  "story": {
+    "eyebrow": "How it started",
+    "copy": "Seppe had been building rooms for Australian artists out of Perth for years. William Hobbs, working as Nitrose out of Miami, was making the parallel moves from the other side of the ocean. Servus is what happened when they joined forces. Established practice meeting young hunger, with a long view on what that means and the patience to write history on the way there."
+  },
+  "roles": {
+    "word1": "THE",
+    "word2": "roles",
+    "hint": "Grab a row and pull it down",
+    "list": [
+      {
+        "title": "Artists",
+        "description": "You make the music. We handle release strategy, distribution and brand, built around how you actually work.",
+        "cta": "Submit your work"
+      },
+      {
+        "title": "Partners",
+        "description": "Labels, venues, brands, festivals. We work on partnerships that come back the year after.",
+        "cta": "Start a conversation"
+      },
+      {
+        "title": "Investors",
+        "description": "We're building infrastructure for artist careers that run on long timelines. Open to talking numbers.",
+        "cta": "Learn more"
+      },
+      {
+        "title": "Creatives",
+        "description": "Photographers, directors, designers, producers. If you shape how music looks and feels, get in touch.",
+        "cta": "Get in touch"
+      }
+    ]
+  },
+  "contact": {
+    "word1": "START",
+    "word2": "the right ",
+    "word3": "conversation.",
+    "successMsg": "Application received. Our team will review and get back to you soon.",
+    "direct": "Direct",
+    "pathwaysTitle": "Select a pathway",
+    "pathways": {
+      "artist": "Become a Client",
+      "investor": "Partnership",
+      "other": "General"
+    },
+    "form": {
+      "name": "Your name",
+      "email": "Email",
+      "messageInvestor": "Tell us about your vision…",
+      "messageOther": "What's on your mind?",
+      "send": "Send message",
+      "sending": "Sending…",
+      "title": "Client Onboarding & Service Request Form",
+      "subtitle": "Welcome to Servus Global. Please complete the form below. Our team will review your needs and connect you with the right services. All information is confidential.",
+      "fullName": "Full Name *",
+      "artistName": "Artist / Producer / Brand Name *",
+      "phone": "Phone Number *",
+      "instagram": "Instagram Handle *",
+      "links": "Other Links *",
+      "contactMethod": "Preferred Contact Method *",
+      "bestTime": "Best time to contact you *",
+      "country": "Country of Residence *",
+      "servicesReq": "Services Required *",
+      "platform": "Which platform do you consider most important for your growth? *",
+      "budget": "Budget Range *",
+      "shortTerm": "What are your short-term goals? *",
+      "longTerm": "What is your long-term vision as an artist/brand? *",
+      "consentTitle": "Consent to Contact *",
+      "consentDesc": "I agree that Servus Global may review my submission and contact me regarding services.",
+      "back": "← Back",
+      "next": "Next Step",
+      "submit": "Submit Application",
+      "submitting": "Submitting…"
+    },
+    "pathwaysDesc": {
+      "artist": "Submit your portfolio and music for A&R consideration.",
+      "investor": "Partnership and label inquiries.",
+      "other": "General questions and press.",
+      "back": "← Change Option"
+    }
+  },
+  "footer": {
+    "about": "About",
+    "aboutText": "Artist and talent management. Rooted in Perth and the US, working with artists worldwide.",
+    "navigate": "Navigate",
+    "direct": "Direct",
+    "social": "Social",
+    "rights": "All rights reserved",
+    "brand": "SERVUS"
+  },
+  "marquees": {
+    "diagonal_word1": "SERVUS",
+    "diagonal_word2": "global",
+    "work_word1": "WORK",
+    "work_word2": "with us"
+  },
+  "roster": {
+    "title1": "THE",
+    "title2": "roster",
+    "artistsCount": "artists"
+  },
+  "releases": {
+    "title1": "Selected",
+    "title2": "releases",
+    "titlesCount": "titles"
+  },
+  "showcase": {
+    "stats": "850M+ Streams · 47 Countries · 24 Artists",
+    "heading1": "The sound is yours.",
+    "heading2": "We amplify.",
+    "desc": "Build the team, the rollout and the business around the music you're already making."
+  },
+  "artistPage": {
+    "back": "← Back",
+    "tag": "Roster · Artist",
+    "notFound": "Artist not found."
+  }
+}

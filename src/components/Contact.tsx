@@ -7,20 +7,18 @@ import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
-type Pathway = "artist" | "investor" | "other" | null;
+const pathwaysKeys = ["artist", "investor", "other"] as const;
+type Pathway = typeof pathwaysKeys[number] | null;
 
-const pathways = [
-  { key: "artist" as const, label: "Become a Client" },
-  { key: "investor" as const, label: "Partnership" },
-  { key: "other" as const, label: "General" },
-];
-
-export default function Contact() {
+export default function Contact({ dict }: { dict: any }) {
+  const pathways = [
+    { key: "artist" as const, label: dict.contact.pathways.artist },
+    { key: "investor" as const, label: dict.contact.pathways.investor },
+    { key: "other" as const, label: dict.contact.pathways.other },
+  ];
   const [pathway, setPathway] = useState<Pathway>(null);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [news, setNews] = useState("");
-  const [newsDone, setNewsDone] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const reducedMotion = useReducedMotion();
@@ -92,19 +90,6 @@ export default function Contact() {
     setLoading(false);
   };
 
-  const handleNews = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!news) return;
-    try {
-      await fetch("/api/newsletter", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: news }),
-      });
-    } catch {}
-    setNewsDone(true);
-  };
-
   return (
     <section
       ref={sectionRef}
@@ -131,17 +116,17 @@ export default function Contact() {
               className="hero-word block"
               style={{ color: "var(--color-off-white)" }}
             >
-              START
+              {dict.contact.word1}
             </span>
           </span>
           <span className="block overflow-hidden">
             <span className="hero-word block">
-              <span style={{ color: "var(--color-off-white)" }}>the right </span>
+              <span style={{ color: "var(--color-off-white)" }}>{dict.contact.word2}</span>
               <span
                 className="serif-italic"
                 style={{ color: "var(--color-gold)", fontWeight: 400 }}
               >
-                conversation.
+                {dict.contact.word3}
               </span>
             </span>
           </span>
@@ -165,227 +150,172 @@ export default function Contact() {
               className="font-body text-body-lg"
               style={{ color: "var(--color-off-white)" }}
             >
-              Application received. Our team will review and get back to you soon.
+              {dict.contact.successMsg}
             </span>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-            {/* Left — direct lines */}
-            <div className="lg:col-span-4 flex flex-col gap-3">
-              <span
-                className="font-body text-eyebrow eyebrow mb-2"
-                style={{ color: "var(--color-off-white)", opacity: 0.4 }}
-              >
-                Direct
-              </span>
-              {[
-                ["A&R", "ar@servusglobal.com"],
-                ["Partnerships", "partners@servusglobal.com"],
-                ["Press", "press@servusglobal.com"],
-              ].map(([label, addr]) => (
-                <a
-                  key={addr}
-                  href={`mailto:${addr}`}
-                  className="group flex items-baseline justify-between py-3 border-t transition-colors duration-300"
-                  style={{ borderColor: "rgba(245,242,235,0.08)" }}
-                >
-                  <span
-                    className="font-body text-caption"
-                    style={{ color: "var(--color-off-white)", opacity: 0.4 }}
-                  >
-                    {label}
-                  </span>
-                  <span
-                    className="font-body text-body link-underline transition-colors duration-300 group-hover:!text-[var(--color-gold)]"
-                    style={{ color: "var(--color-off-white)" }}
-                  >
-                    {addr}
-                  </span>
-                </a>
-              ))}
-            </div>
-
-            {/* Right — form */}
-            <div className="lg:col-span-8">
-              <span
-                className="font-body text-eyebrow eyebrow mb-4 inline-block"
-                style={{ color: "var(--color-off-white)", opacity: 0.4 }}
-              >
-                Select a pathway
-              </span>
-              <div className="flex flex-wrap gap-2 mb-10">
-                {pathways.map((p) => {
-                  const active = pathway === p.key;
-                  return (
-                    <button
-                      key={p.key}
-                      onClick={() => setPathway(p.key)}
-                      className="font-body text-caption px-5 py-3 transition-all duration-300 cursor-pointer"
-                      style={{
-                        background: active ? "var(--color-gold)" : "transparent",
-                        color: active
-                          ? "var(--color-black)"
-                          : "var(--color-off-white)",
-                        border: active
-                          ? "1px solid var(--color-gold)"
-                          : "1px solid rgba(245,242,235,0.15)",
-                      }}
-                    >
-                      {p.label}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {pathway === "artist" && (
-                <ClientOnboardingForm
-                  formRef={formRef}
-                  loading={loading}
-                  onSubmit={handleSubmit}
-                />
-              )}
-
-              {(pathway === "investor" || pathway === "other") && (
-                <form
-                  ref={formRef}
-                  onSubmit={handleSubmit}
-                  className="flex flex-col gap-8"
-                >
-                  <input
-                    name="name"
-                    required
-                    placeholder="Your name"
-                    className="field-anim w-full bg-transparent font-body text-body-lg py-3 outline-none placeholder:opacity-30 transition-colors"
-                    style={{
-                      color: "var(--color-off-white)",
-                      borderBottom: "1px solid rgba(245,242,235,0.15)",
-                    }}
-                    onFocus={(e) =>
-                      (e.target.style.borderBottomColor = "var(--color-gold)")
-                    }
-                    onBlur={(e) =>
-                      (e.target.style.borderBottomColor =
-                        "rgba(245,242,235,0.15)")
-                    }
-                  />
-                  <input
-                    name="email"
-                    type="email"
-                    required
-                    placeholder="Email"
-                    className="field-anim w-full bg-transparent font-body text-body-lg py-3 outline-none placeholder:opacity-30 transition-colors"
-                    style={{
-                      color: "var(--color-off-white)",
-                      borderBottom: "1px solid rgba(245,242,235,0.15)",
-                    }}
-                    onFocus={(e) =>
-                      (e.target.style.borderBottomColor = "var(--color-gold)")
-                    }
-                    onBlur={(e) =>
-                      (e.target.style.borderBottomColor =
-                        "rgba(245,242,235,0.15)")
-                    }
-                  />
-                  <textarea
-                    name="message"
-                    required
-                    placeholder={
-                      pathway === "investor"
-                        ? "Tell us about your vision…"
-                        : "What's on your mind?"
-                    }
-                    rows={4}
-                    className="field-anim w-full bg-transparent font-body text-body-lg py-3 outline-none placeholder:opacity-30 resize-none transition-colors"
-                    style={{
-                      color: "var(--color-off-white)",
-                      borderBottom: "1px solid rgba(245,242,235,0.15)",
-                    }}
-                    onFocus={(e) =>
-                      (e.target.style.borderBottomColor = "var(--color-gold)")
-                    }
-                    onBlur={(e) =>
-                      (e.target.style.borderBottomColor =
-                        "rgba(245,242,235,0.15)")
-                    }
-                  />
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="field-anim self-start font-body text-eyebrow eyebrow inline-flex items-center gap-3 px-8 py-4 mt-2 cursor-pointer disabled:opacity-50 transition-all duration-300"
-                    style={{
-                      color: "var(--color-black)",
-                      background: "var(--color-gold)",
-                      fontWeight: 700,
-                    }}
-                  >
-                    {loading ? "Sending…" : "Send message"}
-                    <span aria-hidden>→</span>
-                  </button>
-                </form>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Newsletter */}
-        <div
-          className="mt-24 md:mt-32 pt-10 border-t flex flex-col md:flex-row md:items-end md:justify-between gap-6"
-          style={{ borderColor: "rgba(245,242,235,0.08)" }}
-        >
-          <div className="max-w-md">
+        ) : !pathway ? (
+          <div className="max-w-5xl">
             <span
-              className="font-body text-eyebrow eyebrow mb-3 inline-block"
+              className="font-body text-eyebrow eyebrow mb-8 inline-block"
               style={{ color: "var(--color-off-white)", opacity: 0.4 }}
             >
-              Newsletter
+              {dict.contact.pathwaysTitle}
             </span>
-            <p
-              className="font-body text-body text-pretty"
-              style={{ color: "var(--color-off-white)", opacity: 0.45 }}
-            >
-              Releases, signings and tour dates. A few emails a year.
-            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {pathways.map((p) => (
+                <button
+                  key={p.key}
+                  onClick={() => setPathway(p.key)}
+                  className="group relative flex flex-col text-left p-8 md:p-10 transition-all duration-500 overflow-hidden cursor-pointer"
+                  style={{
+                    background: "rgba(20,20,20,0.4)",
+                    border: "1px solid rgba(245,242,235,0.08)",
+                  }}
+                >
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{
+                      background: "linear-gradient(135deg, rgba(212,165,65,0.1) 0%, transparent 100%)",
+                    }}
+                  />
+                  <h3
+                    className="font-display mb-4 relative z-10 transition-colors duration-300 group-hover:!text-[var(--color-gold)]"
+                    style={{
+                      color: "var(--color-off-white)",
+                      fontSize: "clamp(1.5rem, 2vw, 2rem)",
+                      lineHeight: 1.1,
+                      letterSpacing: "-0.02em",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {p.label}
+                  </h3>
+                  <p
+                    className="font-body text-caption relative z-10"
+                    style={{ color: "var(--color-off-white)", opacity: 0.5 }}
+                  >
+                    {dict.contact.pathwaysDesc?.[p.key]}
+                  </p>
+                  
+                  <div className="mt-12 flex justify-end relative z-10 w-full">
+                    <span
+                      className="inline-flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 group-hover:bg-[var(--color-gold)] group-hover:text-black group-hover:border-[var(--color-gold)]"
+                      style={{ border: "1px solid rgba(245,242,235,0.15)", color: "var(--color-off-white)" }}
+                    >
+                      →
+                    </span>
+                  </div>
+                </button>
+              ))}
+            </div>
           </div>
-          {newsDone ? (
-            <span
-              className="font-body text-body"
-              style={{ color: "var(--color-gold)" }}
-            >
-              Subscribed.
-            </span>
-          ) : (
-            <form
-              onSubmit={handleNews}
-              className="flex items-end gap-4 w-full md:w-auto md:min-w-[400px]"
-            >
-              <input
-                type="email"
-                required
-                value={news}
-                onChange={(e) => setNews(e.target.value)}
-                placeholder="you@somewhere.com"
-                className="flex-1 bg-transparent font-body text-body py-2 outline-none placeholder:opacity-30 transition-colors"
-                style={{
-                  color: "var(--color-off-white)",
-                  borderBottom: "1px solid rgba(245,242,235,0.15)",
-                }}
-                onFocus={(e) =>
-                  (e.target.style.borderBottomColor = "var(--color-gold)")
-                }
-                onBlur={(e) =>
-                  (e.target.style.borderBottomColor = "rgba(245,242,235,0.15)")
-                }
-              />
-              <button
-                type="submit"
-                className="font-body text-eyebrow eyebrow inline-flex items-center gap-2 py-2 cursor-pointer transition-opacity duration-300 hover:opacity-80"
-                style={{ color: "var(--color-gold)" }}
+        ) : (
+          <div className="max-w-3xl">
+            <div className="mb-12 flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <span
+                className="font-body text-eyebrow eyebrow inline-block"
+                style={{ color: "var(--color-off-white)", opacity: 0.4 }}
               >
-                Subscribe →
+                {dict.contact.pathwaysTitle} / <span style={{ color: "var(--color-gold)", opacity: 1 }}>{pathways.find(p => p.key === pathway)?.label}</span>
+              </span>
+              <button
+                onClick={() => setPathway(null)}
+                className="font-body text-eyebrow eyebrow hover:text-[var(--color-gold)] transition-colors duration-300 cursor-pointer flex items-center gap-2"
+                style={{ color: "var(--color-off-white)", opacity: 0.6 }}
+              >
+                {dict.contact.pathwaysDesc?.back || "← Change Option"}
               </button>
-            </form>
-          )}
-        </div>
+            </div>
+
+            {pathway === "artist" && (
+              <ClientOnboardingForm
+                formRef={formRef}
+                loading={loading}
+                onSubmit={handleSubmit}
+                dict={dict}
+              />
+            )}
+
+            {(pathway === "investor" || pathway === "other") && (
+              <form
+                ref={formRef}
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-8"
+              >
+                <input
+                  name="name"
+                  required
+                  placeholder={dict.contact.form.name}
+                  className="field-anim w-full bg-transparent font-body text-body-lg py-3 outline-none placeholder:opacity-30 transition-colors"
+                  style={{
+                    color: "var(--color-off-white)",
+                    borderBottom: "1px solid rgba(245,242,235,0.15)",
+                  }}
+                  onFocus={(e) =>
+                    (e.target.style.borderBottomColor = "var(--color-gold)")
+                  }
+                  onBlur={(e) =>
+                    (e.target.style.borderBottomColor =
+                      "rgba(245,242,235,0.15)")
+                  }
+                />
+                <input
+                  name="email"
+                  type="email"
+                  required
+                  placeholder={dict.contact.form.email}
+                  className="field-anim w-full bg-transparent font-body text-body-lg py-3 outline-none placeholder:opacity-30 transition-colors"
+                  style={{
+                    color: "var(--color-off-white)",
+                    borderBottom: "1px solid rgba(245,242,235,0.15)",
+                  }}
+                  onFocus={(e) =>
+                    (e.target.style.borderBottomColor = "var(--color-gold)")
+                  }
+                  onBlur={(e) =>
+                    (e.target.style.borderBottomColor =
+                      "rgba(245,242,235,0.15)")
+                  }
+                />
+                <textarea
+                  name="message"
+                  required
+                  placeholder={
+                    pathway === "investor"
+                      ? dict.contact.form.messageInvestor
+                      : dict.contact.form.messageOther
+                  }
+                  rows={4}
+                  className="field-anim w-full bg-transparent font-body text-body-lg py-3 outline-none placeholder:opacity-30 resize-none transition-colors"
+                  style={{
+                    color: "var(--color-off-white)",
+                    borderBottom: "1px solid rgba(245,242,235,0.15)",
+                  }}
+                  onFocus={(e) =>
+                    (e.target.style.borderBottomColor = "var(--color-gold)")
+                  }
+                  onBlur={(e) =>
+                    (e.target.style.borderBottomColor =
+                      "rgba(245,242,235,0.15)")
+                  }
+                />
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="field-anim self-start font-body text-eyebrow eyebrow inline-flex items-center gap-3 px-8 py-4 mt-2 cursor-pointer disabled:opacity-50 transition-all duration-300"
+                  style={{
+                    color: "var(--color-black)",
+                    background: "var(--color-gold)",
+                    fontWeight: 700,
+                  }}
+                >
+                  {loading ? dict.contact.form.sending : dict.contact.form.send}
+                  <span aria-hidden>→</span>
+                </button>
+              </form>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );
@@ -393,106 +323,215 @@ export default function Contact() {
 
 // Sub-components for Onboarding Form
 
-function ClientOnboardingForm({ formRef, loading, onSubmit }: any) {
+function ClientOnboardingForm({ formRef, loading, onSubmit, dict }: any) {
+  const [step, setStep] = useState(1);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleNext = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const form = formRef.current;
+    if (form) {
+      // Get all inputs within the current step
+      const currentStepContainer = form.querySelector(`#step-${step}`);
+      if (currentStepContainer) {
+        const inputs = currentStepContainer.querySelectorAll("input, textarea, select");
+        let isStepValid = true;
+        let firstInvalid: any = null;
+
+        inputs.forEach((input: any) => {
+          if (!input.checkValidity()) {
+            isStepValid = false;
+            if (!firstInvalid) firstInvalid = input;
+          }
+        });
+
+        if (!isStepValid && firstInvalid) {
+          firstInvalid.reportValidity();
+          return;
+        }
+      }
+    }
+    
+    // Fade out current step, then change step
+    if (containerRef.current) {
+      gsap.to(containerRef.current.querySelector(`#step-${step}`), {
+        opacity: 0,
+        y: -10,
+        duration: 0.3,
+        onComplete: () => {
+          setStep((s) => s + 1);
+        }
+      });
+    } else {
+      setStep((s) => s + 1);
+    }
+  };
+
+  const handlePrev = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setStep((s) => s - 1);
+  };
+
+  useEffect(() => {
+    // Animate in new step
+    if (containerRef.current) {
+      gsap.fromTo(containerRef.current.querySelector(`#step-${step}`), 
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }
+      );
+    }
+  }, [step]);
+
   return (
     <form ref={formRef} onSubmit={onSubmit} className="flex flex-col gap-10 bg-[rgba(245,242,235,0.02)] p-6 md:p-10 border border-[rgba(245,242,235,0.08)]">
       <div className="flex flex-col gap-3 mb-4 field-anim">
-        <h3 className="font-display text-2xl md:text-3xl" style={{ color: "var(--color-gold)" }}>Client Onboarding & Service Request Form</h3>
+        <h3 className="font-display text-2xl md:text-3xl" style={{ color: "var(--color-gold)" }}>{dict.contact.form.title}</h3>
         <p className="font-body text-body" style={{ color: "var(--color-off-white)", opacity: 0.6 }}>
-          Welcome to Servus Global. Please complete the form below. Our team will review your needs and connect you with the right services. All information is confidential.
+          {dict.contact.form.subtitle}
         </p>
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 field-anim">
-        <InputField name="fullName" label="Full Name *" placeholder="Please enter your full legal name" required />
-        <InputField name="artistName" label="Artist / Producer / Brand Name *" placeholder="If applicable" required />
-        <InputField name="email" label="Email Address *" type="email" placeholder="Enter a valid email address" required />
-        <InputField name="phone" label="Phone Number *" type="tel" placeholder="Include country code" required />
-        <InputField name="instagram" label="Instagram Handle *" placeholder="@yourname" required />
-        <InputField name="links" label="Other Links *" placeholder="Spotify, YouTube, Website, etc. (comma separated)" required />
-      </div>
-
-      <RadioGroup
-        className="field-anim"
-        name="contactMethod"
-        label="Preferred Contact Method *"
-        options={["Email", "Phone", "Instagram DM"]}
-        required
-      />
-
-      <RadioGroup
-        className="field-anim"
-        name="bestTime"
-        label="Best time to contact you *"
-        options={["Morning (8am – 12pm)", "Afternoon (12pm – 5pm)", "Evening (5pm – 9pm)", "Outro"]}
-        required
-      />
-
-      <div className="field-anim">
-        <InputField name="country" label="Country of Residence *" placeholder="Which country are you currently based in?" required />
-      </div>
-
-      <CheckboxGroup
-        className="field-anim"
-        name="services"
-        label="Services Required *"
-        options={[
-          "Streaming Campaigns (Spotify, Apple, YouTube, SoundCloud)",
-          "Press & Exposure (Blogs, Genius, PR Packages)",
-          "Consultations (Business, Branding, Strategy)",
-          "Creative Services (Songwriting, Executive Production, A&R)",
-          "Visuals & Media (Graphic Design, Video, Photography)",
-          "Rollout Strategies (NDA Required – Premium Clients Only)",
-        ]}
-      />
-
-      <RadioGroup
-        className="field-anim"
-        name="platform"
-        label="Which platform do you consider most important for your growth? *"
-        options={["Spotify", "Apple Music", "YouTube", "SoundCloud", "Instagram", "Other"]}
-        required
-      />
-
-      <RadioGroup
-        className="field-anim"
-        name="budget"
-        label="Budget Range *"
-        options={["$200 – $500", "$500 – $1,000", "$1,000 – $2,500", "$2,500+"]}
-        required
-      />
-
-      <div className="flex flex-col gap-8 field-anim">
-        <TextareaField name="shortTermGoals" label="What are your short-term goals? *" placeholder="Describe the immediate results or milestones you hope to achieve." required />
-        <TextareaField name="longTermVision" label="What is your long-term vision as an artist/brand? *" placeholder="Share your aspirations, brand goals, and where you see yourself in 2–5 years." required />
-      </div>
-
-      <label className="field-anim group flex items-start gap-4 cursor-pointer mt-4 max-w-xl">
-        <div className="relative flex-shrink-0 w-6 h-6 border border-[rgba(245,242,235,0.3)] transition-colors group-hover:border-[var(--color-gold)] mt-0.5">
-          <input type="checkbox" name="consent" required className="peer sr-only" />
-          <div className="absolute inset-0 bg-[var(--color-gold)] scale-0 peer-checked:scale-100 transition-transform origin-center" />
+        {/* Step Indicator */}
+        <div className="flex items-center gap-2 mt-4">
+          {[1, 2, 3].map((s) => (
+            <div key={s} className="flex-1 h-1 bg-[rgba(245,242,235,0.15)] rounded-full overflow-hidden relative">
+               <div className="absolute top-0 left-0 bottom-0 bg-[var(--color-gold)] transition-all duration-500" style={{ width: step >= s ? "100%" : "0%" }} />
+            </div>
+          ))}
         </div>
-        <div className="flex flex-col">
-          <span className="font-body text-body-lg text-[var(--color-off-white)]">Consent to Contact *</span>
-          <span className="font-body text-caption text-[var(--color-off-white)] opacity-50 mt-1">
-            I agree that Servus Global may review my submission and contact me regarding services.
-          </span>
+        <div className="font-body text-caption text-[var(--color-off-white)] opacity-50 mt-2">
+          {step === 1 ? dict.contact.form.step1 : step === 2 ? dict.contact.form.step2 : dict.contact.form.step3}
         </div>
-      </label>
+      </div>
 
-      <button
-        type="submit"
-        disabled={loading}
-        className="field-anim self-start font-body text-eyebrow eyebrow inline-flex items-center gap-3 px-8 py-4 mt-6 cursor-pointer disabled:opacity-50 transition-all duration-300 hover:opacity-80"
-        style={{
-          color: "var(--color-black)",
-          background: "var(--color-gold)",
-          fontWeight: 700,
-        }}
-      >
-        {loading ? "Submitting Application…" : "Submit Application"}
-        <span aria-hidden>→</span>
-      </button>
+      <div ref={containerRef}>
+        <div id="step-1" style={{ display: step === 1 ? "block" : "none" }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <InputField name="fullName" label={dict.contact.form.fullName} placeholder="" required />
+            <InputField name="artistName" label={dict.contact.form.artistName} placeholder="" required />
+            <InputField name="email" label={dict.contact.form.email} type="email" placeholder="" required />
+            <InputField name="phone" label={dict.contact.form.phone} type="tel" placeholder="" required />
+            <InputField name="instagram" label={dict.contact.form.instagram} placeholder="" required />
+            <InputField name="links" label={dict.contact.form.links} placeholder="" required />
+          </div>
+        </div>
+
+        <div id="step-2" style={{ display: step === 2 ? "block" : "none" }}>
+          <div className="flex flex-col gap-8">
+            <RadioGroup
+              name="contactMethod"
+              label={dict.contact.form.contactMethod}
+              options={["Email", "Phone", "Instagram DM"]}
+              required
+            />
+
+            <RadioGroup
+              name="bestTime"
+              label={dict.contact.form.bestTime}
+              options={["Morning (8am – 12pm)", "Afternoon (12pm – 5pm)", "Evening (5pm – 9pm)"]}
+              required
+            />
+
+            <div className="">
+              <InputField name="country" label={dict.contact.form.country} placeholder="" required />
+            </div>
+          </div>
+        </div>
+
+        <div id="step-3" style={{ display: step === 3 ? "block" : "none" }}>
+          <div className="flex flex-col gap-8">
+            <CheckboxGroup
+              name="services"
+              label={dict.contact.form.servicesReq}
+              options={[
+                "Streaming Campaigns",
+                "Press & Exposure",
+                "Consultations",
+                "Creative Services",
+                "Visuals & Media",
+                "Rollout Strategies",
+              ]}
+            />
+
+            <RadioGroup
+              name="platform"
+              label={dict.contact.form.platform}
+              options={["Spotify", "Apple Music", "YouTube", "SoundCloud", "Instagram", "Other"]}
+              required
+            />
+
+            <RadioGroup
+              name="budget"
+              label={dict.contact.form.budget}
+              options={["$200 – $500", "$500 – $1,000", "$1,000 – $2,500", "$2,500+"]}
+              required
+            />
+
+            <div className="flex flex-col gap-8">
+              <TextareaField name="shortTermGoals" label={dict.contact.form.shortTerm} placeholder="" required />
+              <TextareaField name="longTermVision" label={dict.contact.form.longTerm} placeholder="" required />
+            </div>
+
+            <label className="group flex items-start gap-4 cursor-pointer mt-4 max-w-xl">
+              <div className="relative flex-shrink-0 w-6 h-6 border border-[rgba(245,242,235,0.3)] transition-colors group-hover:border-[var(--color-gold)] mt-0.5">
+                <input type="checkbox" name="consent" required className="peer sr-only" />
+                <div className="absolute inset-0 bg-[var(--color-gold)] scale-0 peer-checked:scale-100 transition-transform origin-center" />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-body text-body-lg text-[var(--color-off-white)]">{dict.contact.form.consentTitle}</span>
+                <span className="font-body text-caption text-[var(--color-off-white)] opacity-50 mt-1">
+                  {dict.contact.form.consentDesc}
+                </span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-4 mt-6">
+        {step > 1 && (
+          <button
+            type="button"
+            onClick={handlePrev}
+            className="font-body text-eyebrow eyebrow px-6 py-4 cursor-pointer transition-all duration-300 hover:opacity-80"
+            style={{
+              color: "var(--color-off-white)",
+              border: "1px solid rgba(245,242,235,0.15)",
+            }}
+          >
+            {dict.contact.form.back}
+          </button>
+        )}
+        
+        {step < 3 ? (
+          <button
+            type="button"
+            onClick={handleNext}
+            className="font-body text-eyebrow eyebrow inline-flex items-center gap-3 px-8 py-4 cursor-pointer transition-all duration-300 hover:opacity-80"
+            style={{
+              color: "var(--color-black)",
+              background: "var(--color-gold)",
+              fontWeight: 700,
+            }}
+          >
+            {dict.contact.form.next}
+            <span aria-hidden>→</span>
+          </button>
+        ) : (
+          <button
+            type="submit"
+            disabled={loading}
+            className="font-body text-eyebrow eyebrow inline-flex items-center gap-3 px-8 py-4 cursor-pointer disabled:opacity-50 transition-all duration-300 hover:opacity-80"
+            style={{
+              color: "var(--color-black)",
+              background: "var(--color-gold)",
+              fontWeight: 700,
+            }}
+          >
+            {loading ? dict.contact.form.submitting : dict.contact.form.submit}
+            <span aria-hidden>→</span>
+          </button>
+        )}
+      </div>
     </form>
   );
 }

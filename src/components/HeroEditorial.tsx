@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const featured = artists.filter((a) => a.featured).slice(0, 3);
 
-export default function HeroEditorial() {
+export default function HeroEditorial({ dict }: { dict: any }) {
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
 
@@ -35,7 +35,6 @@ export default function HeroEditorial() {
         // Title word reveal
         gsap.set(".hero-word", { yPercent: 110 });
         gsap.set(".hero-subtitle", { opacity: 0, y: 30 });
-        gsap.set(".hero-scroll-indicator", { opacity: 0 });
         gsap.set(".hero-eyebrow", { opacity: 0, y: 10 });
 
         const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
@@ -50,11 +49,6 @@ export default function HeroEditorial() {
           ".hero-subtitle",
           { opacity: 0.5, y: 0, duration: 1.2 },
           "-=0.8"
-        );
-        tl.to(
-          ".hero-scroll-indicator",
-          { opacity: 0.3, duration: 1 },
-          "-=0.4"
         );
       };
 
@@ -71,6 +65,41 @@ export default function HeroEditorial() {
     return () => ctx.revert();
   }, [reducedMotion]);
 
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Standard play attempt
+    const playPromise = video.play();
+
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // If we land here, autoplay is blocked (likely iOS Low Power Mode).
+        // We force "playback" by manually seeking the video forward.
+        let lastTime = performance.now();
+        let frameId: number;
+
+        const forceLoop = (now: number) => {
+          if (!video) return;
+          // Only scrub if the video is actually stuck/paused
+          if (video.paused) {
+            const delta = (now - lastTime) / 1000;
+            let nextTime = video.currentTime + delta;
+            if (nextTime >= video.duration || isNaN(nextTime)) nextTime = 0;
+            video.currentTime = nextTime;
+          }
+          lastTime = now;
+          frameId = requestAnimationFrame(forceLoop);
+        };
+
+        frameId = requestAnimationFrame(forceLoop);
+        return () => cancelAnimationFrame(frameId);
+      });
+    }
+  }, []);
+
   return (
     <section
       ref={sectionRef}
@@ -80,7 +109,15 @@ export default function HeroEditorial() {
     >
       {/* Background Image */}
       <div className="hero-bg absolute inset-0 w-full h-full">
-        <video autoPlay muted loop playsInline className="absolute scale-110 inset-0 opacity-40 w-full h-full object-cover">
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/fleursunset.png"
+          className="absolute scale-110 inset-0 opacity-40 w-full h-full object-cover"
+        >
           <source src="/fleur.mp4" type="video/mp4" />
         </video>
       </div>
@@ -105,18 +142,18 @@ export default function HeroEditorial() {
       />
 
       {/* Content */}
-      <div className="relative mix-blend-difference  z-10 flex flex-col justify-center items-center h-full px-6 md:px-12 text-center">
+      <div className="relative mix-blend-difference z-10 flex flex-col justify-center items-center h-full px-6 md:px-12 text-center">
         {/* Eyebrow */}
         <span
           className="hero-eyebrow font-body text-eyebrow eyebrow mb-8 md:mb-12"
           style={{ color: "var(--color-off-white)", opacity: 0.5 }}
         >
-          Artist & Talent Management
+          {dict.hero.eyebrow}
         </span>
 
         {/* Massive headline */}
         <h1
-          className="font-display "
+          className="font-display"
           style={{
             fontSize: "clamp(3.5rem, 13vw, 15rem)",
             lineHeight: 0.85,
@@ -124,12 +161,12 @@ export default function HeroEditorial() {
             fontWeight: 800,
           }}
         >
-          <span className="block  overflow-hidden">
+          <span className="block overflow-hidden">
             <span
               className="hero-word block"
               style={{ color: "var(--color-off-white)" }}
             >
-              ARTISTS
+              {dict.hero.word1}
             </span>
           </span>
           <span className="block overflow-hidden">
@@ -141,7 +178,7 @@ export default function HeroEditorial() {
                 fontSize: "0.85em",
               }}
             >
-              create
+              {dict.hero.word2}
             </span>
           </span>
           <span className="block overflow-hidden">
@@ -149,7 +186,7 @@ export default function HeroEditorial() {
               className="hero-word block"
               style={{ color: "var(--color-off-white)" }}
             >
-              CULTURE
+              {dict.hero.word3}
             </span>
           </span>
         </h1>
@@ -165,12 +202,9 @@ export default function HeroEditorial() {
             letterSpacing: "0.01em",
           }}
         >
-          Artist and talent management for musicians building long careers.
-          Releases, brand, touring, business.
+          {dict.hero.subtitle}
         </p>
       </div>
-
-   
     </section>
   );
 }
