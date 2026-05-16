@@ -146,17 +146,10 @@ body {
   outline-offset: 2px;
 }
 
-/* ── Reduced Motion ───────────────────────── */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
+/* ── Reduced Motion ──
+   We handle this per-component using useReducedMotion() for GSAP.
+   CSS animations like marquees are allowed to persist for the 'premium' feel.
+*/
 
 /* ── Utility Classes ──────────────────────── */
 .text-balance {
@@ -261,6 +254,8 @@ body {
   display: flex;
   width: max-content;
   will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
 .marquee-forward {
