@@ -94,6 +94,16 @@ export default function HeroEditorial() {
         }}
       />
 
+      {/* Bottom fade — eases the hand-off into the diagonal marquee */}
+      <div
+        className="absolute inset-x-0 bottom-0 pointer-events-none"
+        style={{
+          height: "clamp(12rem, 28vh, 22rem)",
+          background:
+            "linear-gradient(180deg, rgba(10,10,10,0) 0%, rgba(10,10,10,0.65) 55%, var(--color-black) 100%)",
+        }}
+      />
+
       {/* Content */}
       <div className="relative mix-blend-difference  z-10 flex flex-col justify-center items-center h-full px-6 md:px-12 text-center">
         {/* Eyebrow */}

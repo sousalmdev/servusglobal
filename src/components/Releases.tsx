@@ -423,7 +423,7 @@ export default function Releases() {
                   <img
                     src={logo}
                     alt={link.platform}
-                    className={`w-8 h-8 md:w-20 md:h-20 object-contain opacity-60 group-hover:opacity-100 transition-all duration-300 ${['apple', 'tidal'].some(p => link.platform.toLowerCase().includes(p)) ? 'brightness-0 invert' : ''}`}
+                    className={`w-14 h-14 md:w-28 md:h-28 object-contain opacity-60 group-hover:opacity-100 transition-all duration-300 ${['apple', 'tidal'].some(p => link.platform.toLowerCase().includes(p)) ? 'brightness-0 invert' : ''}`}
                   />
                 ) : (
                   link.platform

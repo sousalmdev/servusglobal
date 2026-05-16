@@ -1,11 +1,11 @@
 import LoadingSequence from "@/components/LoadingSequence";
 import Navbar from "@/components/Navbar";
 import HeroEditorial from "@/components/HeroEditorial";
-import LocationMarquee from "@/components/LocationMarquee";
 import ArtistGridEditorial from "@/components/ArtistGridEditorial";
 import Releases from "@/components/Releases";
 import Services from "@/components/Services";
 import OurStory from "@/components/OurStory";
+import DiagonalMarquee from "@/components/DiagonalMarquee";
 import ParallaxShowcase from "@/components/ParallaxShowcase";
 import WorkWithUsMarquee from "@/components/WorkWithUsMarquee";
 import Roles from "@/components/Roles";
@@ -19,7 +19,7 @@ export default function Home() {
       <Navbar />
       <main>
         <HeroEditorial />
-        <LocationMarquee />
+        <DiagonalMarquee />
         <ArtistGridEditorial />
         <Releases />
         <Services />

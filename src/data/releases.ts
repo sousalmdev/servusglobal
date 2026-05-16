@@ -2,6 +2,22 @@ import { Release } from "@/types";
 
 export const releases: Release[] = [
   {
+    title: "Aquarium",
+    slug: "aquarium",
+    artistSlug: "solis",
+    artistName: "Solis",
+    coverArtUrl: "/images/releases/aquarium.jpg",
+    releaseDate: "2025-09-12",
+    year: 2025,
+    streamingLinks: [
+      { platform: "Spotify", url: "https://open.spotify.com", icon: "spotify" },
+      { platform: "Soundcloud", url: "https://soundcloud.com/whotfissolis", icon: "soundcloud" },
+      { platform: "YouTube", url: "https://www.youtube.com/@whotfissolis", icon: "youtube" },
+    ],
+    productionCredits: "Written and recorded in Perth.",
+    featured: true,
+  },
+  {
     title: "Meridian",
     slug: "meridian",
     artistSlug: "zara-osei",
@@ -17,7 +33,7 @@ export const releases: Release[] = [
     ],
     productionCredits:
       "Produced by Zara Osei & Kwame B. Mixed at Red Bull Studios Lagos.",
-    featured: true,
+    featured: false,
   },
   {
     title: "Concrete Prayers",

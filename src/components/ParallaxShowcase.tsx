@@ -78,6 +78,8 @@ export default function ParallaxShowcase() {
           style={{
             backgroundImage: `url(${showcaseArtist.portraitUrl})`,
             backgroundColor: "#0a0a0a",
+            backgroundBlendMode: "screen",
+            opacity: 0.2,
             height: "130%",
             top: "-15%",
           }}

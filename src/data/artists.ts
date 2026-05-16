@@ -2,6 +2,20 @@ import { Artist } from "@/types";
 
 export const artists: Artist[] = [
   {
+    name: "Solis",
+    slug: "solis",
+    bio: "Perth-based artist working at the seam of hip-hop and R&B. Debut full-length Aquarium pairs melodic vocal lines with beats that breathe more than they hit.",
+    portraitUrl: "/images/roster/solis.png",
+    genres: ["Hip-Hop", "R&B"],
+    socialLinks: [
+      { platform: "youtube", url: "https://www.youtube.com/@whotfissolis" },
+      { platform: "soundcloud", url: "https://soundcloud.com/whotfissolis" },
+      { platform: "instagram", url: "https://instagram.com/whotfissolis" },
+    ],
+    featured: true,
+    order: 0,
+  },
+  {
     name: "Zara Osei",
     slug: "zara-osei",
     bio: "Genre-bending vocalist and producer from Lagos. Fuses Afrobeats with ambient electronics into a sonic landscape that ignores borders.",

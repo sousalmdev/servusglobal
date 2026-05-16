@@ -117,7 +117,7 @@ export default function ArtistGridEditorial() {
       </div>
 
       {/* Photo grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-5">
         {sorted.map((artist) => (
           <Link
             key={artist.slug}
@@ -134,17 +134,17 @@ export default function ArtistGridEditorial() {
               }}
             />
 
-            {/* Hover overlay */}
+            {/* Overlay — always on for touch, hover-revealed on desktop */}
             <div
-              className="absolute inset-0 transition-opacity duration-700 opacity-0 group-hover:opacity-100"
+              className="absolute inset-0 transition-opacity duration-700 opacity-100 md:opacity-0 md:group-hover:opacity-100"
               style={{
                 background:
                   "linear-gradient(180deg, transparent 40%, rgba(10,10,10,0.8) 100%)",
               }}
             />
 
-            {/* Name on hover */}
-            <div className="artist-names-group absolute bottom-0 left-0 right-0 p-5 md:p-6 z-10 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]">
+            {/* Name */}
+            <div className="artist-names-group absolute bottom-0 left-0 right-0 p-5 md:p-6 z-10 translate-y-0 opacity-100 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]">
               <h3
                 className="artist-name-reveal font-display"
                 style={{
@@ -166,7 +166,7 @@ export default function ArtistGridEditorial() {
             </div>
 
             {/* Arrow indicator */}
-            <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-2 group-hover:translate-x-0">
+            <div className="absolute top-4 right-4 z-10 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-500 translate-x-0 md:translate-x-2 md:group-hover:translate-x-0">
               <span
                 className="font-body text-eyebrow eyebrow"
                 style={{ color: "var(--color-gold)" }}
@@ -176,7 +176,7 @@ export default function ArtistGridEditorial() {
             </div>
 
             {/* Fleur tag */}
-            <div className="absolute bottom-5 right-5 z-10 w-6 h-6 md:w-8 md:h-8 opacity-0 group-hover:opacity-100 transition-all duration-700 translate-y-4 group-hover:translate-y-0">
+            <div className="absolute bottom-5 right-5 z-10 w-6 h-6 md:w-8 md:h-8 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-700 translate-y-0 md:translate-y-4 md:group-hover:translate-y-0">
               <FleurIcon style={{ color: "var(--color-gold)" }} />
             </div>
           </Link>
