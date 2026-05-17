@@ -256,7 +256,7 @@ export default function Releases({ dict }: { dict?: any }) {
         <h2
           className="font-display"
           style={{
-            fontSize: "clamp(3rem, 9vw, 10rem)",
+            fontSize: "clamp(2.5rem, 9vw, 10rem)",
             lineHeight: 0.9,
             letterSpacing: "-0.04em",
             fontWeight: 800,
