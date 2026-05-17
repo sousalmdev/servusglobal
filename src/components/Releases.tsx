@@ -131,6 +131,16 @@ function ReleaseCard({
             filter: "saturate(0.95) contrast(1.04)",
           }}
         />
+        {/* Plastic wrap overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none mix-blend-screen opacity-45 z-20"
+          style={{
+            backgroundImage: "url(/plasticwrap.png)",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+       
       </a>
     </div>
   );
@@ -277,160 +287,221 @@ export default function Releases({ dict }: { dict?: any }) {
         </span>
       </div>
 
-      {/* Featured spread */}
-      <div className="feature-block grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center mb-32 md:mb-44">
-        <div className="lg:col-span-7 relative">
-          <div
-            className="release-card relative"
-            style={{ ["--rest-rotate" as string]: "-1.4deg" }}
-          >
-            {/* Adapted ReleaseCard for the featured tier — needs the
-                feature-* classnames so the GSAP timeline can target it. */}
-            <div className="release-card-inner relative">
-              <div
-                className="feature-vinyl vinyl-peek absolute pointer-events-none"
-                style={{
-                  top: "6%",
-                  right: "-25%",
-                  width: "70%",
-                  aspectRatio: "1/1",
-                  zIndex: 1,
-                }}
-                aria-hidden
-              >
-                <div className="vinyl-disc absolute inset-0 rounded-full">
-                  <div
-                    className="absolute inset-0 rounded-full"
-                    style={{
-                      background:
-                        "repeating-radial-gradient(circle at 50% 50%, #181818 0px, #1a1a1a 1px, #0c0c0c 2px, #161616 3px)",
-                    }}
-                  />
-                  <div
-                    className="absolute inset-0 rounded-full opacity-30"
-                    style={{
-                      background:
-                        "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 35%, transparent 65%, rgba(255,255,255,0.06) 100%)",
-                    }}
-                  />
-                </div>
-                <div
-                  className="absolute rounded-full"
-                  style={{
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%,-50%)",
-                    width: "32%",
-                    aspectRatio: "1/1",
-                    background: "var(--color-gold)",
-                    zIndex: 5,
-                  }}
-                />
-                <div
-                  className="absolute rounded-full"
-                  style={{
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%,-50%)",
-                    width: "2.5%",
-                    aspectRatio: "1/1",
-                    background: "var(--color-black)",
-                    zIndex: 6,
-                  }}
-                />
-              </div>
+      {/* Featured Highlight Section with dynamic y-border marquees and distinct background */}
+      <div 
+        className="feature-section-container -mx-6 md:-mx-12 lg:-mx-16 mb-32 md:mb-44 relative bg-black overflow-hidden select-none"
+      >
+        {/* Top Marquee Border (Beige background with Gold characters) */}
+        <div 
+          className="w-full bg-[var(--color-off-white)] overflow-hidden py-2.5 border-b border-[rgba(10,10,10,0.1)] flex items-center"
+          style={{ zIndex: 10 }}
+        >
+          <div className="marquee-track marquee-forward marquee-fast flex items-center whitespace-nowrap">
+            {Array(10).fill(null).map((_, idx) => (
+              <span key={`top-${idx}`} className="font-body text-eyebrow eyebrow text-[9px] md:text-[10px] tracking-[0.25em] font-extrabold text-[var(--color-gold)] flex items-center select-none">
+                <span>DO NOT TOUCH - CONTAGIOUS</span>
+                <span className="mx-6 text-black">✦</span>
+              </span>
+            ))}
+            {/* Repeat for seamless infinite scrolling */}
+            {Array(10).fill(null).map((_, idx) => (
+              <span key={`top-dup-${idx}`} className="font-body text-eyebrow eyebrow text-[9px] md:text-[10px] tracking-[0.25em] font-extrabold text-[var(--color-gold)] flex items-center select-none">
+                <span>DO NOT TOUCH - CONTAGIOUS</span>
+                <span className="mx-6 text-black">✦</span>
+              </span>
+            ))}
+          </div>
+        </div>
 
-              <a
-                href={featured.streamingLinks[0]?.url ?? "#"}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cursor="hover"
-                className="feature-cover-mask block relative aspect-square overflow-hidden z-10"
+        {/* Featured block content */}
+        <div className="px-6 md:px-12 lg:px-16 py-20 md:py-24">
+          <div className="feature-block grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+            <div className="lg:col-span-7 relative flex justify-center lg:justify-start">
+              <div
+                className="release-card relative w-full max-w-[380px] sm:max-w-[420px] md:max-w-[450px]"
+                style={{ ["--rest-rotate" as string]: "-1.4deg" }}
               >
-                <div
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.03]"
-                  style={{
-                    backgroundImage: `url(${featured.coverArtUrl})`,
-                    backgroundColor: "#1a1a1a",
-                    filter: "saturate(0.95) contrast(1.04)",
-                  }}
-                />
-              </a>
+                {/* Adapted ReleaseCard for the featured tier — needs the
+                    feature-* classnames so the GSAP timeline can target it. */}
+                <div className="release-card-inner relative">
+                  <div
+                    className="feature-vinyl vinyl-peek absolute pointer-events-none"
+                    style={{
+                      top: "6%",
+                      right: "-25%",
+                      width: "70%",
+                      aspectRatio: "1/1",
+                      zIndex: 1,
+                    }}
+                    aria-hidden
+                  >
+                    <div className="vinyl-disc absolute inset-0 rounded-full">
+                      <div
+                        className="absolute inset-0 rounded-full"
+                        style={{
+                          background:
+                            "repeating-radial-gradient(circle at 50% 50%, #181818 0px, #1a1a1a 1px, #0c0c0c 2px, #161616 3px)",
+                        }}
+                      />
+                      <div
+                        className="absolute inset-0 rounded-full opacity-30"
+                        style={{
+                          background:
+                            "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 35%, transparent 65%, rgba(255,255,255,0.06) 100%)",
+                        }}
+                      />
+                    </div>
+                    <div
+                      className="absolute rounded-full"
+                      style={{
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%,-50%)",
+                        width: "32%",
+                        aspectRatio: "1/1",
+                        background: "var(--color-gold)",
+                        zIndex: 5,
+                      }}
+                    />
+                    <div
+                      className="absolute rounded-full"
+                      style={{
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%,-50%)",
+                        width: "2.5%",
+                        aspectRatio: "1/1",
+                        background: "var(--color-black)",
+                        zIndex: 6,
+                      }}
+                    />
+                  </div>
+
+                  <a
+                    href={featured.streamingLinks[0]?.url ?? "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-cursor="hover"
+                    className="feature-cover-mask block relative aspect-square overflow-hidden z-10"
+                  >
+                    <div
+                      className="absolute inset-0 bg-cover bg-center transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.03]"
+                      style={{
+                        backgroundImage: `url(${featured.coverArtUrl})`,
+                        backgroundColor: "#1a1a1a",
+                        filter: "saturate(0.95) contrast(1.04)",
+                      }}
+                    />
+                    {/* Plastic wrap overlay */}
+                    <div
+                      className="absolute inset-0 pointer-events-none mix-blend-screen opacity-45 z-20"
+                      style={{
+                        backgroundImage: "url(/plasticwrap.png)",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }}
+                    />
+                  
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="feature-info lg:col-span-5">
+              <span
+                className="font-body text-eyebrow eyebrow inline-block mb-6"
+                style={{ color: "var(--color-gold)", opacity: 0.7 }}
+              >
+                Now spinning
+              </span>
+              <h3
+                className="font-display"
+                style={{
+                  color: "var(--color-off-white)",
+                  fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
+                  lineHeight: 0.95,
+                  letterSpacing: "-0.035em",
+                  fontWeight: 600,
+                }}
+              >
+                {featured.title}
+              </h3>
+              <div className="mt-4 flex items-baseline gap-3">
+                <span
+                  className="font-body text-body-lg"
+                  style={{ color: "var(--color-off-white)", opacity: 0.85 }}
+                >
+                  {featured.artistName}
+                </span>
+                <span
+                  className="font-body text-caption"
+                  style={{ color: "var(--color-off-white)", opacity: 0.4 }}
+                >
+                  · {releaseDate(featured.releaseDate)}
+                </span>
+              </div>
+              {featured.productionCredits && (
+                <p
+                  className="font-body text-body mt-6 max-w-md text-pretty"
+                  style={{ color: "var(--color-off-white)", opacity: 0.55 }}
+                >
+                  {featured.productionCredits}
+                </p>
+              )}
+              <div className="mt-10 flex flex-wrap gap-6">
+                {featured.streamingLinks.map((link) => {
+                  const logo = getLogoPath(link.platform);
+                  return (
+                    <a
+                      key={link.platform}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-cursor="hover"
+                      className={`group font-body text-eyebrow eyebrow inline-flex items-center justify-center transition-all duration-300 ${logo ? 'hover:scale-110' : 'release-platform-pill px-4 py-2.5 gap-2'}`}
+                      style={{
+                        color: "var(--color-off-white)",
+                        ...(logo ? {} : { border: "1px solid rgba(245,242,235,0.18)" }),
+                        fontSize: "0.625rem",
+                      }}
+                      aria-label={link.platform}
+                    >
+                      {logo ? (
+                        <img
+                          src={logo}
+                          alt={link.platform}
+                          className={`w-14 h-14 md:w-28 md:h-28 object-contain opacity-60 group-hover:opacity-100 transition-all duration-300 ${['apple', 'tidal'].some(p => link.platform.toLowerCase().includes(p)) ? 'brightness-0 invert' : ''}`}
+                        />
+                      ) : (
+                        link.platform
+                      )}
+                    </a>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="feature-info lg:col-span-5">
-          <span
-            className="font-body text-eyebrow eyebrow inline-block mb-6"
-            style={{ color: "var(--color-gold)", opacity: 0.7 }}
-          >
-            Now spinning
-          </span>
-          <h3
-            className="font-display"
-            style={{
-              color: "var(--color-off-white)",
-              fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
-              lineHeight: 0.95,
-              letterSpacing: "-0.035em",
-              fontWeight: 600,
-            }}
-          >
-            {featured.title}
-          </h3>
-          <div className="mt-4 flex items-baseline gap-3">
-            <span
-              className="font-body text-body-lg"
-              style={{ color: "var(--color-off-white)", opacity: 0.85 }}
-            >
-              {featured.artistName}
-            </span>
-            <span
-              className="font-body text-caption"
-              style={{ color: "var(--color-off-white)", opacity: 0.4 }}
-            >
-              · {releaseDate(featured.releaseDate)}
-            </span>
-          </div>
-          {featured.productionCredits && (
-            <p
-              className="font-body text-body mt-6 max-w-md text-pretty"
-              style={{ color: "var(--color-off-white)", opacity: 0.55 }}
-            >
-              {featured.productionCredits}
-            </p>
-          )}
-          <div className="mt-10 flex flex-wrap gap-6">
-            {featured.streamingLinks.map((link) => {
-              const logo = getLogoPath(link.platform);
-              return (
-              <a
-                key={link.platform}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cursor="hover"
-                className={`group font-body text-eyebrow eyebrow inline-flex items-center justify-center transition-all duration-300 ${logo ? 'hover:scale-110' : 'release-platform-pill px-4 py-2.5 gap-2'}`}
-                style={{
-                  color: "var(--color-off-white)",
-                  ...(logo ? {} : { border: "1px solid rgba(245,242,235,0.18)" }),
-                  fontSize: "0.625rem",
-                }}
-                aria-label={link.platform}
-              >
-                {logo ? (
-                  <img
-                    src={logo}
-                    alt={link.platform}
-                    className={`w-14 h-14 md:w-28 md:h-28 object-contain opacity-60 group-hover:opacity-100 transition-all duration-300 ${['apple', 'tidal'].some(p => link.platform.toLowerCase().includes(p)) ? 'brightness-0 invert' : ''}`}
-                  />
-                ) : (
-                  link.platform
-                )}
-              </a>
-              );
-            })}
+        {/* Bottom Marquee Border (Beige background with Gold characters - Scrolling Reverse) */}
+        <div 
+          className="w-full bg-[var(--color-off-white)] overflow-hidden py-2.5 border-t border-[rgba(10,10,10,0.1)] flex items-center"
+          style={{ zIndex: 10 }}
+        >
+          <div className="marquee-track marquee-reverse marquee-fast flex items-center whitespace-nowrap">
+            {Array(10).fill(null).map((_, idx) => (
+              <span key={`bottom-${idx}`} className="font-body text-eyebrow eyebrow text-[9px] md:text-[10px] tracking-[0.25em] font-extrabold text-[var(--color-gold)] flex items-center select-none">
+                <span>DO NOT TOUCH - CONTAGIOUS</span>
+                <span className="mx-6 text-black">✦</span>
+              </span>
+            ))}
+            {/* Repeat for seamless infinite scrolling */}
+            {Array(10).fill(null).map((_, idx) => (
+              <span key={`bottom-dup-${idx}`} className="font-body text-eyebrow eyebrow text-[9px] md:text-[10px] tracking-[0.25em] font-extrabold text-[var(--color-gold)] flex items-center select-none">
+                <span>DO NOT TOUCH - CONTAGIOUS</span>
+                <span className="mx-6 text-black">✦</span>
+              </span>
+            ))}
           </div>
         </div>
       </div>
@@ -550,6 +621,17 @@ function SmallReleaseCard({
               filter: "saturate(0.9) contrast(1.04)",
             }}
           />
+          {/* Plastic wrap overlay */}
+          <div
+            className="absolute inset-0 pointer-events-none mix-blend-screen opacity-45 z-20"
+            style={{
+              backgroundImage: "url(/plasticwrap.png)",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+          {/* Glass shine flare overlay */}
+          <div className="glass-shine" />
         </a>
       </div>
 

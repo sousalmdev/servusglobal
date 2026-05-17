@@ -4,10 +4,16 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
-import Image from 'next/image'
-gsap.registerPlugin(ScrollTrigger);
-
+import Image from 'next/image';
 import { usePathname, useRouter } from "next/navigation";
+
+// Vector Flag Icons (using 3x2 aspect ratio SVG)
+import US from 'country-flag-icons/react/3x2/US';
+import BR from 'country-flag-icons/react/3x2/BR';
+import ES from 'country-flag-icons/react/3x2/ES';
+import JP from 'country-flag-icons/react/3x2/JP';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Navbar({ dict }: { dict: any }) {
   const navRef = useRef<HTMLElement>(null);
@@ -112,22 +118,53 @@ export default function Navbar({ dict }: { dict: any }) {
             {dict.nav.workWithUs}
           </a>
           
+          {/* Desktop Language Selector */}
           <div className="relative group nav-item">
             <button
-              className="font-body text-eyebrow eyebrow px-3 py-2.5 flex items-center gap-2 transition-all duration-300"
+              className="font-body text-eyebrow eyebrow px-3 py-2 flex items-center gap-2 transition-all duration-300 cursor-pointer"
               style={{
                 color: "var(--color-off-white)",
                 border: "1px solid rgba(245, 242, 235, 0.18)",
               }}
             >
-              {currentLocale.toUpperCase()}
-              <span className="text-[10px]">▼</span>
+              <span className="w-4 h-auto inline-flex items-center" aria-hidden="true">
+                {currentLocale === 'en' && <US className="w-full h-auto" />}
+                {currentLocale === 'pt' && <BR className="w-full h-auto" />}
+                {currentLocale === 'es' && <ES className="w-full h-auto" />}
+                {currentLocale === 'ja' && <JP className="w-full h-auto" />}
+              </span>
+              <span>{currentLocale.toUpperCase()}</span>
+              <span className="text-[9px] opacity-60">▼</span>
             </button>
-            <div className="absolute right-0 top-full mt-2 w-28 bg-[#111] border border-[rgba(245,242,235,0.1)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col backdrop-blur-md shadow-xl overflow-hidden" style={{ zIndex: 1000 }}>
-              <button onClick={() => switchLanguage('en')} className="font-body text-eyebrow eyebrow px-4 py-3 text-left hover:bg-[var(--color-gold)] hover:text-black transition-colors" style={{ color: "var(--color-off-white)" }}>EN 🇺🇸</button>
-              <button onClick={() => switchLanguage('pt')} className="font-body text-eyebrow eyebrow px-4 py-3 text-left hover:bg-[var(--color-gold)] hover:text-black transition-colors" style={{ color: "var(--color-off-white)" }}>PT 🇧🇷</button>
-              <button onClick={() => switchLanguage('es')} className="font-body text-eyebrow eyebrow px-4 py-3 text-left hover:bg-[var(--color-gold)] hover:text-black transition-colors" style={{ color: "var(--color-off-white)" }}>ES 🇪🇸</button>
-              <button onClick={() => switchLanguage('ja')} className="font-body text-eyebrow eyebrow px-4 py-3 text-left hover:bg-[var(--color-gold)] hover:text-black transition-colors" style={{ color: "var(--color-off-white)" }}>JA 🇯🇵</button>
+            <div className="absolute right-0 top-full mt-2 w-32 bg-[#111] border border-[rgba(245,242,235,0.1)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col backdrop-blur-md shadow-xl overflow-hidden" style={{ zIndex: 1000 }}>
+              <button 
+                onClick={() => switchLanguage('en')} 
+                className="font-body text-eyebrow eyebrow px-4 py-2.5 text-left hover:bg-[var(--color-gold)] hover:text-black transition-colors flex items-center gap-2 cursor-pointer" 
+                style={{ color: "var(--color-off-white)" }}
+              >
+                <US className="w-4 h-auto" /> <span>EN</span>
+              </button>
+              <button 
+                onClick={() => switchLanguage('pt')} 
+                className="font-body text-eyebrow eyebrow px-4 py-2.5 text-left hover:bg-[var(--color-gold)] hover:text-black transition-colors flex items-center gap-2 cursor-pointer" 
+                style={{ color: "var(--color-off-white)" }}
+              >
+                <BR className="w-4 h-auto" /> <span>PT</span>
+              </button>
+              <button 
+                onClick={() => switchLanguage('es')} 
+                className="font-body text-eyebrow eyebrow px-4 py-2.5 text-left hover:bg-[var(--color-gold)] hover:text-black transition-colors flex items-center gap-2 cursor-pointer" 
+                style={{ color: "var(--color-off-white)" }}
+              >
+                <ES className="w-4 h-auto" /> <span>ES</span>
+              </button>
+              <button 
+                onClick={() => switchLanguage('ja')} 
+                className="font-body text-eyebrow eyebrow px-4 py-2.5 text-left hover:bg-[var(--color-gold)] hover:text-black transition-colors flex items-center gap-2 cursor-pointer" 
+                style={{ color: "var(--color-off-white)" }}
+              >
+                <JP className="w-4 h-auto" /> <span>JA</span>
+              </button>
             </div>
           </div>
         </div>
@@ -166,7 +203,7 @@ export default function Navbar({ dict }: { dict: any }) {
       <div
         className="md:hidden overflow-hidden transition-all duration-500"
         style={{
-          maxHeight: menuOpen ? "400px" : "0",
+          maxHeight: menuOpen ? "450px" : "0",
           background: "rgba(10, 10, 10, 0.95)",
           backdropFilter: "blur(20px)",
         }}
@@ -195,6 +232,50 @@ export default function Navbar({ dict }: { dict: any }) {
           >
             {dict.nav.workWithUs}
           </a>
+
+          {/* Mobile Language Selector */}
+          <div className="flex flex-wrap items-center gap-3 mt-4 pt-6 border-t border-[rgba(245,242,235,0.08)]">
+            <button
+              onClick={() => { switchLanguage('en'); setMenuOpen(false); }}
+              className={`flex items-center gap-2 px-3 py-2 border text-xs font-body text-eyebrow eyebrow transition-all duration-300 cursor-pointer ${
+                currentLocale === 'en'
+                  ? 'border-[var(--color-gold)] text-[var(--color-gold)]'
+                  : 'border-[rgba(245,242,235,0.15)] text-[var(--color-off-white)]'
+              }`}
+            >
+              <US className="w-4 h-auto" /> EN
+            </button>
+            <button
+              onClick={() => { switchLanguage('pt'); setMenuOpen(false); }}
+              className={`flex items-center gap-2 px-3 py-2 border text-xs font-body text-eyebrow eyebrow transition-all duration-300 cursor-pointer ${
+                currentLocale === 'pt'
+                  ? 'border-[var(--color-gold)] text-[var(--color-gold)]'
+                  : 'border-[rgba(245,242,235,0.15)] text-[var(--color-off-white)]'
+              }`}
+            >
+              <BR className="w-4 h-auto" /> PT
+            </button>
+            <button
+              onClick={() => { switchLanguage('es'); setMenuOpen(false); }}
+              className={`flex items-center gap-2 px-3 py-2 border text-xs font-body text-eyebrow eyebrow transition-all duration-300 cursor-pointer ${
+                currentLocale === 'es'
+                  ? 'border-[var(--color-gold)] text-[var(--color-gold)]'
+                  : 'border-[rgba(245,242,235,0.15)] text-[var(--color-off-white)]'
+              }`}
+            >
+              <ES className="w-4 h-auto" /> ES
+            </button>
+            <button
+              onClick={() => { switchLanguage('ja'); setMenuOpen(false); }}
+              className={`flex items-center gap-2 px-3 py-2 border text-xs font-body text-eyebrow eyebrow transition-all duration-300 cursor-pointer ${
+                currentLocale === 'ja'
+                  ? 'border-[var(--color-gold)] text-[var(--color-gold)]'
+                  : 'border-[rgba(245,242,235,0.15)] text-[var(--color-off-white)]'
+              }`}
+            >
+              <JP className="w-4 h-auto" /> JA
+            </button>
+          </div>
         </div>
       </div>
     </nav>

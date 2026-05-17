@@ -79,11 +79,14 @@ export default function ParallaxShowcase({ dict }: { dict?: any }) {
             backgroundImage: `url(${showcaseArtist.portraitUrl})`,
             backgroundColor: "#0a0a0a",
             backgroundBlendMode: "screen",
-            opacity: 0.2,
+            opacity: 0.25,
             height: "130%",
             top: "-15%",
           }}
         />
+
+        {/* Glass shine flare overlay */}
+        <div className="glass-shine opacity-30" />
 
         {/* Dark overlay */}
         <div
@@ -96,12 +99,7 @@ export default function ParallaxShowcase({ dict }: { dict?: any }) {
 
         {/* Centered content */}
         <div className="relative mix-blend-screen z-10 flex flex-col items-center justify-center h-full text-center px-6">
-          <span
-            className="showcase-text font-body text-eyebrow eyebrow mb-6"
-            style={{ color: "var(--color-gold)", opacity: 0.7 }}
-          >
-            {dict?.showcase?.stats || "850M+ Streams · 47 Countries · 24 Artists"}
-          </span>
+    
           <h2
             className="showcase-text font-display max-w-4xl"
             style={{

@@ -67,7 +67,7 @@ export default async function ArtistPage({ params }: Props) {
   const artistReleases = releases.filter((r) => r.artistSlug === artist.slug);
 
   return (
-    <main className="min-h-screen" style={{ background: "var(--color-black)" }}>
+    <main className="min-h-screen overflow-x-hidden w-full relative" style={{ background: "var(--color-black)" }}>
       {/* Back link */}
       <div className="px-6 md:px-12 lg:px-16 pt-10 md:pt-12">
         <Link
@@ -230,7 +230,7 @@ export default async function ArtistPage({ params }: Props) {
             {artistReleases.map((r) => (
               <div key={r.slug} className="group">
                 <div
-                  className="aspect-square overflow-hidden mb-5"
+                  className="aspect-square overflow-hidden mb-5 relative"
                   style={{ background: "var(--color-dark-surface-2)" }}
                 >
                   <div
@@ -240,6 +240,17 @@ export default async function ArtistPage({ params }: Props) {
                       filter: "saturate(0.95) contrast(1.04)",
                     }}
                   />
+                  {/* Plastic wrap overlay */}
+                  <div
+                    className="absolute inset-0 pointer-events-none mix-blend-screen opacity-45 z-20"
+                    style={{
+                      backgroundImage: "url(/plasticwrap.png)",
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  />
+                  {/* Glass shine flare overlay */}
+                  <div className="glass-shine" />
                 </div>
                 <h3
                   className="font-display"

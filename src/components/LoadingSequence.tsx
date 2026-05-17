@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 
-const MIN_VISIBLE_MS = 1400;
+const MIN_VISIBLE_MS = 2200;
 
 export default function LoadingSequence() {
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -36,9 +36,18 @@ export default function LoadingSequence() {
       gsap.set(png, { opacity: 1, scale: 1 });
       cleanupTimer = window.setTimeout(() => {
         if (cancelled) return;
-        sessionStorage.setItem("sg-loaded", "1");
-        document.body.style.overflow = "";
-        setShow(false);
+        // Premium soft fade out overlay exit for reduced motion
+        gsap.to(overlay, {
+          opacity: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          onComplete: () => {
+            if (cancelled) return;
+            sessionStorage.setItem("sg-loaded", "1");
+            document.body.style.overflow = "";
+            setShow(false);
+          },
+        });
       }, MIN_VISIBLE_MS);
     };
 
@@ -112,6 +121,9 @@ export default function LoadingSequence() {
         svg.style.width = "min(70vw, 560px)";
         svg.style.height = "auto";
         svg.style.display = "block";
+        
+        // Force browser layout recalculation/reflow to guarantee WebKit measures correctly
+        svg.getBoundingClientRect();
       }
 
       const paths = svgContainer.querySelectorAll(
@@ -119,7 +131,11 @@ export default function LoadingSequence() {
       ) as NodeListOf<SVGPathElement>;
 
       paths.forEach((path) => {
-        const length = path.getTotalLength();
+        let length = path.getTotalLength();
+        // Bulletproof measurement fallback to handle layout timing races on mobile viewports
+        if (!length || length <= 0 || isNaN(length)) {
+          length = 1000;
+        }
         path.setAttribute("fill", "none");
         path.setAttribute("stroke", "#f5f2eb");
         path.setAttribute("stroke-width", "1.5");

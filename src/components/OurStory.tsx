@@ -14,6 +14,15 @@ export default function OurStory({ dict }: { dict: any }) {
   useEffect(() => {
     if (!sectionRef.current) return;
     const ctx = gsap.context(() => {
+      if (reducedMotion) {
+        gsap.set(".story-eyebrow", { opacity: 0.5, y: 0 });
+        gsap.set(".story-copy", { opacity: 0.78, y: 0 });
+        gsap.set(".story-image-mask", { clipPath: "inset(0% 0 0 0)" });
+        gsap.set(".story-heading .story-word", { yPercent: 0 });
+        return;
+      }
+
+      gsap.set(".story-heading .story-word", { yPercent: 110 });
       gsap.set(".story-eyebrow", { opacity: 0, y: 12 });
       gsap.set(".story-copy", { opacity: 0, y: 24 });
       gsap.set(".story-image-mask", { clipPath: "inset(100% 0 0 0)" });
@@ -24,13 +33,12 @@ export default function OurStory({ dict }: { dict: any }) {
         once: true,
         onEnter: () => {
           const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
-          tl.to(".story-eyebrow", { opacity: 0.5, y: 0, duration: 0.8 }, 0);
-          tl.to(".story-image-mask", { clipPath: "inset(0% 0 0 0)", duration: 1.3 }, 0.1);
-          tl.to(".story-copy", { opacity: 0.78, y: 0, duration: 1.0 }, 0.35);
+          tl.to(".story-heading .story-word", { yPercent: 0, duration: 1.4, stagger: 0.1 }, 0);
+          tl.to(".story-eyebrow", { opacity: 0.5, y: 0, duration: 0.8 }, 0.25);
+          tl.to(".story-image-mask", { clipPath: "inset(0% 0 0 0)", duration: 1.3 }, 0.35);
+          tl.to(".story-copy", { opacity: 0.78, y: 0, duration: 1.0 }, 0.55);
         },
       });
-
-      if (reducedMotion) return;
 
       gsap.to(".story-image-inner", {
         y: -50,
@@ -56,6 +64,30 @@ export default function OurStory({ dict }: { dict: any }) {
         paddingBottom: "clamp(8rem, 14vw, 12rem)",
       }}
     >
+      {/* Heading */}
+      <div className="story-heading mb-16 md:mb-24">
+        <h2
+          className="font-display"
+          style={{
+            fontSize: "clamp(3rem, 9vw, 10rem)",
+            lineHeight: 0.9,
+            letterSpacing: "-0.04em",
+            fontWeight: 800,
+          }}
+        >
+          <span className="block overflow-hidden">
+            <span className="story-word block" style={{ color: "var(--color-off-white)" }}>
+              {dict.story.word1}
+            </span>
+          </span>
+          <span className="block overflow-hidden">
+            <span className="story-word block serif-italic" style={{ color: "var(--color-gold)" }}>
+              {dict.story.word2}
+            </span>
+          </span>
+        </h2>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 lg:gap-24 items-center">
         {/* Text column */}
         <div className="md:col-span-6 lg:col-span-6 max-w-xl">
@@ -91,7 +123,7 @@ export default function OurStory({ dict }: { dict: any }) {
             <div
               className="story-image-inner absolute inset-0 bg-cover bg-center"
               style={{
-                backgroundImage: "url(/fleursunset.png)",
+                backgroundImage: "url(/servusabout.png)",
                 transform: "scale(1.05)",
               }}
             />

@@ -111,12 +111,15 @@ html {
   scroll-behavior: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
   background: var(--color-black);
   color: var(--color-off-white);
   overflow-x: hidden;
+  max-width: 100%;
 }
 
 /* ── Selection ────────────────────────────── */
@@ -191,8 +194,9 @@ body {
 .cursor-ring {
   width: 34px;
   height: 34px;
-  border: 1px solid var(--color-gold);
-  opacity: 0.7;
+  border: 1.5px solid var(--color-gold);
+  opacity: 0.75;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.18);
 }
 
 @media (pointer: coarse) {
@@ -201,15 +205,35 @@ body {
 }
 
 /* ── Film Grain Overlay ──────────────────── */
+@keyframes noise-flicker {
+  0% { transform: translate(0, 0); }
+  10% { transform: translate(-0.5%, -0.5%); }
+  20% { transform: translate(0.5%, 0.5%); }
+  30% { transform: translate(-0.5%, 0.5%); }
+  40% { transform: translate(0.5%, -0.5%); }
+  50% { transform: translate(-0.5%, 0.5%); }
+  60% { transform: translate(0.5%, 0.5%); }
+  70% { transform: translate(-0.5%, -0.5%); }
+  80% { transform: translate(0.5%, 0.5%); }
+  90% { transform: translate(-0.5%, 0.5%); }
+  100% { transform: translate(0, 0); }
+}
+
 .grain-overlay::after {
   content: "";
   position: fixed;
-  inset: 0;
+  top: -10%;
+  left: -10%;
+  right: -10%;
+  bottom: -10%;
+  width: 120%;
+  height: 120%;
   z-index: 9998;
   pointer-events: none;
-  opacity: 0.035;
+  opacity: 0.025; /* Highly refined, subtle editorial physical film texture */
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
+  animation: noise-flicker 0.12s steps(2) infinite;
 }
 
 /* ── Gradient Overlay ─────────────────────── */
@@ -398,6 +422,26 @@ body {
 .feature-block:hover .vinyl-disc {
   animation-play-state: paused;
 }
+
+/* Vinyl Sleeve Dynamic Pull-Out on Card Hover */
+.vinyl-peek {
+  transition: transform 0.9s cubic-bezier(0.25, 1, 0.3, 1);
+  will-change: transform;
+}
+.release-card:hover .vinyl-peek,
+.feature-block:hover .vinyl-peek {
+  transform: translateX(20px) rotate(8deg);
+}
+.release-card:hover .vinyl-peek[style*="left"] {
+  transform: translateX(-20px) rotate(-8deg);
+}
+
+
+.release-cover-mask:hover .glass-shine,
+.feature-cover-mask:hover .glass-shine,
+.aspect-square:hover .glass-shine {
+  background-position: -50% -50%;
+}
 @keyframes vinyl-spin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
@@ -414,8 +458,5 @@ body {
     transform: rotate(0deg);
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .vinyl-disc {
-    animation: none;
-  }
-}
+
+

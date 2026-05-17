@@ -21,7 +21,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
     <>
       <LoadingSequence />
       <Navbar dict={dict} />
-      <main>
+      <main className="overflow-x-hidden w-full relative">
         <HeroEditorial dict={dict} />
         <DiagonalMarquee dict={dict} />
         <ArtistGridEditorial dict={dict} />
