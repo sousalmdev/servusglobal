@@ -338,7 +338,7 @@ body {
 /* ── Serif Italic Accent (for mixed typography) ── */
 .serif-italic {
   font-family: var(--font-stack-serif);
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
 }
 
@@ -459,4 +459,14 @@ body {
   }
 }
 
-
+/* ── Global Uppercase Titles & Big Texts ── */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-display,
+.serif-italic {
+  text-transform: uppercase;
+}

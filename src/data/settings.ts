@@ -19,35 +19,4 @@ export const settings: SiteSettings = {
   ],
 };
 
-export const milestones: Milestone[] = [
-  {
-    year: "2019",
-    title: "Founded",
-    description:
-      "Started in Perth with two artists on the roster and a long view of the work.",
-  },
-  {
-    year: "2020",
-    title: "First Global Release",
-    description:
-      "First release landed on playlists across 12 countries in week one.",
-  },
-  {
-    year: "2021",
-    title: "Expanded to Africa & South America",
-    description:
-      "Opened partnerships in Lagos, Nairobi and São Paulo. Six new signings.",
-  },
-  {
-    year: "2023",
-    title: "100 Million Streams",
-    description:
-      "Crossed 100 million streams across the roster. No single viral moment, just steady releases.",
-  },
-  {
-    year: "2025",
-    title: "The Next Chapter",
-    description:
-      "24 artists, 47 countries, the next batch already in the studio.",
-  },
-];
+

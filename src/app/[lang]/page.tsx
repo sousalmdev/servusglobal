@@ -3,8 +3,8 @@ import Navbar from "@/components/Navbar";
 import HeroEditorial from "@/components/HeroEditorial";
 import ArtistGridEditorial from "@/components/ArtistGridEditorial";
 import Releases from "@/components/Releases";
+import WhyServus from "@/components/WhyServus";
 import Services from "@/components/Services";
-import OurStory from "@/components/OurStory";
 import DiagonalMarquee from "@/components/DiagonalMarquee";
 import ParallaxShowcase from "@/components/ParallaxShowcase";
 import WorkWithUsMarquee from "@/components/WorkWithUsMarquee";
@@ -26,8 +26,8 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <DiagonalMarquee dict={dict} />
         <ArtistGridEditorial dict={dict} />
         <Releases dict={dict} />
+        <WhyServus dict={dict} />
         <Services dict={dict} />
-        <OurStory dict={dict} />
         <ParallaxShowcase dict={dict} />
         <WorkWithUsMarquee dict={dict} />
         <Roles dict={dict} />

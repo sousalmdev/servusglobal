@@ -162,6 +162,26 @@
     "heading2": "Nós amplificamos.",
     "desc": "Construa a equipe, a estratégia e os negócios ao redor da música que você já faz."
   },
+  "whyServus": {
+    "eyebrow": "Por Que a Servus Global",
+    "title": "Construída para um Legado Duradouro.",
+    "badgeNumber": "15+",
+    "badgeText": "Anos de Excelência",
+    "pillars": [
+      {
+        "title": "Representação de Confiança",
+        "desc": "Artistas confiam em nós para proteger suas marcas e desenvolver suas carreiras de forma sustentável e com integridade inabalável."
+      },
+      {
+        "title": "Crescimento Estratégico",
+        "desc": "Insights baseados em dados combinados com intuição cultural para expandir o alcance e elevar a influência."
+      },
+      {
+        "title": "Rede Incomparável",
+        "desc": "Relacionamentos profundos com as principais gravadoras, casas de shows e mídia globalmente."
+      }
+    ]
+  },
   "artistPage": {
     "back": "← Voltar",
     "tag": "Elenco · Artista",

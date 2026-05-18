@@ -66,7 +66,7 @@ export default async function RootLayout({
 
   return (
     <html lang={lang} className={`${syne.variable} ${inter.variable} ${playfair.variable}`}>
-      <body className={`min-h-full overflow-x-hidden uppercase grain-overlay`}>
+      <body className={`min-h-full overflow-x-hidden grain-overlay`}>
         <ReducedMotionProvider>
           <LenisProvider>{children}</LenisProvider>
         </ReducedMotionProvider>
