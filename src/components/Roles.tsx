@@ -160,7 +160,7 @@ function RoleRow({
         style={{ touchAction: "none" }}
         data-cursor="hover"
       >
-        <div className="flex items-baseline gap-4 md:gap-8 pointer-events-none">
+        <div className="flex flex-wrap items-baseline gap-4 md:gap-8 pointer-events-none">
           <span
             className="font-body text-eyebrow eyebrow"
             style={{ color: "var(--color-gold)", opacity: 0.55 }}

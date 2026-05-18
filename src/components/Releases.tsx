@@ -426,7 +426,7 @@ export default function Releases({ dict }: { dict?: any }) {
               >
                 {featured.title}
               </h3>
-              <div className="mt-4 flex items-baseline gap-3">
+              <div className="mt-4 flex flex-wrap items-baseline gap-2 md:gap-3">
                 <span
                   className="font-body text-body-lg"
                   style={{ color: "var(--color-off-white)", opacity: 0.85 }}
