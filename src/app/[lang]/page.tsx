@@ -24,7 +24,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       <main className="overflow-x-hidden w-full relative">
         <HeroEditorial dict={dict} />
         <DiagonalMarquee dict={dict} />
-        <ArtistGridEditorial dict={dict} />
+        <ArtistGridEditorial dict={dict} lang={lang} />
         <Releases dict={dict} />
         <WhyServus dict={dict} />
         <Services dict={dict} />

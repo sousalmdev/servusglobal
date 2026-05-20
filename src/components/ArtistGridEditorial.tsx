@@ -10,7 +10,7 @@ import FleurIcon from "@/components/FleurIcon";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function ArtistGridEditorial({ dict }: { dict?: any }) {
+export default function ArtistGridEditorial({ dict, lang = "en" }: { dict?: any; lang?: string }) {
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
 
@@ -121,7 +121,7 @@ export default function ArtistGridEditorial({ dict }: { dict?: any }) {
         {sorted.map((artist) => (
           <Link
             key={artist.slug}
-            href={`/artists/${artist.slug}`}
+            href={`/${lang}/artists/${artist.slug}`}
             className="artist-card-editorial group block relative overflow-hidden"
             style={{ aspectRatio: "3/4" }}
           >

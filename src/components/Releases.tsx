@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 import { releases } from "@/data/releases";
 import type { Release } from "@/types";
-
+import {FaFireFlameCurved} from "react-icons/fa6"
 gsap.registerPlugin(ScrollTrigger);
 
 type VinylSide = "right" | "left";
@@ -156,6 +156,140 @@ export default function Releases({ dict }: { dict?: any }) {
   );
   const featured = sorted.find((r) => r.featured) ?? sorted[0];
   const rest = sorted.filter((r) => r.slug !== featured.slug).slice(0, 5);
+
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const isMutedByUser = useRef(false);
+
+  const fadeAudio = (targetVolume: number, duration: number, pauseOnComplete = false) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    gsap.killTweensOf(audio, { volume: true });
+
+    if (targetVolume > 0) {
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          setIsPlaying(true);
+        }).catch((err) => {
+          console.log("Autoplay prevented:", err);
+          setIsPlaying(false);
+        });
+      }
+    }
+
+    gsap.to(audio, {
+      volume: targetVolume,
+      duration: duration,
+      ease: "power1.out",
+      onComplete: () => {
+        if (pauseOnComplete) {
+          audio.pause();
+          setIsPlaying(false);
+        }
+      },
+    });
+  };
+
+  const toggleMute = (e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (audio.paused || audio.volume === 0 || !isPlaying) {
+      isMutedByUser.current = false;
+      fadeAudio(0.5, 1);
+    } else {
+      isMutedByUser.current = true;
+      fadeAudio(0, 1, true);
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !sectionRef.current) return;
+
+    const audio = new Audio("/audio/mood.mp3");
+    audio.loop = true;
+    audio.volume = 0;
+
+    const handleLoadedMetadata = () => {
+      audio.currentTime = 33;
+    };
+
+    if (audio.readyState >= 1) {
+      audio.currentTime = 33;
+    } else {
+      audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+    }
+
+    audioRef.current = audio;
+
+    const trg = ScrollTrigger.create({
+      trigger: ".feature-block",
+      start: "top 70%",
+      end: "bottom 30%",
+      onEnter: () => {
+        if (isMutedByUser.current) return;
+        fadeAudio(0.5, 2);
+      },
+      onLeave: () => {
+        fadeAudio(0, 1.5, true);
+      },
+      onEnterBack: () => {
+        if (isMutedByUser.current) return;
+        fadeAudio(0.5, 2);
+      },
+      onLeaveBack: () => {
+        fadeAudio(0, 1.5, true);
+      },
+    });
+
+    const unlockAudio = () => {
+      if (!audioRef.current) return;
+
+      audioRef.current.play()
+        .then(() => {
+          const featureBlock = document.querySelector(".feature-block");
+          if (featureBlock) {
+            const rect = featureBlock.getBoundingClientRect();
+            const inView = rect.top < window.innerHeight && rect.bottom > 0;
+            if (inView && !isMutedByUser.current) {
+              fadeAudio(0.5, 2);
+            } else {
+              audioRef.current?.pause();
+              setIsPlaying(false);
+            }
+          } else {
+            audioRef.current?.pause();
+            setIsPlaying(false);
+          }
+        })
+        .catch((err) => {
+          console.log("Failed to unlock audio:", err);
+        });
+
+      window.removeEventListener("click", unlockAudio);
+      window.removeEventListener("touchstart", unlockAudio);
+      window.removeEventListener("keydown", unlockAudio);
+    };
+
+    window.addEventListener("click", unlockAudio);
+    window.addEventListener("touchstart", unlockAudio);
+    window.addEventListener("keydown", unlockAudio);
+
+    return () => {
+      trg.kill();
+      audio.pause();
+      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      audioRef.current = null;
+      window.removeEventListener("click", unlockAudio);
+      window.removeEventListener("touchstart", unlockAudio);
+      window.removeEventListener("keydown", unlockAudio);
+    };
+  }, []);
 
   useEffect(() => {
     if (reducedMotion || !sectionRef.current) return;
@@ -408,12 +542,25 @@ export default function Releases({ dict }: { dict?: any }) {
             </div>
 
             <div className="feature-info lg:col-span-5">
-              <span
-                className="font-body text-eyebrow eyebrow inline-block mb-6"
-                style={{ color: "var(--color-gold)", opacity: 0.7 }}
-              >
-                Now spinning
-              </span>
+              <div className="flex items-center gap-3 mb-6">
+                <span
+                  className="font-body text-eyebrow eyebrow inline-block"
+                  style={{ color: "var(--color-gold)", opacity: 0.7 }}
+                >
+                  Now spinning
+                </span>
+                
+                <button
+                  onClick={(e) => toggleMute(e)}
+                  className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-[rgba(245,242,235,0.15)] bg-[rgba(10,10,10,0.4)] hover:bg-[rgba(245,242,235,0.05)] hover:border-[rgba(245,242,235,0.3)] transition-all duration-300 group cursor-pointer"
+                  title={isPlaying ? "Mute audio" : "Play audio"}
+                >
+             
+                  <span className="font-body animate-pulse text-[8px] tracking-[0.15em] font-semibold text-[var(--color-gold)] opacity-80 group-hover:opacity-100 transition-opacity">
+                    {isPlaying ? <h4 className="flex items-center gap-2"><FaFireFlameCurved/> LIVE </h4> : "PAUSED"}
+                  </span>
+                </button>
+              </div>
               <h3
                 className="font-display"
                 style={{

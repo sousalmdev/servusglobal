@@ -88,7 +88,15 @@ export default function ArtistKineticStage({
       });
     }, rootRef);
 
-    return () => ctx.revert();
+    // Force-refresh ScrollTrigger shortly after mounting to correct coordinate caches
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
+
+    return () => {
+      ctx.revert();
+      clearTimeout(timer);
+    };
   }, [reducedMotion]);
 
   return (
@@ -97,18 +105,22 @@ export default function ArtistKineticStage({
           STAGE — name is the architecture
           Tall outer section + sticky inner viewport-sized "frame"
          ============================================================ */}
-      <section className="stage relative w-full">
+      <section className="stage relative w-full h-[100dvh] md:h-[150vh]">
         <div
           className="sticky top-0 w-full overflow-hidden"
           style={{ height: "100dvh", minHeight: "640px" }}
         >
           {/* Portrait — full bleed */}
-          <div
-            className="stage-portrait absolute inset-0 bg-cover bg-center img-editorial"
+          <img
+            src={artist.portraitUrl}
+            alt={artist.name}
+            className="stage-portrait absolute inset-0 w-full h-full object-cover img-editorial"
             style={{
-              backgroundImage: `url(${artist.portraitUrl})`,
               willChange: "transform, opacity",
               transformOrigin: "center center",
+            }}
+            onLoad={() => {
+              ScrollTrigger.refresh();
             }}
           />
 
@@ -379,17 +391,18 @@ export default function ArtistKineticStage({
                     {String(idx + 1).padStart(2, "0")}
                   </span>
                   <div className="col-span-2 md:col-span-1 overflow-hidden">
-                    <div
-                      className="aspect-square bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                      style={{
-                        backgroundImage: r.coverArtUrl
-                          ? `url(${r.coverArtUrl})`
-                          : undefined,
-                        background: !r.coverArtUrl
-                          ? "var(--color-dark-surface-2)"
-                          : undefined,
-                      }}
-                    />
+                    {r.coverArtUrl ? (
+                      <img
+                        src={r.coverArtUrl}
+                        alt={r.title}
+                        className="w-full h-full aspect-square object-cover transition-transform duration-700 group-hover:scale-110"
+                        onLoad={() => {
+                          ScrollTrigger.refresh();
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full h-full aspect-square bg-[var(--color-dark-surface-2)]" />
+                    )}
                   </div>
                   <h4
                     className="col-span-7 md:col-span-8 font-display transition-colors duration-300 group-hover:text-[var(--color-gold)]"

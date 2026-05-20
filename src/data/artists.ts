@@ -4,7 +4,7 @@ export const artists: Artist[] = [
   {
     name: "Solis",
     slug: "solis",
-    bio: "Perth-based artist working at the seam of hip-hop and R&B. Debut full-length Aquarium pairs melodic vocal lines with beats that breathe more than they hit.",
+    bio: "Perth-based artist working at the seam of hip-hop and R&B. Debut full-length Mood pairs melodic vocal lines with beats that breathe more than they hit.",
     portraitUrl: "/images/roster/solis.png",
     genres: ["Hip-Hop", "R&B"],
     socialLinks: [
