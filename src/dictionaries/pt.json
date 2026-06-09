@@ -5,6 +5,7 @@
     "services": "Serviços",
     "story": "História",
     "contact": "Contato",
+    "faq": "FAQ",
     "workWithUs": "Trabalhe conosco"
   },
   "hero": {
@@ -53,8 +54,8 @@
   "story": {
     "word1": "NOSSA",
     "word2": "história",
-    "eyebrow": "Como tudo começou",
-    "copy": "Seppe vinha construindo espaços para artistas australianos a partir de Perth por anos. William Hobbs, trabalhando como Nitrose em Miami, fazia movimentos paralelos do outro lado do oceano. A Servus nasceu quando eles uniram forças. A prática estabelecida encontrando a fome da juventude, com uma visão de longo prazo sobre o que isso significa e a paciência para fazer história no caminho."
+    "eyebrow": "Por que existimos",
+    "copy": "Criamos a Servus porque uma música incrível não deveria estagnar por falta de infraestrutura. A indústria está cheia de artistas com visão e ética de trabalho para vencer, mas sem a estratégia de lançamento, canais de distribuição e representação dedicada necessárias para transformar esse ímpeto em uma carreira duradoura. A Servus cuida da gestão, marketing, distribuição e direção criativa, permitindo que os artistas gerenciem suas carreiras como empresas para que possam se concentrar no que realmente importa—a arte."
   },
   "roles": {
     "word1": "OS",
@@ -88,6 +89,7 @@
     "word2": "a conversa ",
     "word3": "certa.",
     "successMsg": "Aplicação recebida. Nossa equipe analisará e retornará em breve.",
+    "errorMsg": "Algo deu errado. Por favor, verifique sua conexão e tente novamente.",
     "direct": "Direto",
     "pathwaysTitle": "Selecione um caminho",
     "pathways": {
@@ -122,7 +124,10 @@
       "back": "← Voltar",
       "next": "Próxima Etapa",
       "submit": "Enviar Aplicação",
-      "submitting": "Enviando…"
+      "submitting": "Enviando…",
+      "step1": "Etapa 1 de 3: Informações Básicas",
+      "step2": "Etapa 2 de 3: Preferências de Contato",
+      "step3": "Etapa 3 de 3: Detalhes do Serviço"
     },
     "pathwaysDesc": {
       "artist": "Envie seu portfólio e música para consideração do A&R.",
@@ -186,5 +191,37 @@
     "back": "← Voltar",
     "tag": "Elenco · Artista",
     "notFound": "Artista não encontrado."
+  },
+  "founders": {
+    "word1": "OS",
+    "word2": "fundadores"
+  },
+  "faq": {
+    "word1": "PERGUNTAS",
+    "word2": "frequentes",
+    "word3": "",
+    "eyebrow": "DÚVIDAS COMUNS",
+    "questions": [
+      {
+        "q": "Quais serviços a Servus Global oferece?",
+        "a": "Oferecemos serviços completos para artistas, incluindo estratégia de lançamento, distribuição global (digital e física), licenciamento de sincronização (sync), gestão de turnês, desenvolvimento de marca e direção criativa de A&R."
+      },
+      {
+        "q": "Como posso enviar minha música para a equipe de A&R?",
+        "a": "Você pode enviar seu portfólio e faixas diretamente através do nosso formulário na seção de Contato. Selecione \"Tornar-se Cliente\" para começar."
+      },
+      {
+        "q": "Vocês trabalham com artistas independentes ou contratados por gravadoras?",
+        "a": "Ambos. Construímos uma infraestrutura personalizada para cada artista, oferecendo desde parcerias de co-gestão até serviços de distribuição global e gravadora."
+      },
+      {
+        "q": "Onde fica a sede da Servus Global?",
+        "a": "Operamos globalmente, com raízes e hubs principais em Perth, Austrália, e Miami/Nova York, EUA, conectando artistas a mercados mundiais."
+      },
+      {
+        "q": "Quais são os critérios para se tornar um cliente da Servus Global?",
+        "a": "Buscamos artistas, marcas e gravadoras dedicados, com uma visão criativa única, profissionalismo e compromisso com o crescimento de carreira a longo prazo."
+      }
+    ]
   }
 }

@@ -4,10 +4,11 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
+import type { Dictionary } from "@/i18n/getDictionary";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function OurStory({ dict }: { dict: any }) {
+export default function OurStory({ dict }: { dict: Dictionary }) {
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
 

@@ -36,9 +36,12 @@ export default function CustomCursor() {
 
     const setHover = (active: boolean) => {
       gsap.to(ring, {
-        scale: active ? 1.7 : 1,
-        opacity: active ? 1 : 0.7,
-        duration: 0.35,
+        scale: active ? 1.85 : 1,
+        opacity: active ? 0.95 : 0.75,
+        backgroundColor: active ? "rgba(212, 175, 55, 0.08)" : "transparent",
+        borderColor: active ? "var(--color-gold-bright)" : "var(--color-gold)",
+        borderWidth: active ? "1px" : "1.5px",
+        duration: 0.4,
         ease: "power3.out",
       });
       gsap.to(dot, {

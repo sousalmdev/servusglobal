@@ -5,13 +5,14 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 import { artists } from "@/data/artists";
+import type { Dictionary } from "@/i18n/getDictionary";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const showcaseArtist =
   artists.find((a) => a.slug === "marcos-vidal") || artists[1];
 
-export default function ParallaxShowcase({ dict }: { dict?: any }) {
+export default function ParallaxShowcase({ dict }: { dict?: Dictionary }) {
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
 
@@ -85,17 +86,8 @@ export default function ParallaxShowcase({ dict }: { dict?: any }) {
           }}
         />
 
-        {/* Glass shine flare overlay */}
-        <div className="glass-shine opacity-30" />
 
-        {/* Dark overlay */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.6) 100%)",
-          }}
-        />
+       
 
         {/* Centered content */}
         <div className="relative mix-blend-screen z-10 flex flex-col items-center justify-center h-full text-center px-6">

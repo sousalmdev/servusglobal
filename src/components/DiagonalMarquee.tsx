@@ -1,10 +1,11 @@
 "use client";
 
 import FleurIcon from "@/components/FleurIcon";
+import type { Dictionary } from "@/i18n/getDictionary";
 
 const ROTATE_DEG = -4;
 
-export default function DiagonalMarquee({ dict }: { dict: any }) {
+export default function DiagonalMarquee({ dict }: { dict: Dictionary }) {
   const items = Array(10).fill(null);
 
   return (

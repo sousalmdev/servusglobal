@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 import { FiShield, FiTrendingUp, FiGlobe } from "react-icons/fi";
+import type { Dictionary } from "@/i18n/getDictionary";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,7 +23,7 @@ const getIconForIndex = (index: number) => {
   }
 };
 
-export default function WhyServus({ dict }: { dict: any }) {
+export default function WhyServus({ dict }: { dict: Dictionary }) {
   const sectionRef = useRef<HTMLElement>(null);
   const imageMaskRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);

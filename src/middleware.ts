@@ -33,7 +33,7 @@ export function middleware(request: NextRequest) {
     // Exclude static files, API routes, etc.
     if (
       pathname.match(
-        /^\/(api|_next\/static|_next\/image|favicon\.ico|icon\.svg|images|public)/
+        /^\/(api|_next\/static|_next\/image|favicon\.ico|icon\.svg|images|audio|public|.*\.(mp4|png|jpg|jpeg|svg|gif|webp|avif|mp3|woff|woff2|ttf|ico)$)/
       )
     ) {
       return NextResponse.next();

@@ -16,6 +16,11 @@ export default function LoadingSequence() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    if (sessionStorage.getItem("sg-loaded")) {
+      setShow(false);
+      return;
+    }
+
     document.body.style.overflow = "hidden";
     const overlay = overlayRef.current;
     const svgContainer = svgContainerRef.current;

@@ -5,6 +5,7 @@
     "services": "Servicios",
     "story": "Historia",
     "contact": "Contacto",
+    "faq": "FAQ",
     "workWithUs": "Trabaja con nosotros"
   },
   "hero": {
@@ -53,8 +54,8 @@
   "story": {
     "word1": "NUESTRA",
     "word2": "historia",
-    "eyebrow": "Cómo empezó todo",
-    "copy": "Seppe había estado construyendo espacios para artistas australianos desde Perth durante años. William Hobbs, trabajando como Nitrose en Miami, hacía movimientos paralelos del otro lado del océano. Servus nació cuando unieron fuerzas. La práctica establecida encontrando el hambre de la juventud, con una visión a largo plazo sobre lo que eso significa y la paciencia para hacer historia en el camino."
+    "eyebrow": "Por qué existimos",
+    "copy": "Creamos Servus porque la música increíble no debería estancarse por falta de infraestructura. La industria está llena de artistas con la visión y la ética de trabajo para triunfar, pero sin la estrategia de lanzamiento, los canales de distribución y la representación dedicada necesarias para transformar el impulso en una carrera duradera. Servus se encarga de la gestión, el marketing, la distribución y la dirección creativa, permitiendo a los artistas dirigir sus carreras como empresas para que puedan concentrarse en lo que realmente importa: el arte."
   },
   "roles": {
     "word1": "LOS",
@@ -88,6 +89,7 @@
     "word2": "la conversación ",
     "word3": "correcta.",
     "successMsg": "Solicitud recibida. Nuestro equipo revisará y te responderá pronto.",
+    "errorMsg": "Algo salió mal. Por favor, comprueba tu conexión e inténtalo de nuevo.",
     "direct": "Directo",
     "pathwaysTitle": "Selecciona un camino",
     "pathways": {
@@ -111,7 +113,7 @@
       "links": "Otros Enlaces *",
       "contactMethod": "Método de Contacto Preferido *",
       "bestTime": "Mejor hora para contactarte *",
-      "country": "País de Residencia *",
+      "country": "País de Residência *",
       "servicesReq": "Servicios Requeridos *",
       "platform": "Plataforma más importante *",
       "budget": "Rango de Presupuesto *",
@@ -122,7 +124,10 @@
       "back": "← Volver",
       "next": "Siguiente Paso",
       "submit": "Enviar Solicitud",
-      "submitting": "Enviando…"
+      "submitting": "Enviando…",
+      "step1": "Paso 1 de 3: Información Básica",
+      "step2": "Paso 2 de 3: Preferencias de Contacto",
+      "step3": "Paso 3 de 3: Detalles del Servicio"
     },
     "pathwaysDesc": {
       "artist": "Envía tu portafolio y música para consideración de A&R.",
@@ -186,5 +191,37 @@
     "back": "← Volver",
     "tag": "Elenco · Artista",
     "notFound": "Artista no encontrado."
+  },
+  "founders": {
+    "word1": "LOS",
+    "word2": "fundadores"
+  },
+  "faq": {
+    "word1": "PREGUNTAS",
+    "word2": "frecuentes",
+    "word3": "",
+    "eyebrow": "DUDAS COMUNES",
+    "questions": [
+      {
+        "q": "¿Qué servicios ofrece Servus Global?",
+        "a": "Ofrecemos servicios artísticos integrales que incluyen estrategia de lanzamiento, distribución global (digital y física), licencias de sincronización, gestión de giras, desarrollo de marca y dirección creativa de A&R."
+      },
+      {
+        "q": "¿Cómo puedo enviar mi música al equipo de A&R?",
+        "a": "Puedes enviar tu portafolio y pistas directamente a través de nuestro formulario en la sección de Contacto. Selecciona \"Convertirse en Cliente\" para comenzar."
+      },
+      {
+        "q": "¿Trabajan con artistas independientes o firmados por sellos?",
+        "a": "Ambos. Construimos una infraestructura a la medida para cada artista, ofreciendo desde alianzas de co-gestión hasta distribución global y servicios de sello discográfico."
+      },
+      {
+        "q": "¿Dónde tiene su sede Servus Global?",
+        "a": "Operamos a nivel mundial, con raíces y centros principales en Perth, Australia, y Miami/Nueva York, EE. UU., conectando a los artistas con los mercados globales."
+      },
+      {
+        "q": "¿Cuáles son los criterios para convertirse en cliente de Servus Global?",
+        "a": "Buscamos artistas, marcas y sellos dedicados con una visión creativa única, impulso profesional y un compromiso con el crecimiento profesional a largo plazo."
+      }
+    ]
   }
 }

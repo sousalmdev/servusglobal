@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 import Image from 'next/image';
 import { usePathname, useRouter } from "next/navigation";
+import type { Dictionary } from "@/i18n/getDictionary";
 
 // Vector Flag Icons (using 3x2 aspect ratio SVG)
 import US from 'country-flag-icons/react/3x2/US';
@@ -15,7 +16,7 @@ import JP from 'country-flag-icons/react/3x2/JP';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Navbar({ dict }: { dict: any }) {
+export default function Navbar({ dict }: { dict: Dictionary }) {
   const navRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
@@ -36,6 +37,7 @@ export default function Navbar({ dict }: { dict: any }) {
     { label: dict.nav.roster, href: `/${currentLocale}#artists` },
     { label: dict.nav.services, href: `/${currentLocale}#services` },
     { label: dict.nav.story, href: `/${currentLocale}#story` },
+    { label: dict.nav.faq || "FAQ", href: `/${currentLocale}#faq` },
     { label: dict.nav.contact, href: `/${currentLocale}#contact` },
   ];
 
@@ -44,6 +46,26 @@ export default function Navbar({ dict }: { dict: any }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Close menu on Escape key
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [menuOpen]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
 
   useEffect(() => {
     if (reducedMotion || !navRef.current) return;
@@ -63,6 +85,7 @@ export default function Navbar({ dict }: { dict: any }) {
   return (
     <nav
       ref={navRef}
+      aria-label="Main navigation"
       className="fixed top-0 left-0 w-full z-[100] transition-all duration-700"
       style={{
         background: scrolled
@@ -122,6 +145,7 @@ export default function Navbar({ dict }: { dict: any }) {
           <div className="relative group nav-item">
             <button
               className="font-body text-eyebrow eyebrow px-3 py-2 flex items-center gap-2 transition-all duration-300 cursor-pointer"
+              aria-label="Change language"
               style={{
                 color: "var(--color-off-white)",
                 border: "1px solid rgba(245, 242, 235, 0.18)",
@@ -139,6 +163,7 @@ export default function Navbar({ dict }: { dict: any }) {
             <div className="absolute right-0 top-full mt-2 w-32 bg-[#111] border border-[rgba(245,242,235,0.1)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col backdrop-blur-md shadow-xl overflow-hidden" style={{ zIndex: 1000 }}>
               <button 
                 onClick={() => switchLanguage('en')} 
+                aria-label="Switch to English"
                 className="font-body text-eyebrow eyebrow px-4 py-2.5 text-left hover:bg-[var(--color-gold)] hover:text-black transition-colors flex items-center gap-2 cursor-pointer" 
                 style={{ color: "var(--color-off-white)" }}
               >
@@ -146,6 +171,7 @@ export default function Navbar({ dict }: { dict: any }) {
               </button>
               <button 
                 onClick={() => switchLanguage('pt')} 
+                aria-label="Switch to Portuguese"
                 className="font-body text-eyebrow eyebrow px-4 py-2.5 text-left hover:bg-[var(--color-gold)] hover:text-black transition-colors flex items-center gap-2 cursor-pointer" 
                 style={{ color: "var(--color-off-white)" }}
               >
@@ -153,6 +179,7 @@ export default function Navbar({ dict }: { dict: any }) {
               </button>
               <button 
                 onClick={() => switchLanguage('es')} 
+                aria-label="Switch to Spanish"
                 className="font-body text-eyebrow eyebrow px-4 py-2.5 text-left hover:bg-[var(--color-gold)] hover:text-black transition-colors flex items-center gap-2 cursor-pointer" 
                 style={{ color: "var(--color-off-white)" }}
               >
@@ -160,6 +187,7 @@ export default function Navbar({ dict }: { dict: any }) {
               </button>
               <button 
                 onClick={() => switchLanguage('ja')} 
+                aria-label="Switch to Japanese"
                 className="font-body text-eyebrow eyebrow px-4 py-2.5 text-left hover:bg-[var(--color-gold)] hover:text-black transition-colors flex items-center gap-2 cursor-pointer" 
                 style={{ color: "var(--color-off-white)" }}
               >
@@ -174,6 +202,7 @@ export default function Navbar({ dict }: { dict: any }) {
           onClick={() => setMenuOpen(!menuOpen)}
           className="md:hidden nav-item flex flex-col gap-1.5 cursor-pointer"
           aria-label="Toggle menu"
+          aria-expanded={menuOpen}
         >
           <span
             className="block w-6 h-[1.5px] transition-all duration-300"
@@ -209,34 +238,51 @@ export default function Navbar({ dict }: { dict: any }) {
         }}
       >
         <div className="flex flex-col gap-6 px-6 py-8">
-          {NAV_LINKS.map((link) => (
+          {NAV_LINKS.map((link, index) => (
             <a
               key={link.label}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="font-display text-2xl"
-              style={{ color: "var(--color-off-white)", fontWeight: 500 }}
+              className="font-display text-2xl transition-all duration-500 ease-out"
+              style={{
+                color: "var(--color-off-white)",
+                fontWeight: 500,
+                transform: menuOpen ? "translateX(0)" : "translateX(-20px)",
+                opacity: menuOpen ? 1 : 0,
+                transitionDelay: `${index * 50}ms`
+              }}
             >
               {link.label}
             </a>
           ))}
           <a
-            href="#contact"
+            href={`/${currentLocale}#contact`}
             onClick={() => setMenuOpen(false)}
-            className="font-body text-eyebrow eyebrow inline-block self-start px-5 py-3 mt-2"
+            className="font-body text-eyebrow eyebrow inline-block self-start px-5 py-3 mt-2 transition-all duration-500 ease-out"
             style={{
               color: "var(--color-black)",
               background: "var(--color-gold)",
               fontWeight: 700,
+              transform: menuOpen ? "translateX(0)" : "translateX(-20px)",
+              opacity: menuOpen ? 1 : 0,
+              transitionDelay: `${NAV_LINKS.length * 50}ms`
             }}
           >
             {dict.nav.workWithUs}
           </a>
 
           {/* Mobile Language Selector */}
-          <div className="flex flex-wrap items-center gap-3 mt-4 pt-6 border-t border-[rgba(245,242,235,0.08)]">
+          <div 
+            className="flex flex-wrap items-center gap-3 mt-4 pt-6 border-t border-[rgba(245,242,235,0.08)] transition-all duration-500 ease-out"
+            style={{
+              transform: menuOpen ? "translateY(0)" : "translateY(15px)",
+              opacity: menuOpen ? 1 : 0,
+              transitionDelay: `${(NAV_LINKS.length + 1) * 50}ms`
+            }}
+          >
             <button
               onClick={() => { switchLanguage('en'); setMenuOpen(false); }}
+              aria-label="Switch to English"
               className={`flex items-center gap-2 px-3 py-2 border text-xs font-body text-eyebrow eyebrow transition-all duration-300 cursor-pointer ${
                 currentLocale === 'en'
                   ? 'border-[var(--color-gold)] text-[var(--color-gold)]'
@@ -247,6 +293,7 @@ export default function Navbar({ dict }: { dict: any }) {
             </button>
             <button
               onClick={() => { switchLanguage('pt'); setMenuOpen(false); }}
+              aria-label="Switch to Portuguese"
               className={`flex items-center gap-2 px-3 py-2 border text-xs font-body text-eyebrow eyebrow transition-all duration-300 cursor-pointer ${
                 currentLocale === 'pt'
                   ? 'border-[var(--color-gold)] text-[var(--color-gold)]'
@@ -257,6 +304,7 @@ export default function Navbar({ dict }: { dict: any }) {
             </button>
             <button
               onClick={() => { switchLanguage('es'); setMenuOpen(false); }}
+              aria-label="Switch to Spanish"
               className={`flex items-center gap-2 px-3 py-2 border text-xs font-body text-eyebrow eyebrow transition-all duration-300 cursor-pointer ${
                 currentLocale === 'es'
                   ? 'border-[var(--color-gold)] text-[var(--color-gold)]'
@@ -267,6 +315,7 @@ export default function Navbar({ dict }: { dict: any }) {
             </button>
             <button
               onClick={() => { switchLanguage('ja'); setMenuOpen(false); }}
+              aria-label="Switch to Japanese"
               className={`flex items-center gap-2 px-3 py-2 border text-xs font-body text-eyebrow eyebrow transition-all duration-300 cursor-pointer ${
                 currentLocale === 'ja'
                   ? 'border-[var(--color-gold)] text-[var(--color-gold)]'

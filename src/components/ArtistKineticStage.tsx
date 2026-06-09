@@ -4,30 +4,38 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
+import Image from "next/image";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 import type { Artist, Release } from "@/types";
+import type { Dictionary } from "@/i18n/getDictionary";
+import { getLogoPath } from "@/utils/getLogoPath";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const getLogoPath = (platform: string) => {
-  const p = platform.toLowerCase();
-  if (p.includes("spotify")) return "/images/logos/spotify.svg";
-  if (p.includes("apple")) return "/images/logos/applemusic.svg";
-  if (p.includes("youtube")) return "/images/logos/youtube.svg";
-  if (p.includes("tidal")) return "/images/logos/tidal.svg";
-  if (p.includes("soundcloud")) return "/images/logos/soundcloud.png";
-  if (p.includes("instagram")) return "/instagram-1.svg";
-  return null;
-};
+
 
 interface Props {
   artist: Artist;
   releases: Release[];
   lang: string;
-  dict: any;
+  dict: Dictionary;
   rosterIndex: number;
   rosterTotal: number;
 }
+
+const formatArtistName = (name: string) => {
+  if (!name.includes(" ") && name.length > 7) {
+    const splitIndex = name.toLowerCase().startsWith("chris") ? 5 : Math.ceil(name.length / 2);
+    return (
+      <>
+        {name.slice(0, splitIndex)}
+        <br />
+        {name.slice(splitIndex)}
+      </>
+    );
+  }
+  return name;
+};
 
 export default function ArtistKineticStage({
   artist,
@@ -111,9 +119,12 @@ export default function ArtistKineticStage({
           style={{ height: "100dvh", minHeight: "640px" }}
         >
           {/* Portrait — full bleed */}
-          <img
+          <Image
             src={artist.portraitUrl}
             alt={artist.name}
+            fill
+            sizes="100vw"
+            loading="lazy"
             className="stage-portrait absolute inset-0 w-full h-full object-cover img-editorial"
             style={{
               willChange: "transform, opacity",
@@ -157,7 +168,7 @@ export default function ArtistKineticStage({
               className="stage-name font-display text-balance text-center"
               style={{
                 color: "var(--color-off-white)",
-                fontSize: "clamp(4rem, 18vw, 17rem)",
+                fontSize: "clamp(4rem, 18vw, 14rem)",
                 lineHeight: 0.85,
                 letterSpacing: "-0.05em",
                 fontWeight: 800,
@@ -165,7 +176,7 @@ export default function ArtistKineticStage({
                 transformOrigin: "center center",
               }}
             >
-              {artist.name}
+              {formatArtistName(artist.name)}
             </h1>
           </div>
 
@@ -298,9 +309,12 @@ export default function ArtistKineticStage({
                         aria-label={s.platform}
                       >
                         {logo ? (
-                          <img
+                          <Image
                             src={logo}
                             alt={s.platform}
+                            width={28}
+                            height={28}
+                            loading="lazy"
                             className={`h-7 w-auto object-contain opacity-75 group-hover:opacity-100 transition-opacity duration-300 ${isInverted ? "brightness-0 invert" : ""}`}
                           />
                         ) : (
@@ -390,19 +404,18 @@ export default function ArtistKineticStage({
                   >
                     {String(idx + 1).padStart(2, "0")}
                   </span>
-                  <div className="col-span-2 md:col-span-1 overflow-hidden">
-                    {r.coverArtUrl ? (
-                      <img
-                        src={r.coverArtUrl}
-                        alt={r.title}
-                        className="w-full h-full aspect-square object-cover transition-transform duration-700 group-hover:scale-110"
-                        onLoad={() => {
-                          ScrollTrigger.refresh();
-                        }}
-                      />
-                    ) : (
-                      <div className="w-full h-full aspect-square bg-[var(--color-dark-surface-2)]" />
-                    )}
+                  <div className="col-span-2 md:col-span-1 overflow-hidden relative aspect-square">
+                    <Image
+                      src={r.coverArtUrl || artist.portraitUrl}
+                      alt={r.title}
+                      fill
+                      sizes="(max-width: 768px) 15vw, 8vw"
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      onLoad={() => {
+                        ScrollTrigger.refresh();
+                      }}
+                    />
                   </div>
                   <h4
                     className="col-span-7 md:col-span-8 font-display transition-colors duration-300 group-hover:text-[var(--color-gold)]"

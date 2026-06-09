@@ -7,10 +7,25 @@ import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 import { artists } from "@/data/artists";
 import Link from "next/link";
 import FleurIcon from "@/components/FleurIcon";
+import type { Dictionary } from "@/i18n/getDictionary";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function ArtistGridEditorial({ dict, lang = "en" }: { dict?: any; lang?: string }) {
+const formatArtistName = (name: string) => {
+  if (!name.includes(" ") && name.length > 7) {
+    const splitIndex = name.toLowerCase().startsWith("chris") ? 5 : Math.ceil(name.length / 2);
+    return (
+      <>
+        {name.slice(0, splitIndex)}
+        <br />
+        {name.slice(splitIndex)}
+      </>
+    );
+  }
+  return name;
+};
+
+export default function ArtistGridEditorial({ dict, lang = "en" }: { dict?: Dictionary; lang?: string }) {
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
 
@@ -127,10 +142,10 @@ export default function ArtistGridEditorial({ dict, lang = "en" }: { dict?: any;
           >
             {/* Grayscale base */}
             <div
-              className="absolute inset-0 bg-cover bg-center transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06] img-bw group-hover:!filter-none"
+              className="absolute inset-0 bg-cover bg-center transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:!filter-none"
               style={{
                 backgroundImage: `url(${artist.portraitUrl})`,
-                backgroundColor: "#141414",
+              
               }}
             />
 
@@ -155,7 +170,7 @@ export default function ArtistGridEditorial({ dict, lang = "en" }: { dict?: any;
                   fontWeight: 600,
                 }}
               >
-                {artist.name}
+                {formatArtistName(artist.name)}
               </h3>
               <span
                 className="artist-name-reveal font-body text-eyebrow eyebrow mt-2 inline-flex items-center gap-2"

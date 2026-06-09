@@ -4,10 +4,11 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
+import type { Dictionary } from "@/i18n/getDictionary";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function FooterEditorial({ dict }: { dict: any }) {
+export default function FooterEditorial({ dict }: { dict: Dictionary }) {
   const footerRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
 
@@ -159,6 +160,7 @@ export default function FooterEditorial({ dict }: { dict: any }) {
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`Follow us on ${link.label}`}
                 className="footer-link link-underline font-body"
                 style={{
                   color: "var(--color-off-white)",

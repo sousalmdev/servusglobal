@@ -3,10 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 import { releases } from "@/data/releases";
 import type { Release } from "@/types";
-import {FaFireFlameCurved} from "react-icons/fa6"
+import type { Dictionary } from "@/i18n/getDictionary";
+import { getLogoPath } from "@/utils/getLogoPath";
+import VinylDisc from "@/components/VinylDisc";
+import { FaFireFlameCurved } from "react-icons/fa6";
+
 gsap.registerPlugin(ScrollTrigger);
 
 type VinylSide = "right" | "left";
@@ -22,15 +27,7 @@ const SMALL_LAYOUTS: { area: string; tilt: number; vinylSide: VinylSide }[] = [
 const releaseDate = (iso: string) =>
   new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "short" });
 
-const getLogoPath = (platform: string) => {
-  const p = platform.toLowerCase();
-  if (p.includes("spotify")) return "/images/logos/spotify.svg";
-  if (p.includes("apple")) return "/images/logos/applemusic.svg";
-  if (p.includes("youtube")) return "/images/logos/youtube.svg";
-  if (p.includes("tidal")) return "/images/logos/tidal.svg";
-  if (p.includes("soundcloud")) return "/images/logos/soundcloud.png";
-  return null;
-};
+
 
 /**
  * Cover + vinyl-peek primitive. Used for both the featured release and the
@@ -69,50 +66,7 @@ function ReleaseCard({
         }}
         aria-hidden
       >
-        <div className="vinyl-disc absolute inset-0 rounded-full">
-          {/* Concentric grooves */}
-          <div
-            className="absolute inset-0 rounded-full"
-            style={{
-              background:
-                "repeating-radial-gradient(circle at 50% 50%, #181818 0px, #1a1a1a 1px, #0c0c0c 2px, #161616 3px)",
-            }}
-          />
-          {/* Plastic sheen */}
-          <div
-            className="absolute inset-0 rounded-full opacity-25"
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 35%, transparent 65%, rgba(255,255,255,0.06) 100%)",
-            }}
-          />
-        </div>
-        {/* Center label (does not spin) */}
-        <div
-          className="absolute rounded-full"
-          style={{
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%,-50%)",
-            width: "32%",
-            aspectRatio: "1/1",
-            background: "var(--color-gold)",
-            zIndex: 5,
-          }}
-        />
-        {/* Spindle hole */}
-        <div
-          className="absolute rounded-full"
-          style={{
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%,-50%)",
-            width: "2.5%",
-            aspectRatio: "1/1",
-            background: "var(--color-black)",
-            zIndex: 6,
-          }}
-        />
+        <VinylDisc />
       </div>
 
       {/* Cover */}
@@ -146,7 +100,7 @@ function ReleaseCard({
   );
 }
 
-export default function Releases({ dict }: { dict?: any }) {
+export default function Releases({ dict }: { dict?: Dictionary }) {
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
 
@@ -469,46 +423,7 @@ export default function Releases({ dict }: { dict?: any }) {
                     }}
                     aria-hidden
                   >
-                    <div className="vinyl-disc absolute inset-0 rounded-full">
-                      <div
-                        className="absolute inset-0 rounded-full"
-                        style={{
-                          background:
-                            "repeating-radial-gradient(circle at 50% 50%, #181818 0px, #1a1a1a 1px, #0c0c0c 2px, #161616 3px)",
-                        }}
-                      />
-                      <div
-                        className="absolute inset-0 rounded-full opacity-30"
-                        style={{
-                          background:
-                            "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 35%, transparent 65%, rgba(255,255,255,0.06) 100%)",
-                        }}
-                      />
-                    </div>
-                    <div
-                      className="absolute rounded-full"
-                      style={{
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%,-50%)",
-                        width: "32%",
-                        aspectRatio: "1/1",
-                        background: "var(--color-gold)",
-                        zIndex: 5,
-                      }}
-                    />
-                    <div
-                      className="absolute rounded-full"
-                      style={{
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%,-50%)",
-                        width: "2.5%",
-                        aspectRatio: "1/1",
-                        background: "var(--color-black)",
-                        zIndex: 6,
-                      }}
-                    />
+                    <VinylDisc />
                   </div>
 
                   <a
@@ -557,7 +472,7 @@ export default function Releases({ dict }: { dict?: any }) {
                 >
              
                   <span className="font-body animate-pulse text-[8px] tracking-[0.15em] font-semibold text-[var(--color-gold)] opacity-80 group-hover:opacity-100 transition-opacity">
-                    {isPlaying ? <h4 className="flex items-center gap-2"><FaFireFlameCurved/> LIVE </h4> : "PAUSED"}
+                    {isPlaying ? <span className="flex items-center gap-2"><FaFireFlameCurved/> LIVE</span> : "PAUSED"}
                   </span>
                 </button>
               </div>
@@ -614,9 +529,12 @@ export default function Releases({ dict }: { dict?: any }) {
                       aria-label={link.platform}
                     >
                       {logo ? (
-                        <img
+                        <Image
                           src={logo}
                           alt={link.platform}
+                          width={112}
+                          height={112}
+                          loading="lazy"
                           className={`w-14 h-14 md:w-28 md:h-28 object-contain opacity-60 group-hover:opacity-100 transition-all duration-300 ${['apple', 'tidal'].some(p => link.platform.toLowerCase().includes(p)) ? 'brightness-0 invert' : ''}`}
                         />
                       ) : (
@@ -711,46 +629,7 @@ function SmallReleaseCard({
           }}
           aria-hidden
         >
-          <div className="vinyl-disc absolute inset-0 rounded-full">
-            <div
-              className="absolute inset-0 rounded-full"
-              style={{
-                background:
-                  "repeating-radial-gradient(circle at 50% 50%, #181818 0px, #1a1a1a 1px, #0c0c0c 2px, #161616 3px)",
-              }}
-            />
-            <div
-              className="absolute inset-0 rounded-full opacity-25"
-              style={{
-                background:
-                  "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 35%, transparent 65%, rgba(255,255,255,0.05) 100%)",
-              }}
-            />
-          </div>
-          <div
-            className="absolute rounded-full"
-            style={{
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%,-50%)",
-              width: "32%",
-              aspectRatio: "1/1",
-              background: "var(--color-gold)",
-              zIndex: 5,
-            }}
-          />
-          <div
-            className="absolute rounded-full"
-            style={{
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%,-50%)",
-              width: "2.5%",
-              aspectRatio: "1/1",
-              background: "var(--color-black)",
-              zIndex: 6,
-            }}
-          />
+          <VinylDisc />
         </div>
 
         <a

@@ -4,13 +4,14 @@ import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
+import type { Dictionary } from "@/i18n/getDictionary";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const pathwaysKeys = ["artist", "investor", "other"] as const;
 type Pathway = typeof pathwaysKeys[number] | null;
 
-export default function Contact({ dict }: { dict: any }) {
+export default function Contact({ dict }: { dict: Dictionary }) {
   const pathways = [
     { key: "artist" as const, label: dict.contact.pathways.artist },
     { key: "investor" as const, label: dict.contact.pathways.investor },
@@ -19,6 +20,7 @@ export default function Contact({ dict }: { dict: any }) {
   const [pathway, setPathway] = useState<Pathway>(null);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const reducedMotion = useReducedMotion();
@@ -66,6 +68,7 @@ export default function Contact({ dict }: { dict: any }) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+    setError(false);
     const data = new FormData(e.currentTarget);
     const payload: Record<string, any> = { pathway };
     
@@ -80,14 +83,21 @@ export default function Contact({ dict }: { dict: any }) {
     }
 
     try {
-      await fetch("/api/contact", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-    } catch {}
-    setSubmitted(true);
-    setLoading(false);
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        setError(true);
+      }
+    } catch (err) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -166,7 +176,7 @@ export default function Contact({ dict }: { dict: any }) {
                 <button
                   key={p.key}
                   onClick={() => setPathway(p.key)}
-                  className="group relative flex flex-col text-left p-8 md:p-10 transition-all duration-500 overflow-hidden cursor-pointer"
+                  className="group relative flex flex-col text-left p-8 md:p-10 transition-all duration-500 overflow-hidden cursor-pointer hover:border-[rgba(212,175,55,0.3)] hover:-translate-y-1.5"
                   style={{
                     background: "rgba(20,20,20,0.4)",
                     border: "1px solid rgba(245,242,235,0.08)",
@@ -211,6 +221,29 @@ export default function Contact({ dict }: { dict: any }) {
           </div>
         ) : (
           <div className="max-w-3xl">
+            {error && (
+              <div
+                className="mb-8 flex items-center gap-3 py-4 px-6 border field-anim animate-fade-in"
+                style={{
+                  borderColor: "rgba(239, 68, 68, 0.4)",
+                  background: "rgba(239, 68, 68, 0.05)",
+                }}
+              >
+                <span
+                  className="inline-block w-2.5 h-2.5 rounded-full"
+                  style={{
+                    background: "#ef4444",
+                    boxShadow: "0 0 12px #ef4444",
+                  }}
+                />
+                <span
+                  className="font-body text-body"
+                  style={{ color: "#f87171" }}
+                >
+                  {dict.contact.errorMsg}
+                </span>
+              </div>
+            )}
             <div className="mb-12 flex flex-col md:flex-row md:items-center justify-between gap-6">
               <span
                 className="font-body text-eyebrow eyebrow inline-block"
@@ -323,7 +356,17 @@ export default function Contact({ dict }: { dict: any }) {
 
 // Sub-components for Onboarding Form
 
-function ClientOnboardingForm({ formRef, loading, onSubmit, dict }: any) {
+function ClientOnboardingForm({
+  formRef,
+  loading,
+  onSubmit,
+  dict,
+}: {
+  formRef: React.RefObject<HTMLFormElement | null>;
+  loading: boolean;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  dict: Dictionary;
+}) {
   const [step, setStep] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
 

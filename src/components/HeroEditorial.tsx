@@ -4,13 +4,14 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
+import type { Dictionary } from "@/i18n/getDictionary";
 import { artists } from "@/data/artists";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const featured = artists.filter((a) => a.featured).slice(0, 3);
 
-export default function HeroEditorial({ dict }: { dict: any }) {
+export default function HeroEditorial({ dict }: { dict: Dictionary }) {
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
 
