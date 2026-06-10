@@ -605,4 +605,16 @@ section[id] {
   scroll-margin-top: clamp(80px, 10vw, 120px);
 }
 
+/* ── Hide native OS video player elements (e.g. play button overlays on iOS Low Power Mode) ── */
+video::-webkit-media-controls {
+  display: none !important;
+}
+video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
+}
+video::-webkit-media-controls-overlay-play-button {
+  display: none !important;
+}
+
 

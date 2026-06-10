@@ -86,7 +86,7 @@ export default function FAQ({ dict }: { dict: Dictionary }) {
           <h2
             className="faq-heading font-display text-pretty"
             style={{
-              fontSize: "clamp(2.5rem, 5vw, 4rem)",
+              fontSize: "clamp(2rem, 5vw, 4rem)",
               lineHeight: 1.05,
               letterSpacing: "-0.03em",
               fontWeight: 800,

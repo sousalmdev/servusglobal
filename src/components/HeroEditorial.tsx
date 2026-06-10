@@ -73,48 +73,9 @@ export default function HeroEditorial({ dict }: { dict: Dictionary }) {
     const video = videoRef.current;
     if (!video) return;
 
-    let frameId: number;
-    let isCancelled = false;
-
-    // Standard play attempt
-    const playPromise = video.play();
-
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        if (isCancelled) return;
-        // If we land here, autoplay is blocked (likely iOS Low Power Mode).
-        // We force "playback" by manually seeking the video forward.
-        let lastTime = performance.now();
-
-        const forceLoop = (now: number) => {
-          if (isCancelled || !video) return;
-          
-          // Only scrub if the video is actually stuck/paused and metadata/duration is valid
-          if (
-            video.paused &&
-            video.readyState >= 1 &&
-            !isNaN(video.duration) &&
-            video.duration > 0
-          ) {
-            const delta = (now - lastTime) / 1000;
-            let nextTime = video.currentTime + delta;
-            if (nextTime >= video.duration || isNaN(nextTime)) nextTime = 0;
-            video.currentTime = nextTime;
-          }
-          lastTime = now;
-          frameId = requestAnimationFrame(forceLoop);
-        };
-
-        frameId = requestAnimationFrame(forceLoop);
-      });
-    }
-
-    return () => {
-      isCancelled = true;
-      if (frameId) {
-        cancelAnimationFrame(frameId);
-      }
-    };
+    video.play().catch((error) => {
+      console.warn("Autoplay blocked (likely Low Power Mode):", error);
+    });
   }, []);
 
   return (
@@ -133,7 +94,7 @@ export default function HeroEditorial({ dict }: { dict: Dictionary }) {
           loop
           playsInline
           poster="/fleursunset.png"
-          className="absolute scale-110 inset-0 opacity-40 w-full h-full object-cover"
+          className="absolute scale-110 inset-0 opacity-40 w-full h-full object-cover pointer-events-none"
         >
           <source src="/fleur.mp4" type="video/mp4" />
         </video>
