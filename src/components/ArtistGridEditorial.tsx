@@ -55,7 +55,7 @@ export default function ArtistGridEditorial({ dict, lang = "en" }: { dict?: Dict
       });
 
       // Parallax drift on card images — staggered depth per card
-      gsap.utils.toArray<HTMLElement>(".artist-card-img").forEach((img, i) => {
+      gsap.utils.toArray<HTMLElement>(".artist-card-img-wrap").forEach((img, i) => {
         const yAmount = 20 + (i % 3) * 10; // Vary parallax depth per column
         gsap.to(img, {
           y: -yAmount,
@@ -125,24 +125,23 @@ export default function ArtistGridEditorial({ dict, lang = "en" }: { dict?: Dict
             key={artist.slug}
             href={`/${lang}/artists/${artist.slug}`}
             className="artist-card-editorial group block relative overflow-hidden"
-            style={{ aspectRatio: "3/4" }}
-            data-cursor="hover"
+            style={{ aspectRatio: "4/5" }}
           >
-            {/* Base image with subtle zoom hover + parallax drift */}
-            <div
-              className="artist-card-img absolute inset-0 transition-transform duration-[1000ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
-              style={{
-                transform: "scale(1.08)",
-              }}
-            >
-              <Image
-                src={artist.portraitUrl}
-                alt={artist.name}
-                fill
-                sizes="(max-width: 768px) 100vw, 33vw"
-                className="object-cover object-center"
-                loading="lazy"
-              />
+            {/* Parallax wrapper div (animated by GSAP) */}
+            <div className="artist-card-img-wrap absolute inset-0 overflow-hidden">
+              {/* Inner image container (handles hover zoom with CSS) */}
+              <div
+                className="w-full h-full"
+              >
+                <Image
+                  src={artist.portraitUrl}
+                  alt={artist.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover object-center"
+                  loading="lazy"
+                />
+              </div>
             </div>
           </Link>
         ))}

@@ -55,7 +55,7 @@ export default function ArtistKineticStage({
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
-      // Kinetic stage — desktop only. Mobile gets a clean static stage.
+      // Kinetic stage — Desktop
       mm.add("(min-width: 768px)", () => {
         gsap
           .timeline({
@@ -81,6 +81,33 @@ export default function ArtistKineticStage({
           .to(".stage-meta-top", { opacity: 0, y: -12, ease: "none" }, 0)
           .to(".stage-meta-bottom", { opacity: 0, y: 20, ease: "none" }, 0)
           .to(".stage-cue", { opacity: 0, ease: "none" }, 0);
+      });
+
+      // Kinetic stage — Mobile (adapted params for smaller screens)
+      mm.add("(max-width: 767px)", () => {
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: ".stage",
+              start: "top top",
+              end: "bottom bottom",
+              scrub: 0.8,
+            },
+          })
+          .fromTo(
+            ".stage-portrait",
+            { scale: 1.0, opacity: 1 },
+            { scale: 1.12, opacity: 0.4, ease: "none" },
+            0,
+          )
+          .fromTo(
+            ".stage-name",
+            { scale: 1, y: 0, letterSpacing: "-0.04em" },
+            { scale: 0.55, y: "-18vh", letterSpacing: "-0.02em", ease: "none" },
+            0,
+          )
+          .to(".stage-meta-top", { opacity: 0, y: -8, ease: "none" }, 0)
+          .to(".stage-meta-bottom", { opacity: 0, y: 12, ease: "none" }, 0);
       });
 
       // Name watermark drifts horizontally as bio section scrolls past.
@@ -113,7 +140,7 @@ export default function ArtistKineticStage({
           STAGE — name is the architecture
           Tall outer section + sticky inner viewport-sized "frame"
          ============================================================ */}
-      <section className="stage relative w-full h-[100dvh] md:h-[150vh]">
+      <section className="stage relative w-full h-[130vh] md:h-[150vh]">
         <div
           className="sticky top-0 w-full overflow-hidden"
           style={{ height: "100dvh", minHeight: "640px" }}

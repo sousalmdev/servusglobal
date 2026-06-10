@@ -34,10 +34,14 @@ export default function Services({ dict }: { dict: Dictionary }) {
       // Cards — alternating horizontal slide entrance
       gsap.utils.toArray<HTMLElement>(".service-card").forEach((card, i) => {
         const fromLeft = i % 2 === 0;
+        const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+        const shiftX = isMobile ? (fromLeft ? -30 : 30) : (fromLeft ? -80 : 80);
+        const rotateVal = isMobile ? (fromLeft ? 1.5 : -1.5) : (fromLeft ? 4 : -4);
+
         gsap.set(card, {
-          x: fromLeft ? -80 : 80,
+          x: shiftX,
           opacity: 0,
-          rotateY: fromLeft ? 4 : -4,
+          rotateY: rotateVal,
         });
         ScrollTrigger.create({
           trigger: card,

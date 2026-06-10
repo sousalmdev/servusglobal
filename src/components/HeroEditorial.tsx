@@ -73,18 +73,21 @@ export default function HeroEditorial({ dict }: { dict: Dictionary }) {
     const video = videoRef.current;
     if (!video) return;
 
+    let frameId: number;
+    let isCancelled = false;
+
     // Standard play attempt
     const playPromise = video.play();
 
     if (playPromise !== undefined) {
       playPromise.catch(() => {
+        if (isCancelled) return;
         // If we land here, autoplay is blocked (likely iOS Low Power Mode).
         // We force "playback" by manually seeking the video forward.
         let lastTime = performance.now();
-        let frameId: number;
 
         const forceLoop = (now: number) => {
-          if (!video) return;
+          if (isCancelled || !video) return;
           // Only scrub if the video is actually stuck/paused
           if (video.paused) {
             const delta = (now - lastTime) / 1000;
@@ -97,9 +100,15 @@ export default function HeroEditorial({ dict }: { dict: Dictionary }) {
         };
 
         frameId = requestAnimationFrame(forceLoop);
-        return () => cancelAnimationFrame(frameId);
       });
     }
+
+    return () => {
+      isCancelled = true;
+      if (frameId) {
+        cancelAnimationFrame(frameId);
+      }
+    };
   }, []);
 
   return (

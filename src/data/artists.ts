@@ -19,7 +19,7 @@ export const artists: Artist[] = [
     name: "Lola Redd",
     slug: "lola-redd",
     bio: "One of the hottest upcoming artists reigning from Chicago. Antisocial, Blunt and Versatile. She is truly something you NEVER want to underestimate.",
-    portraitUrl: "/images/roster/lolaredd.jpg",
+    portraitUrl: "/images/roster/servuscrew1.png",
     genres: ["Hip-Hop", "Rap"],
     socialLinks: [
       { platform: "spotify", url: "https://open.spotify.com/artist/6rW8Vn8nN8J6vJ3W5kGZ5w" },

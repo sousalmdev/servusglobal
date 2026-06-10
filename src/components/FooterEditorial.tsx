@@ -139,9 +139,7 @@ export default function FooterEditorial({ dict }: { dict: Dictionary }) {
           </span>
           <div className="flex flex-col gap-3">
             {[
-              { label: "A&R", email: "ar@servusglobal.com" },
-              { label: "Partnerships", email: "partners@servusglobal.com" },
-              { label: "Press", email: "press@servusglobal.com" },
+              { label: "Official E-mail", email: "servusgloballlc@gmail.com" },
             ].map((item) => (
               <a
                 key={item.email}

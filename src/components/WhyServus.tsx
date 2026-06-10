@@ -12,15 +12,16 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Helper to map pillar index to corresponding icon
 const getIconForIndex = (index: number) => {
+  const classes = "w-8 h-8 md:w-9 md:h-9 transition-transform duration-500 group-hover:scale-110";
   switch (index) {
     case 0:
-      return <FiShield className="w-8 h-8 md:w-9 md:h-9" />;
+      return <FiShield className={classes} />;
     case 1:
-      return <FiTrendingUp className="w-8 h-8 md:w-9 md:h-9" />;
+      return <FiTrendingUp className={classes} />;
     case 2:
-      return <FiGlobe className="w-8 h-8 md:w-9 md:h-9" />;
+      return <FiGlobe className={classes} />;
     default:
-      return <FiShield className="w-8 h-8 md:w-9 md:h-9" />;
+      return <FiShield className={classes} />;
   }
 };
 
@@ -176,7 +177,7 @@ export default function WhyServus({ dict }: { dict: Dictionary }) {
               >
                 {/* Icon wrapper with subtle border & gold color */}
                 <div
-                  className="why-pillar-icon flex-shrink-0 flex items-center justify-center p-3 rounded-sm transition-transform duration-500 group-hover:scale-110"
+                  className="why-pillar-icon flex-shrink-0 flex items-center justify-center p-3 rounded-sm"
                   style={{
                     color: "var(--color-gold)",
                     background: "rgba(245, 242, 235, 0.02)",

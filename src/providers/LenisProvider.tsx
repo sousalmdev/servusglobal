@@ -7,19 +7,52 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Ignore minor height changes (like mobile address bar sliding) to prevent layout-thrashing
+ScrollTrigger.config({
+  ignoreMobileResize: true,
+});
+
 export function LenisProvider({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<any>(null);
 
   useEffect(() => {
+    let scrollLinked = false;
     const update = (time: number) => {
-      lenisRef.current?.lenis?.raf(time * 1000);
+      const lenisInstance = lenisRef.current?.lenis;
+      if (lenisInstance) {
+        if (!scrollLinked) {
+          lenisInstance.on("scroll", ScrollTrigger.update);
+          scrollLinked = true;
+        }
+        lenisInstance.raf(time * 1000);
+      }
     };
 
     gsap.ticker.add(update);
     gsap.ticker.lagSmoothing(0);
 
+    // Refresh ScrollTrigger when custom fonts are fully loaded and layout stabilizes
+    if (typeof document !== "undefined" && document.fonts) {
+      document.fonts.ready.then(() => {
+        ScrollTrigger.refresh();
+      });
+    }
+
+    // Refresh ScrollTrigger when document body size changes (lazy images, dynamic imports, etc.)
+    let resizeObserver: ResizeObserver | undefined;
+    if (typeof ResizeObserver !== "undefined" && typeof document !== "undefined") {
+      resizeObserver = new ResizeObserver(() => {
+        ScrollTrigger.refresh();
+      });
+      resizeObserver.observe(document.body);
+    }
+
     return () => {
       gsap.ticker.remove(update);
+      lenisRef.current?.lenis?.off("scroll", ScrollTrigger.update);
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
     };
   }, []);
 
