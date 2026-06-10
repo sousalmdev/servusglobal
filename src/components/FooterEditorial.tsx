@@ -167,9 +167,9 @@ export default function FooterEditorial({ dict }: { dict: Dictionary }) {
           </span>
           <div className="flex flex-col gap-3">
             {[
-              { label: "Instagram", url: "https://instagram.com" },
-              { label: "Spotify", url: "https://open.spotify.com" },
-              { label: "YouTube", url: "https://youtube.com" },
+              { label: "Instagram", url: "https://instagram.com/servusglobal" },
+              { label: "Spotify", url: "https://open.spotify.com/playlist/0PIFJf9DBKgi8GvSUx68Zd?si=8n0GYCBBQhCEzhsMzE7yLQ&pi=-78P2vpKRW6Cv" },
+              { label: "YouTube", url: "https://youtube.com/playlist?list=PLp99fRICOQqARCJt6UV1tWLib4IpwRY6n&si=LJFYtkBBt28pYzQm" },
             ].map((link) => (
               <a
                 key={link.label}
