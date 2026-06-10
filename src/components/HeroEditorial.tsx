@@ -88,8 +88,14 @@ export default function HeroEditorial({ dict }: { dict: Dictionary }) {
 
         const forceLoop = (now: number) => {
           if (isCancelled || !video) return;
-          // Only scrub if the video is actually stuck/paused
-          if (video.paused) {
+          
+          // Only scrub if the video is actually stuck/paused and metadata/duration is valid
+          if (
+            video.paused &&
+            video.readyState >= 1 &&
+            !isNaN(video.duration) &&
+            video.duration > 0
+          ) {
             const delta = (now - lastTime) / 1000;
             let nextTime = video.currentTime + delta;
             if (nextTime >= video.duration || isNaN(nextTime)) nextTime = 0;
