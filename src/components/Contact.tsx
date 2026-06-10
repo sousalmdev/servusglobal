@@ -28,8 +28,8 @@ export default function Contact({ dict }: { dict: Dictionary }) {
   useEffect(() => {
     if (reducedMotion || !sectionRef.current) return;
     const ctx = gsap.context(() => {
-      // Heading reveal
-      gsap.set(".contact-heading .hero-word", { yPercent: 110 });
+      // Heading reveal with blur dissolve
+      gsap.set(".contact-heading .hero-word", { yPercent: 110, filter: "blur(8px)" });
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: "top 70%",
@@ -37,10 +37,28 @@ export default function Contact({ dict }: { dict: Dictionary }) {
         onEnter: () => {
           gsap.to(".contact-heading .hero-word", {
             yPercent: 0,
-            duration: 1.4,
-            stagger: 0.1,
+            filter: "blur(0px)",
+            duration: 1.6,
+            stagger: 0.12,
             ease: "expo.out",
           });
+
+          // Pathway cards — float up with subtle rotation (cards landing on table)
+          gsap.fromTo(
+            ".contact-content .pathway-card",
+            { y: 80, opacity: 0, rotation: -3, scale: 0.95 },
+            {
+              y: 0,
+              opacity: 1,
+              rotation: 0,
+              scale: 1,
+              duration: 1.2,
+              stagger: 0.1,
+              ease: "expo.out",
+              delay: 0.5,
+            }
+          );
+
           gsap.from(".contact-content", {
             y: 40,
             opacity: 0,
@@ -176,7 +194,7 @@ export default function Contact({ dict }: { dict: Dictionary }) {
                 <button
                   key={p.key}
                   onClick={() => setPathway(p.key)}
-                  className="group relative flex flex-col text-left p-8 md:p-10 transition-all duration-500 overflow-hidden cursor-pointer hover:border-[rgba(212,175,55,0.3)] hover:-translate-y-1.5"
+                  className="pathway-card group relative flex flex-col text-left p-8 md:p-10 transition-all duration-500 overflow-hidden cursor-pointer hover:border-[rgba(212,175,55,0.3)] hover:-translate-y-1.5"
                   style={{
                     background: "rgba(20,20,20,0.4)",
                     border: "1px solid rgba(245,242,235,0.08)",

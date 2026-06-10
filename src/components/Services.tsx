@@ -31,18 +31,50 @@ export default function Services({ dict }: { dict: Dictionary }) {
         },
       });
 
-      // Cards stagger
-      gsap.from(".service-card", {
-        y: 60,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.08,
-        ease: "expo.out",
-        scrollTrigger: {
-          trigger: ".services-grid",
-          start: "top 80%",
+      // Cards — alternating horizontal slide entrance
+      gsap.utils.toArray<HTMLElement>(".service-card").forEach((card, i) => {
+        const fromLeft = i % 2 === 0;
+        gsap.set(card, {
+          x: fromLeft ? -80 : 80,
+          opacity: 0,
+          rotateY: fromLeft ? 4 : -4,
+        });
+        ScrollTrigger.create({
+          trigger: card,
+          start: "top 88%",
           once: true,
-        },
+          onEnter: () => {
+            gsap.to(card, {
+              x: 0,
+              opacity: 1,
+              rotateY: 0,
+              duration: 1.2,
+              ease: "expo.out",
+              delay: (i % 3) * 0.08,
+            });
+          },
+        });
+      });
+
+      // Counter animation on service numbers
+      gsap.utils.toArray<HTMLElement>(".service-number").forEach((el) => {
+        const target = parseInt(el.getAttribute("data-number") || "0", 10);
+        const obj = { val: 0 };
+        ScrollTrigger.create({
+          trigger: el,
+          start: "top 90%",
+          once: true,
+          onEnter: () => {
+            gsap.to(obj, {
+              val: target,
+              duration: 1.6,
+              ease: "power2.out",
+              onUpdate: () => {
+                el.textContent = String(Math.round(obj.val)).padStart(2, "0");
+              },
+            });
+          },
+        });
       });
     }, sectionRef);
     return () => ctx.revert();
@@ -90,14 +122,16 @@ export default function Services({ dict }: { dict: Dictionary }) {
             className="service-card group p-8 md:p-10"
             style={{
               borderTop: "1px solid rgba(245, 242, 235, 0.08)",
+              perspective: "800px",
             }}
           >
-            {/* Number */}
+            {/* Number with counter animation */}
             <span
-              className="font-body text-eyebrow eyebrow inline-block mb-6"
+              className="service-number font-body text-eyebrow eyebrow inline-block mb-6"
               style={{ color: "var(--color-gold)", opacity: 0.6 }}
+              data-number={service.number}
             >
-              {service.number}
+              00
             </span>
 
             {/* Title */}

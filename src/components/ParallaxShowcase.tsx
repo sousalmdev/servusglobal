@@ -31,36 +31,62 @@ export default function ParallaxShowcase({ dict }: { dict?: Dictionary }) {
         },
       });
 
+      // Immersive scale zoom — entire section grows as you scroll into it
+      gsap.fromTo(
+        ".showcase-clip",
+        { scale: 0.82 },
+        {
+          scale: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "top 20%",
+            scrub: true,
+          },
+        }
+      );
+
       if (reducedMotion) return;
 
-      // Clip-path reveal for the whole section
-      gsap.set(".showcase-clip", { clipPath: "inset(15% 5% 15% 5%)" });
+      // Clip-path reveal — circle expands from center
+      gsap.set(".showcase-clip", { clipPath: "circle(0% at 50% 50%)" });
       gsap.to(".showcase-clip", {
-        clipPath: "inset(0% 0% 0% 0%)",
+        clipPath: "circle(75% at 50% 50%)",
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 90%",
-          end: "top 30%",
+          start: "top 85%",
+          end: "top 25%",
           scrub: true,
         },
       });
 
-      // Text reveal
-      gsap.set(".showcase-text", { opacity: 0, y: 30 });
+      // Text reveal with stagger
+      gsap.set(".showcase-text", { opacity: 0, y: 40, filter: "blur(8px)" });
       ScrollTrigger.create({
         trigger: sectionRef.current,
-        start: "top 50%",
+        start: "top 45%",
         once: true,
         onEnter: () => {
           gsap.to(".showcase-text", {
             opacity: 1,
             y: 0,
-            duration: 1.2,
-            stagger: 0.1,
+            filter: "blur(0px)",
+            duration: 1.4,
+            stagger: 0.12,
             ease: "expo.out",
           });
         },
+      });
+
+      // Subtle glow pulse on the heading
+      gsap.to(".showcase-glow", {
+        textShadow: "0 0 40px rgba(212, 165, 65, 0.3), 0 0 80px rgba(212, 165, 65, 0.1)",
+        duration: 2.5,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
       });
     }, sectionRef);
     return () => ctx.revert();
@@ -104,7 +130,7 @@ export default function ParallaxShowcase({ dict }: { dict?: Dictionary }) {
           >
             {dict?.showcase?.heading1 || "The sound is yours."}
             <br />
-            <span className="serif-italic" style={{ color: "var(--color-gold)", fontWeight: 400 }}>
+            <span className="showcase-glow serif-italic" style={{ color: "var(--color-gold)", fontWeight: 400 }}>
               {dict?.showcase?.heading2 || "We amplify."}
             </span>
           </h2>

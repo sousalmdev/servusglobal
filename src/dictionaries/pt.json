@@ -93,7 +93,7 @@
     "direct": "Direto",
     "pathwaysTitle": "Selecione um caminho",
     "pathways": {
-      "artist": "Tornar-se Cliente",
+      "artist": "Tornar-se Artista",
       "investor": "Parceria",
       "other": "Geral"
     },
@@ -104,7 +104,7 @@
       "messageOther": "O que você tem em mente?",
       "send": "Enviar mensagem",
       "sending": "Enviando…",
-      "title": "Formulário de Integração de Clientes",
+      "title": "Formulário de Integração de Artistas",
       "subtitle": "Bem-vindo à Servus Global. Preencha o formulário abaixo.",
       "fullName": "Nome Completo *",
       "artistName": "Nome Artístico *",
@@ -162,7 +162,6 @@
     "titlesCount": "títulos"
   },
   "showcase": {
-    "stats": "850M+ Streams · 47 Países · 24 Artistas",
     "heading1": "O som é seu.",
     "heading2": "Nós amplificamos.",
     "desc": "Construa a equipe, a estratégia e os negócios ao redor da música que você já faz."
@@ -170,7 +169,7 @@
   "whyServus": {
     "eyebrow": "Por Que a Servus Global",
     "title": "Construída para um Legado Duradouro.",
-    "badgeNumber": "15+",
+    "badgeNumber": "3++",
     "badgeText": "Anos de Excelência",
     "pillars": [
       {
@@ -194,7 +193,11 @@
   },
   "founders": {
     "word1": "OS",
-    "word2": "fundadores"
+    "word2": "fundadores",
+    "seppeTitle": "Fundador | Executivo de Música | A&R | Gestão Artística",
+    "seppeBio": "Um ítalo-australiano que une sofisticação e ímpeto na sua arte, Seppe combina intuição criativa com visão estratégica do mercado musical. Criado no mundo da música e do entretenimento, e baterista desde os cinco anos com base no rock, jazz e hip hop, ele construiu sua carreira apoiando artistas em seu crescimento, diferenciação e sucesso a longo prazo. Hoje, Seppe atua como empresário artístico, A&R e executivo musical dedicado a descobrir talentos, desenvolver carreiras e criar oportunidades fora dos caminhos convencionais da indústria da música.",
+    "nitroseTitle": "Fundador | Produtor da Billboard | Executivo de Música | Desenvolvimento Criativo",
+    "nitroseBio": "Nascido na Flórida e criado em Miami, Nitrose desenvolveu uma paixão precoce pela música através do piano e da guitarra antes de se estabelecer como artista e produtor da Billboard. Desde que iniciou sua carreira de produção em 2012, ele ganhou reconhecimento por seu som versátil e abordagem sofisticada ao desenvolvimento criativo. Na Servus Global, Nitrose integra experiência em produção com visão criativa para moldar discos, elevar artistas e promover carreiras de impacto por meio de som, estratégia e inovação."
   },
   "faq": {
     "word1": "PERGUNTAS",
@@ -208,7 +211,7 @@
       },
       {
         "q": "Como posso enviar minha música para a equipe de A&R?",
-        "a": "Você pode enviar seu portfólio e faixas diretamente através do nosso formulário na seção de Contato. Selecione \"Tornar-se Cliente\" para começar."
+        "a": "Você pode enviar seu portfólio e faixas diretamente através do nosso formulário na seção de Contato. Selecione \"Tornar-se Artista\" para começar."
       },
       {
         "q": "Vocês trabalham com artistas independentes ou contratados por gravadoras?",
@@ -219,7 +222,7 @@
         "a": "Operamos globalmente, com raízes e hubs principais em Perth, Austrália, e Miami/Nova York, EUA, conectando artistas a mercados mundiais."
       },
       {
-        "q": "Quais são os critérios para se tornar um cliente da Servus Global?",
+        "q": "Quais são os critérios para se tornar um artista da Servus Global?",
         "a": "Buscamos artistas, marcas e gravadoras dedicados, com uma visão criativa única, profissionalismo e compromisso com o crescimento de carreira a longo prazo."
       }
     ]

@@ -21,6 +21,7 @@ export default function Navbar({ dict }: { dict: Dictionary }) {
   const reducedMotion = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("");
   const pathname = usePathname();
   const router = useRouter();
 
@@ -68,7 +69,40 @@ export default function Navbar({ dict }: { dict: Dictionary }) {
   }, [menuOpen]);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    const sections = ["artists", "services", "story", "faq", "contact"];
+    const observers = sections.map((id) => {
+      const el = document.getElementById(id);
+      if (!el) return null;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setActiveSection(id);
+          }
+        },
+        {
+          rootMargin: "-45% 0px -45% 0px", // Trigger when section occupies screen center
+        }
+      );
+      observer.observe(el);
+      return { observer, el };
+    });
+
+    return () => {
+      observers.forEach((obs) => {
+        if (obs) obs.observer.unobserve(obs.el);
+      });
+    };
+  }, []);
+
+  useEffect(() => {
     if (reducedMotion || !navRef.current) return;
+    
+    // Check if the loading sequence has already run or is skipped in this session
+    const hasLoaded = typeof window !== "undefined" && !!sessionStorage.getItem("sg-loaded");
+    const animDelay = hasLoaded ? 0.15 : 2.8;
+
     const ctx = gsap.context(() => {
       gsap.from(".nav-item", {
         y: -20,
@@ -76,11 +110,55 @@ export default function Navbar({ dict }: { dict: Dictionary }) {
         duration: 1,
         stagger: 0.08,
         ease: "expo.out",
-        delay: 2.8,
+        delay: animDelay,
+      });
+
+      // Scroll progress bar indicator
+      gsap.to(".scroll-progress-bar", {
+        scaleX: 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "html",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: true,
+        },
       });
     }, navRef);
     return () => ctx.revert();
   }, [reducedMotion]);
+
+  useEffect(() => {
+    if (reducedMotion || typeof window === "undefined") return;
+
+    if (menuOpen) {
+      gsap.fromTo(
+        ".mobile-nav-link",
+        { y: 35, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          stagger: 0.07,
+          ease: "power3.out",
+          overwrite: "auto",
+        }
+      );
+      gsap.fromTo(
+        ".mobile-lang-btn",
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          stagger: 0.05,
+          ease: "power3.out",
+          delay: 0.25,
+          overwrite: "auto",
+        }
+      );
+    }
+  }, [menuOpen, reducedMotion]);
 
   return (
     <nav
@@ -89,15 +167,19 @@ export default function Navbar({ dict }: { dict: Dictionary }) {
       className="fixed top-0 left-0 w-full z-[100] transition-all duration-700"
       style={{
         background: scrolled
-          ? "rgba(10, 10, 10, 0.85)"
+          ? "rgba(10, 10, 10, 0.98)"
           : "transparent",
-        backdropFilter: scrolled ? "blur(20px)" : "none",
         borderBottom: scrolled
           ? "1px solid rgba(245, 242, 235, 0.06)"
           : "1px solid transparent",
       }}
     >
-      <div className="flex items-center justify-between px-6 md:px-12 lg:px-16 py-5 md:py-6">
+      {/* Scroll Progress Bar */}
+      <div
+        className="scroll-progress-bar absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-[var(--color-gold-dim)] to-[var(--color-gold)] origin-left scale-x-0 z-[110]"
+        style={{ transformOrigin: "left center" }}
+      />
+      <div className="relative z-[100] flex items-center justify-between px-6 md:px-12 lg:px-16 py-5 md:py-6">
         {/* Logo */}
         <a
           href={`/${currentLocale}`}
@@ -119,19 +201,23 @@ export default function Navbar({ dict }: { dict: Dictionary }) {
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="nav-item link-underline font-body text-eyebrow eyebrow"
-              style={{ color: "var(--color-off-white)", opacity: 0.6 }}
-            >
-              {link.label}
-            </a>
-          ))}
+          {NAV_LINKS.map((link) => {
+            const isActive = activeSection && link.href.endsWith(`#${activeSection}`);
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                className={`nav-item link-underline font-body text-eyebrow eyebrow transition-colors duration-300 ${
+                  isActive ? "text-[var(--color-gold)] opacity-100" : "text-[var(--color-off-white)] opacity-60"
+                }`}
+              >
+                {link.label}
+              </a>
+            );
+          })}
           <a
             href={`/${currentLocale}#contact`}
-            className="nav-item font-body text-eyebrow eyebrow px-5 py-2.5 transition-all duration-300"
+            className="nav-item font-body text-eyebrow eyebrow px-5 py-2.5 transition-all duration-300 cta-pulse"
             style={{
               color: "var(--color-black)",
               background: "var(--color-gold)",
@@ -160,7 +246,7 @@ export default function Navbar({ dict }: { dict: Dictionary }) {
               <span>{currentLocale.toUpperCase()}</span>
               <span className="text-[9px] opacity-60">▼</span>
             </button>
-            <div className="absolute right-0 top-full mt-2 w-32 bg-[#111] border border-[rgba(245,242,235,0.1)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col backdrop-blur-md shadow-xl overflow-hidden" style={{ zIndex: 1000 }}>
+            <div className="absolute right-0 top-full mt-2 w-32 bg-[#111] border border-[rgba(245,242,235,0.1)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col shadow-xl overflow-hidden" style={{ zIndex: 1000 }}>
               <button 
                 onClick={() => switchLanguage('en')} 
                 aria-label="Switch to English"
@@ -228,44 +314,42 @@ export default function Navbar({ dict }: { dict: Dictionary }) {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Fullscreen Mobile Menu Overlay */}
       <div
-        className="md:hidden overflow-hidden transition-all duration-500"
+        className="md:hidden fixed inset-0 w-full h-[100dvh] flex flex-col justify-center items-center bg-black/98 backdrop-blur-xl transition-all duration-500"
         style={{
-          maxHeight: menuOpen ? "450px" : "0",
-          background: "rgba(10, 10, 10, 0.95)",
-          backdropFilter: "blur(20px)",
+          opacity: menuOpen ? 1 : 0,
+          pointerEvents: menuOpen ? "auto" : "none",
+          visibility: menuOpen ? "visible" : "hidden",
+          zIndex: 90,
         }}
       >
-        <div className="flex flex-col gap-6 px-6 py-8">
-          {NAV_LINKS.map((link, index) => (
-            <a
-              key={link.label}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-              className="font-display text-2xl transition-all duration-500 ease-out"
-              style={{
-                color: "var(--color-off-white)",
-                fontWeight: 500,
-                transform: menuOpen ? "translateX(0)" : "translateX(-20px)",
-                opacity: menuOpen ? 1 : 0,
-                transitionDelay: `${index * 50}ms`
-              }}
-            >
-              {link.label}
-            </a>
-          ))}
+        <div className="flex flex-col items-center gap-8 px-6 py-12 w-full">
+          {NAV_LINKS.map((link) => {
+            const isActive = activeSection && link.href.endsWith(`#${activeSection}`);
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                className={`mobile-nav-link font-display text-3xl font-medium tracking-tight transition-colors duration-300 ${
+                  isActive ? "text-[var(--color-gold)]" : "text-[var(--color-off-white)]"
+                }`}
+              >
+                {link.label}
+              </a>
+            );
+          })}
           <a
             href={`/${currentLocale}#contact`}
             onClick={() => setMenuOpen(false)}
-            className="font-body text-eyebrow eyebrow inline-block self-start px-5 py-3 mt-2 transition-all duration-500 ease-out"
+            className="mobile-nav-link font-body text-eyebrow eyebrow px-6 py-3.5 mt-4 text-center transition-all duration-300 hover:scale-105"
             style={{
               color: "var(--color-black)",
               background: "var(--color-gold)",
               fontWeight: 700,
-              transform: menuOpen ? "translateX(0)" : "translateX(-20px)",
-              opacity: menuOpen ? 1 : 0,
-              transitionDelay: `${NAV_LINKS.length * 50}ms`
+              opacity: reducedMotion ? 1 : 0,
+              width: "200px",
             }}
           >
             {dict.nav.workWithUs}
@@ -273,17 +357,12 @@ export default function Navbar({ dict }: { dict: Dictionary }) {
 
           {/* Mobile Language Selector */}
           <div 
-            className="flex flex-wrap items-center gap-3 mt-4 pt-6 border-t border-[rgba(245,242,235,0.08)] transition-all duration-500 ease-out"
-            style={{
-              transform: menuOpen ? "translateY(0)" : "translateY(15px)",
-              opacity: menuOpen ? 1 : 0,
-              transitionDelay: `${(NAV_LINKS.length + 1) * 50}ms`
-            }}
+            className="flex flex-wrap justify-center items-center gap-3 mt-8 pt-8 border-t border-[rgba(245,242,235,0.08)] w-full max-w-[280px]"
           >
             <button
               onClick={() => { switchLanguage('en'); setMenuOpen(false); }}
               aria-label="Switch to English"
-              className={`flex items-center gap-2 px-3 py-2 border text-xs font-body text-eyebrow eyebrow transition-all duration-300 cursor-pointer ${
+              className={`mobile-lang-btn flex items-center gap-2 px-3 py-2 border text-xs font-body text-eyebrow eyebrow transition-colors duration-300 cursor-pointer ${
                 currentLocale === 'en'
                   ? 'border-[var(--color-gold)] text-[var(--color-gold)]'
                   : 'border-[rgba(245,242,235,0.15)] text-[var(--color-off-white)]'
@@ -294,7 +373,7 @@ export default function Navbar({ dict }: { dict: Dictionary }) {
             <button
               onClick={() => { switchLanguage('pt'); setMenuOpen(false); }}
               aria-label="Switch to Portuguese"
-              className={`flex items-center gap-2 px-3 py-2 border text-xs font-body text-eyebrow eyebrow transition-all duration-300 cursor-pointer ${
+              className={`mobile-lang-btn flex items-center gap-2 px-3 py-2 border text-xs font-body text-eyebrow eyebrow transition-colors duration-300 cursor-pointer ${
                 currentLocale === 'pt'
                   ? 'border-[var(--color-gold)] text-[var(--color-gold)]'
                   : 'border-[rgba(245,242,235,0.15)] text-[var(--color-off-white)]'
@@ -305,7 +384,7 @@ export default function Navbar({ dict }: { dict: Dictionary }) {
             <button
               onClick={() => { switchLanguage('es'); setMenuOpen(false); }}
               aria-label="Switch to Spanish"
-              className={`flex items-center gap-2 px-3 py-2 border text-xs font-body text-eyebrow eyebrow transition-all duration-300 cursor-pointer ${
+              className={`mobile-lang-btn flex items-center gap-2 px-3 py-2 border text-xs font-body text-eyebrow eyebrow transition-colors duration-300 cursor-pointer ${
                 currentLocale === 'es'
                   ? 'border-[var(--color-gold)] text-[var(--color-gold)]'
                   : 'border-[rgba(245,242,235,0.15)] text-[var(--color-off-white)]'
@@ -316,7 +395,7 @@ export default function Navbar({ dict }: { dict: Dictionary }) {
             <button
               onClick={() => { switchLanguage('ja'); setMenuOpen(false); }}
               aria-label="Switch to Japanese"
-              className={`flex items-center gap-2 px-3 py-2 border text-xs font-body text-eyebrow eyebrow transition-all duration-300 cursor-pointer ${
+              className={`mobile-lang-btn flex items-center gap-2 px-3 py-2 border text-xs font-body text-eyebrow eyebrow transition-colors duration-300 cursor-pointer ${
                 currentLocale === 'ja'
                   ? 'border-[var(--color-gold)] text-[var(--color-gold)]'
                   : 'border-[rgba(245,242,235,0.15)] text-[var(--color-off-white)]'

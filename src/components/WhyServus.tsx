@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 import { FiShield, FiTrendingUp, FiGlobe } from "react-icons/fi";
 import type { Dictionary } from "@/i18n/getDictionary";
@@ -37,8 +38,9 @@ export default function WhyServus({ dict }: { dict: Dictionary }) {
         // Simple static styling for reduced motion
         gsap.set(".why-eyebrow", { opacity: 0.5, y: 0 });
         gsap.set(".why-heading", { opacity: 1, y: 0 });
-        gsap.set(".why-pillar-item", { opacity: 1, y: 0 });
-        gsap.set(imageMaskRef.current, { clipPath: "inset(0% 0 0 0)" });
+        gsap.set(".why-pillar-item", { opacity: 1, x: 0 });
+        gsap.set(".why-pillar-icon", { opacity: 1, scale: 1, rotation: 0 });
+        gsap.set(imageMaskRef.current, { clipPath: "polygon(0 0%, 100% 0%, 100% 100%, 0% 100%)" });
         gsap.set(".why-badge-card", { opacity: 1, scale: 1 });
         return;
       }
@@ -46,8 +48,9 @@ export default function WhyServus({ dict }: { dict: Dictionary }) {
       // Initial state
       gsap.set(".why-eyebrow", { opacity: 0, y: 15 });
       gsap.set(".why-heading", { opacity: 0, y: 30 });
-      gsap.set(".why-pillar-item", { opacity: 0, y: 40 });
-      gsap.set(imageMaskRef.current, { clipPath: "inset(100% 0 0 0)" });
+      gsap.set(".why-pillar-item", { opacity: 0, x: -60 });
+      gsap.set(".why-pillar-icon", { opacity: 0, scale: 0, rotation: -180 });
+      gsap.set(imageMaskRef.current, { clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0% 100%)" });
       gsap.set(".why-badge-card", { opacity: 0, scale: 0.85, y: 20 });
 
       // Main entrance timeline
@@ -61,15 +64,24 @@ export default function WhyServus({ dict }: { dict: Dictionary }) {
           tl.to(".why-eyebrow", { opacity: 0.5, y: 0, duration: 1.0 }, 0);
           tl.to(".why-heading", { opacity: 1, y: 0, duration: 1.4 }, 0.15);
           
+          // Pillars slide in from left with stagger
           tl.to(
             ".why-pillar-item",
-            { opacity: 1, y: 0, duration: 1.2, stagger: 0.12 },
+            { opacity: 1, x: 0, duration: 1.4, stagger: 0.15 },
             0.35
           );
+
+          // Icons spin-in with elastic bounce
+          tl.to(
+            ".why-pillar-icon",
+            { opacity: 1, scale: 1, rotation: 0, duration: 1.6, stagger: 0.15, ease: "elastic.out(1, 0.5)" },
+            0.5
+          );
           
+          // Image — diagonal wipe reveal
           tl.to(
             imageMaskRef.current,
-            { clipPath: "inset(0% 0 0 0)", duration: 1.6, ease: "power4.inOut" },
+            { clipPath: "polygon(0 0%, 100% 0%, 100% 100%, 0% 100%)", duration: 1.8, ease: "power4.inOut" },
             0.25
           );
 
@@ -77,6 +89,24 @@ export default function WhyServus({ dict }: { dict: Dictionary }) {
             ".why-badge-card",
             { opacity: 1, scale: 1, y: 0, duration: 1.2, ease: "elastic.out(1, 0.75)" },
             1.1
+          );
+
+          // Counter animation on badge '15+'
+          const badgeNum = { val: 0 };
+          tl.to(
+            badgeNum,
+            {
+              val: 3,
+              duration: 2.0,
+              ease: "power2.out",
+              onUpdate: () => {
+                const el = document.querySelector(".why-badge-number");
+                if (el) {
+                  el.textContent = Math.round(badgeNum.val) + "+";
+                }
+              },
+            },
+            1.2
           );
         },
       });
@@ -103,7 +133,7 @@ export default function WhyServus({ dict }: { dict: Dictionary }) {
   return (
     <section
       ref={sectionRef}
-      id="why-servus"
+      id="story"
       className="relative px-6 md:px-12 lg:px-16 overflow-hidden"
       style={{
         paddingTop: "clamp(6rem, 12vw, 10rem)",
@@ -146,7 +176,7 @@ export default function WhyServus({ dict }: { dict: Dictionary }) {
               >
                 {/* Icon wrapper with subtle border & gold color */}
                 <div
-                  className="flex-shrink-0 flex items-center justify-center p-3 rounded-sm transition-transform duration-500 group-hover:scale-110"
+                  className="why-pillar-icon flex-shrink-0 flex items-center justify-center p-3 rounded-sm transition-transform duration-500 group-hover:scale-110"
                   style={{
                     color: "var(--color-gold)",
                     background: "rgba(245, 242, 235, 0.02)",
@@ -188,7 +218,7 @@ export default function WhyServus({ dict }: { dict: Dictionary }) {
         </div>
 
         {/* Right Column - Large Editorial Image & Overlapping Badge */}
-        <div className="lg:col-span-6 relative flex justify-center items-center">
+        <div className="lg:col-span-6 relative flex justify-center items-center w-full">
           {/* Main Image Frame with inset reveal clip-path */}
           <div
             ref={imageMaskRef}
@@ -197,15 +227,48 @@ export default function WhyServus({ dict }: { dict: Dictionary }) {
               aspectRatio: "16/19",
             }}
           >
-            {/* The Image inside which GSAP scrolls */}
-            <div
-              ref={imageRef}
-              className="absolute inset-0 w-full h-full bg-cover bg-center img-editorial"
+             {/* The Image inside which GSAP scrolls */}
+             <div
+               ref={imageRef}
+               className="absolute inset-0 w-full h-full img-editorial"
+             >
+               <Image
+                 src="/servusabout.png"
+                 alt="About Servus"
+                 fill
+                 sizes="(max-width: 768px) 100vw, 50vw"
+                 className="object-cover object-bottom"
+                 priority
+               />
+             </div>
+          </div>
+
+          {/* Overlapping Badge Card */}
+          <div
+            className="why-badge-card absolute bottom-8 left-8 md:bottom-12 md:left-12 z-20 p-6 md:p-8 flex flex-col justify-center backdrop-blur-md bg-black/60 border border-[rgba(245,242,235,0.1)] rounded-sm"
+            style={{
+              width: "clamp(160px, 25vw, 240px)",
+              boxShadow: "0 20px 40px rgba(0,0,0,0.5)",
+            }}
+          >
+            <span
+              className="why-badge-number font-display text-[var(--color-gold)] font-bold block"
               style={{
-                backgroundImage: "url(/servusabout.png)",
-                objectPosition: "bottom",
+                fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
+                lineHeight: 1,
               }}
-            />
+            >
+              0+
+            </span>
+            <span
+              className="font-body text-eyebrow eyebrow text-[rgba(245,242,235,0.6)] uppercase tracking-widest block mt-2"
+              style={{
+                fontSize: "0.625rem",
+                lineHeight: 1.4,
+              }}
+            >
+              {dict.whyServus.badgeText}
+            </span>
           </div>
         </div>
 

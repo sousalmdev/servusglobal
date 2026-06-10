@@ -264,9 +264,9 @@ export default function Releases({ dict }: { dict?: Dictionary }) {
         },
       });
 
-      // Featured spread
-      gsap.set(".feature-cover-mask", { clipPath: "inset(100% 0 0 0)" });
-      gsap.set(".feature-vinyl", { x: -180, opacity: 0 });
+      // Featured spread (break the seal entrance)
+      gsap.set(".feature-cover-mask", { x: 80, opacity: 0 });
+      gsap.set(".feature-vinyl-inner", { x: -40, rotation: -90, opacity: 0 });
       gsap.set(".feature-info > *", { opacity: 0, y: 22 });
 
       ScrollTrigger.create({
@@ -275,14 +275,30 @@ export default function Releases({ dict }: { dict?: Dictionary }) {
         once: true,
         onEnter: () => {
           const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+          // 1. Cover slides in from right & fades in
           tl.to(".feature-cover-mask", {
-            clipPath: "inset(0% 0 0 0)",
-            duration: 1.4,
+            x: 0,
+            opacity: 1,
+            duration: 1.2,
+            ease: "power3.out",
           });
+          // 2. Cover slides left to make space
+          tl.to(".feature-cover-mask", {
+            x: -25,
+            duration: 0.9,
+            ease: "back.out(1.1)",
+          }, "-=0.25");
+          // 3. Vinyl slides out to the right (break the seal)
           tl.to(
-            ".feature-vinyl",
-            { x: 0, opacity: 1, duration: 1.6 },
-            "-=1.05"
+            ".feature-vinyl-inner",
+            {
+              x: 45,
+              rotation: 12,
+              opacity: 1,
+              duration: 1.4,
+              ease: "back.out(1.3)",
+            },
+            "-=0.7"
           );
           tl.to(
             ".feature-info > *",
@@ -423,7 +439,9 @@ export default function Releases({ dict }: { dict?: Dictionary }) {
                     }}
                     aria-hidden
                   >
-                    <VinylDisc />
+                    <div className="feature-vinyl-inner w-full h-full relative">
+                      <VinylDisc />
+                    </div>
                   </div>
 
                   <a
@@ -433,14 +451,19 @@ export default function Releases({ dict }: { dict?: Dictionary }) {
                     data-cursor="hover"
                     className="feature-cover-mask block relative aspect-square overflow-hidden z-10"
                   >
-                    <div
-                      className="absolute inset-0 bg-cover bg-center transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.03]"
-                      style={{
-                        backgroundImage: `url(${featured.coverArtUrl})`,
-                        backgroundColor: "#1a1a1a",
-                        filter: "saturate(0.95) contrast(1.04)",
-                      }}
-                    />
+                    <div className="absolute inset-0 transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.03]">
+                      <Image
+                        src={featured.coverArtUrl}
+                        alt={featured.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-cover object-center"
+                        style={{
+                          filter: "saturate(0.95) contrast(1.04)",
+                        }}
+                        priority
+                      />
+                    </div>
                     {/* Plastic wrap overlay */}
                     <div
                       className="absolute inset-0 pointer-events-none mix-blend-screen opacity-45 z-20"
@@ -467,13 +490,26 @@ export default function Releases({ dict }: { dict?: Dictionary }) {
                 
                 <button
                   onClick={(e) => toggleMute(e)}
-                  className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-[rgba(245,242,235,0.15)] bg-[rgba(10,10,10,0.4)] hover:bg-[rgba(245,242,235,0.05)] hover:border-[rgba(245,242,235,0.3)] transition-all duration-300 group cursor-pointer"
+                  className="flex items-center gap-2 px-3 py-1 rounded-full border border-[rgba(245,242,235,0.15)] bg-[rgba(10,10,10,0.4)] hover:bg-[rgba(245,242,235,0.05)] hover:border-[rgba(245,242,235,0.3)] transition-all duration-300 group cursor-pointer"
                   title={isPlaying ? "Mute audio" : "Play audio"}
                 >
-             
-                  <span className="font-body animate-pulse text-[8px] tracking-[0.15em] font-semibold text-[var(--color-gold)] opacity-80 group-hover:opacity-100 transition-opacity">
-                    {isPlaying ? <span className="flex items-center gap-2"><FaFireFlameCurved/> LIVE</span> : "PAUSED"}
-                  </span>
+                  {isPlaying ? (
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-end gap-[2px] h-2.5 w-3.5 mb-[1px]">
+                        <div className="w-[2px] bg-[var(--color-gold)] animate-audio-bar-1" style={{ height: "3px" }} />
+                        <div className="w-[2px] bg-[var(--color-gold)] animate-audio-bar-2" style={{ height: "5px" }} />
+                        <div className="w-[2px] bg-[var(--color-gold)] animate-audio-bar-3" style={{ height: "2px" }} />
+                        <div className="w-[2px] bg-[var(--color-gold)] animate-audio-bar-4" style={{ height: "4px" }} />
+                      </div>
+                      <span className="font-body text-[8px] tracking-[0.15em] font-semibold text-[var(--color-gold)] opacity-90 group-hover:opacity-100 transition-opacity">
+                        LIVE
+                      </span>
+                    </div>
+                  ) : (
+                    <span className="font-body text-[8px] tracking-[0.15em] font-semibold text-[rgba(245,242,235,0.4)] group-hover:text-[rgba(245,242,235,0.7)] transition-colors">
+                      PAUSED
+                    </span>
+                  )}
                 </button>
               </div>
               <h3
@@ -581,9 +617,9 @@ export default function Releases({ dict }: { dict?: Dictionary }) {
           return (
             <div
               key={release.slug}
-              className="release-card relative"
+              className="release-card-grid-item relative"
               style={{
-                gridArea: layout.area,
+                ["--grid-area" as string]: layout.area,
                 ["--rest-rotate" as string]: `${layout.tilt}deg`,
               }}
             >
@@ -639,14 +675,19 @@ function SmallReleaseCard({
           data-cursor="hover"
           className="small-cover-mask block relative aspect-square overflow-hidden z-10"
         >
-          <div
-            className="absolute inset-0 bg-cover bg-center transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.04]"
-            style={{
-              backgroundImage: `url(${release.coverArtUrl})`,
-              backgroundColor: "#1a1a1a",
-              filter: "saturate(0.9) contrast(1.04)",
-            }}
-          />
+          <div className="absolute inset-0 transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.04]">
+            <Image
+              src={release.coverArtUrl}
+              alt={release.title}
+              fill
+              sizes="(max-width: 768px) 50vw, 25vw"
+              className="object-cover object-center"
+              style={{
+                filter: "saturate(0.9) contrast(1.04)",
+              }}
+              loading="lazy"
+            />
+          </div>
           {/* Plastic wrap overlay */}
           <div
             className="absolute inset-0 pointer-events-none mix-blend-screen opacity-45 z-20"

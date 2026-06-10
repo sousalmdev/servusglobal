@@ -1,5 +1,9 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 import FleurIcon from "@/components/FleurIcon";
 import type { Dictionary } from "@/i18n/getDictionary";
 
@@ -7,6 +11,42 @@ const ROTATE_DEG = -4;
 
 export default function DiagonalMarquee({ dict }: { dict: Dictionary }) {
   const items = Array(10).fill(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (reducedMotion || !trackRef.current) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const tl = gsap.to(trackRef.current, {
+      xPercent: -50,
+      ease: "none",
+      duration: 25,
+      repeat: -1,
+    });
+
+    const trigger = ScrollTrigger.create({
+      trigger: trackRef.current,
+      start: "top bottom",
+      end: "bottom top",
+      onUpdate: (self) => {
+        const velocity = Math.abs(self.getVelocity());
+        // Normal speed is 1x. Map velocity to speed multiplier.
+        const speedMultiplier = 1 + velocity / 200;
+        gsap.to(tl, {
+          timeScale: Math.min(speedMultiplier, 6), // Cap at 6x speed
+          overwrite: "auto",
+          duration: 0.4,
+        });
+      },
+    });
+
+    return () => {
+      tl.kill();
+      trigger.kill();
+    };
+  }, [reducedMotion]);
 
   return (
     <div
@@ -30,7 +70,11 @@ export default function DiagonalMarquee({ dict }: { dict: Dictionary }) {
         }}
       >
         <div className="overflow-hidden">
-          <div className="marquee-track marquee-forward">
+          <div
+            ref={trackRef}
+            className={`marquee-track ${reducedMotion ? "marquee-forward" : ""}`}
+            style={reducedMotion ? {} : { animation: "none" }}
+          >
             {[0, 1].map((copy) => (
               <div
                 key={copy}

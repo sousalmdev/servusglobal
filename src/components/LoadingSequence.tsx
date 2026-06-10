@@ -102,6 +102,41 @@ export default function LoadingSequence() {
       });
     };
 
+    // Resolve when page window is loaded
+    const pageLoaded = new Promise<void>((resolve) => {
+      if (typeof document !== "undefined" && document.readyState === "complete") {
+        resolve();
+      } else {
+        window.addEventListener("load", () => resolve(), { once: true });
+      }
+    });
+
+    // Resolve when all videos present are ready to play
+    const videosReady = new Promise<void>((resolve) => {
+      setTimeout(() => {
+        const videos = Array.from(document.querySelectorAll("video"));
+        if (videos.length === 0) {
+          resolve();
+          return;
+        }
+        let loadedCount = 0;
+        const checkResolve = () => {
+          loadedCount++;
+          if (loadedCount === videos.length) {
+            resolve();
+          }
+        };
+        videos.forEach((video) => {
+          if (video.readyState >= 3) {
+            checkResolve();
+          } else {
+            video.addEventListener("canplaythrough", checkResolve, { once: true });
+            video.addEventListener("error", checkResolve, { once: true });
+          }
+        });
+      }, 100);
+    });
+
     // Preload PNG and fetch SVG in parallel; honour min visible time before exit
     const pngLoaded = new Promise<void>((resolve) => {
       if (png.complete) {
@@ -112,11 +147,20 @@ export default function LoadingSequence() {
       }
     });
 
+    // Maximum safety timeout (4.5s) to guarantee exit under slow network
+    const maxTimeout = new Promise<void>((resolve) => {
+      cleanupTimer = window.setTimeout(resolve, 4500);
+    });
+
     Promise.all([
       fetch("/servuslogo.svg")
         .then((r) => r.text())
         .catch(() => ""),
       pngLoaded,
+      Promise.race([
+        Promise.all([pageLoaded, videosReady]),
+        maxTimeout
+      ])
     ]).then(([svgText]) => {
       if (cancelled) return;
 

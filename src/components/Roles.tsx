@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
@@ -28,6 +28,7 @@ function RoleRow({
   const contentRef = useRef<HTMLDivElement>(null);
   const arrowRef = useRef<HTMLSpanElement>(null);
   const accentRef = useRef<HTMLSpanElement>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const stateRef = useRef({
     height: 0,
@@ -54,6 +55,7 @@ function RoleRow({
     const target = open ? OPEN_HEIGHT : 0;
     const state = stateRef.current;
     state.open = open;
+    setIsOpen(open);
     gsap.killTweensOf(state);
     gsap.to(state, {
       height: target,
@@ -90,7 +92,8 @@ function RoleRow({
     const state = stateRef.current;
     if (!state.dragging) return;
     const delta = e.clientY - state.pointerDownY;
-    if (Math.abs(delta) > DRAG_THRESHOLD) state.dragged = true;
+    const currentThreshold = e.pointerType === "touch" ? 14 : DRAG_THRESHOLD;
+    if (Math.abs(delta) > currentThreshold) state.dragged = true;
     applyHeight(state.pointerDownHeight + delta);
   };
 
@@ -105,7 +108,15 @@ function RoleRow({
       snapTo(!state.open);
       return;
     }
-    snapTo(state.height > OPEN_HEIGHT / 2);
+    const finalOpen = state.height > OPEN_HEIGHT / 2;
+    snapTo(finalOpen);
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      snapTo(!stateRef.current.open);
+    }
   };
 
   useEffect(() => {
@@ -157,7 +168,13 @@ function RoleRow({
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
-        className="flex items-center justify-between py-8 md:py-12 select-none"
+        onKeyDown={onKeyDown}
+        role="button"
+        tabIndex={0}
+        aria-expanded={isOpen}
+        aria-controls={`role-content-${index}`}
+        id={`role-trigger-${index}`}
+        className="flex items-center justify-between py-8 md:py-12 select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--color-gold)]"
         style={{ touchAction: "none" }}
         data-cursor="hover"
       >
@@ -203,6 +220,9 @@ function RoleRow({
       {/* Drag-revealed content */}
       <div
         ref={contentRef}
+        id={`role-content-${index}`}
+        role="region"
+        aria-labelledby={`role-trigger-${index}`}
         className="overflow-hidden"
         style={{ height: 0, willChange: "height" }}
       >
@@ -302,8 +322,8 @@ export default function Roles({ dict }: { dict: Dictionary }) {
           </span>
         </h2>
         <p
-          className="roles-hint mt-6 font-body text-eyebrow eyebrow"
-          style={{ color: "var(--color-off-white)", opacity: 0.35 }}
+          className="roles-hint mt-6 font-body text-eyebrow eyebrow animate-pulse"
+          style={{ color: "var(--color-gold)", opacity: 0.8, letterSpacing: "0.22em" }}
         >
           {dict.roles.hint}
         </p>

@@ -23,13 +23,45 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const dict = await getDictionary(lang);
 
   if (!artist) return { title: dict.artistPage.notFound };
+  
+  const title = `${artist.name} | Servus Global Artist Roster`;
+  const description = `${artist.name} - official artist profile. ${artist.bio.substring(0, 120)}... Represented by Servus Global, premier music management agency.`;
+  const genresString = artist.genres.join(", ");
+  
   return {
-    title: artist.name,
-    description: artist.bio,
+    title: title,
+    description: description,
+    keywords: [
+      artist.name,
+      `${artist.name} music`,
+      `${artist.name} artist`,
+      artist.name.toLowerCase(),
+      genresString,
+      "Servus Global roster",
+      "music management roster",
+      "artist management profile"
+    ],
+    alternates: {
+      canonical: `/${lang}/artists/${slug}`,
+      languages: {
+        en: `/en/artists/${slug}`,
+        pt: `/pt/artists/${slug}`,
+        es: `/es/artists/${slug}`,
+        ja: `/ja/artists/${slug}`,
+      },
+    },
     openGraph: {
       title: `${artist.name} | Servus Global`,
-      description: artist.bio,
-      images: [{ url: artist.portraitUrl }],
+      description: description,
+      images: [{ url: artist.portraitUrl, alt: `${artist.name} portrait` }],
+      type: "profile",
+      locale: lang === "pt" ? "pt_BR" : lang === "es" ? "es_ES" : lang === "ja" ? "ja_JP" : "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${artist.name} | Servus Global`,
+      description: description,
+      images: [artist.portraitUrl],
     },
   };
 }

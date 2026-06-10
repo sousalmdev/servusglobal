@@ -33,22 +33,23 @@ export default function HeroEditorial({ dict }: { dict: Dictionary }) {
       if (reducedMotion) return;
 
       const playEntrance = () => {
-        // Title word reveal
-        gsap.set(".hero-word", { yPercent: 110 });
-        gsap.set(".hero-subtitle", { opacity: 0, y: 30 });
-        gsap.set(".hero-eyebrow", { opacity: 0, y: 10 });
+        // Title word reveal — cinematic blur dissolve
+        gsap.set(".hero-word", { yPercent: 110, filter: "blur(12px)" });
+        gsap.set(".hero-subtitle", { opacity: 0, y: 30, filter: "blur(6px)" });
+        gsap.set(".hero-eyebrow", { opacity: 0, y: 10, scale: 0.9 });
 
         const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
 
-        tl.to(".hero-eyebrow", { opacity: 0.5, y: 0, duration: 0.8 }, 0.2);
+        tl.to(".hero-eyebrow", { opacity: 0.5, y: 0, scale: 1, duration: 1.0 }, 0.2);
         tl.to(".hero-word", {
           yPercent: 0,
-          duration: 1.6,
-          stagger: 0.1,
+          filter: "blur(0px)",
+          duration: 1.8,
+          stagger: 0.12,
         }, 0.3);
         tl.to(
           ".hero-subtitle",
-          { opacity: 0.5, y: 0, duration: 1.2 },
+          { opacity: 0.5, y: 0, filter: "blur(0px)", duration: 1.4 },
           "-=0.8"
         );
       };

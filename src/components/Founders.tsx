@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 import type { Dictionary } from "@/i18n/getDictionary";
 
@@ -20,7 +21,7 @@ const founders: Founder[] = [
   {
     name: "Seppe",
     title: "Founder | Music Executive | A&R | Artist Management",
-    bio: "Raised within the world of music and entertainment, Seppe combines creative intuition with strategic industry insight. A drummer since the age of five, with foundations in rock, jazz, and hip hop, he has built his career around supporting artists in their growth, differentiation, and long-term success. Today, Seppe serves as an Artist Manager, A&R, and Music Executive dedicated to discovering talent, developing careers, and creating opportunities beyond conventional music industry pathways.",
+    bio: "An Italo-Australian who unites sophistication and drive in his art, Seppe combines creative intuition with strategic industry insight. Raised within the world of music and entertainment, and a drummer since the age of five with foundations in rock, jazz, and hip hop, he has built his career around supporting artists in their growth, differentiation, and long-term success. Today, Seppe serves as an Artist Manager, A&R, and Music Executive dedicated to discovering talent, developing careers, and creating opportunities beyond conventional music industry pathways.",
     imageUrl: "/images/team/seppe.jpg",
     align: "left",
   },
@@ -44,8 +45,8 @@ export default function Founders({ dict }: { dict: Dictionary }) {
       if (reducedMotion) {
         gsap.set(".founders-heading .founders-word", { yPercent: 0 });
         gsap.set(".founder-row", { opacity: 1 });
-        gsap.set(".founder-img-mask", { clipPath: "inset(0% 0 0 0)" });
-        gsap.set(".founder-name-char", { yPercent: 0 });
+        gsap.set(".founder-img-mask", { clipPath: "inset(0% 0% 0% 0%)" });
+        gsap.set(".founder-name-char", { opacity: 1, scale: 1, yPercent: 0 });
         gsap.set(".founder-title-line", { opacity: 0.6, y: 0 });
         gsap.set(".founder-divider-line", { scaleX: 1 });
         gsap.set(".founder-bio-line", { opacity: 0.78, y: 0 });
@@ -55,8 +56,8 @@ export default function Founders({ dict }: { dict: Dictionary }) {
       // ── Initial hidden states ──
       gsap.set(".founders-heading .founders-word", { yPercent: 110 });
       gsap.set(".founder-row", { opacity: 0 });
-      gsap.set(".founder-img-mask", { clipPath: "inset(100% 0 0 0)" });
-      gsap.set(".founder-name-char", { yPercent: 120 });
+      gsap.set(".founder-img-mask", { clipPath: "inset(0% 50% 0% 50%)" });
+      gsap.set(".founder-name-char", { opacity: 0, scale: 0.7, yPercent: 20 });
       gsap.set(".founder-title-line", { opacity: 0, y: 14 });
       gsap.set(".founder-divider-line", { scaleX: 0 });
       gsap.set(".founder-bio-line", { opacity: 0, y: 20 });
@@ -88,17 +89,17 @@ export default function Founders({ dict }: { dict: Dictionary }) {
             // 1. Fade in the row
             tl.to(row, { opacity: 1, duration: 0.4 }, 0);
 
-            // 2. Image clip-path reveal
+            // 2. Image clip-path reveal (horizontal split-wipe)
             tl.to(
               row.querySelector(".founder-img-mask"),
-              { clipPath: "inset(0% 0 0 0)", duration: 1.4 },
+              { clipPath: "inset(0% 0% 0% 0%)", duration: 1.6, ease: "power4.inOut" },
               0,
             );
 
-            // 3. Name — character-by-character stagger
+            // 3. Name — typewriter character stagger
             tl.to(
               row.querySelectorAll(".founder-name-char"),
-              { yPercent: 0, duration: 1.2, stagger: 0.04 },
+              { opacity: 1, scale: 1, yPercent: 0, duration: 0.7, stagger: 0.05, ease: "back.out(1.5)" },
               0.2,
             );
 
@@ -165,7 +166,7 @@ export default function Founders({ dict }: { dict: Dictionary }) {
         <h2
           className="font-display"
           style={{
-            fontSize: "clamp(3rem, 9vw, 10rem)",
+            fontSize: "clamp(2.25rem, 8vw, 8rem)",
             lineHeight: 0.9,
             letterSpacing: "-0.04em",
             fontWeight: 800,
@@ -195,7 +196,16 @@ export default function Founders({ dict }: { dict: Dictionary }) {
         {founders.map((founder) => {
           const isLeft = founder.align === "left";
           const nameChars = founder.name.split("");
-          const bioSentences = splitBio(founder.bio);
+          
+          const isSeppe = founder.name === "Seppe";
+          const title = isSeppe
+            ? (dict.founders?.seppeTitle ?? founder.title)
+            : (dict.founders?.nitroseTitle ?? founder.title);
+          const bio = isSeppe
+            ? (dict.founders?.seppeBio ?? founder.bio)
+            : (dict.founders?.nitroseBio ?? founder.bio);
+
+          const bioSentences = splitBio(bio);
 
           return (
             <div
@@ -222,13 +232,21 @@ export default function Founders({ dict }: { dict: Dictionary }) {
                     }}
                   >
                     <div
-                      className="founder-img-inner absolute inset-0 bg-cover bg-center"
+                      className="founder-img-inner absolute inset-0"
                       style={{
-                        backgroundImage: `url(${founder.imageUrl})`,
                         transform: "scale(1.1)",
                         filter: "grayscale(1) contrast(1.1) brightness(0.85)",
                       }}
-                    />
+                    >
+                      <Image
+                        src={founder.imageUrl}
+                        alt={`Photo of ${founder.name}`}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 40vw"
+                        className="object-cover object-center"
+                        priority={founder.name === "Seppe"}
+                      />
+                    </div>
 
                     {/* Subtle vignette */}
                     <div
@@ -250,7 +268,7 @@ export default function Founders({ dict }: { dict: Dictionary }) {
                   <h3
                     className="font-display overflow-hidden"
                     style={{
-                      fontSize: "clamp(3rem, 7vw, 6rem)",
+                      fontSize: "clamp(2rem, 6vw, 5rem)",
                       lineHeight: 0.9,
                       letterSpacing: "-0.04em",
                       fontWeight: 800,
@@ -280,7 +298,7 @@ export default function Founders({ dict }: { dict: Dictionary }) {
                       lineHeight: 1.6,
                     }}
                   >
-                    {founder.title}
+                    {title}
                   </span>
 
                   {/* Divider */}

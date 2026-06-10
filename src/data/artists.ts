@@ -8,7 +8,7 @@ export const artists: Artist[] = [
     portraitUrl: "/images/roster/solis_new.png",
     genres: ["Hip-Hop", "R&B"],
     socialLinks: [
-      { platform: "spotify", url: "https://open.spotify.com" },
+      { platform: "spotify", url: "https://open.spotify.com/artist/4j4UVI50ysUAEwetmoEW1X" },
       { platform: "soundcloud", url: "https://soundcloud.com/whotfissolis" },
       { platform: "instagram", url: "https://instagram.com/whotfissolis" },
     ],
@@ -23,7 +23,8 @@ export const artists: Artist[] = [
     genres: ["Hip-Hop", "Rap"],
     socialLinks: [
       { platform: "spotify", url: "https://open.spotify.com/artist/6rW8Vn8nN8J6vJ3W5kGZ5w" },
-      { platform: "instagram", url: "https://instagram.com/Biglola_redd" },
+      { platform: "instagram", url: "https://www.instagram.com/officiallolaredd/" },
+      { platform: "soundcloud", url: "https://soundcloud.com/lolaredd" },
     ],
     featured: true,
     order: 1,
@@ -35,7 +36,7 @@ export const artists: Artist[] = [
     portraitUrl: "/images/roster/dezstacks.png",
     genres: ["Hip-Hop", "R&B", "Reggae"],
     socialLinks: [
-      { platform: "spotify", url: "https://open.spotify.com" },
+      { platform: "spotify", url: "https://open.spotify.com/artist/7frjCOZmXai7pzATdxeuwf" },
       { platform: "instagram", url: "https://instagram.com/official_dezstackz" },
     ],
     featured: true,
@@ -48,7 +49,7 @@ export const artists: Artist[] = [
     portraitUrl: "/images/roster/chrishndrixx.png",
     genres: ["R&B", "Hip-Hop"],
     socialLinks: [
-      { platform: "spotify", url: "https://open.spotify.com" },
+      { platform: "spotify", url: "https://open.spotify.com/artist/0k8nInix9kFrUZTKtj7wEx" },
       { platform: "instagram", url: "https://instagram.com/chrishndrixx" },
     ],
     featured: true,
@@ -61,8 +62,7 @@ export const artists: Artist[] = [
     portraitUrl: "/images/roster/servuscrew5.png",
     genres: ["R&B", "Hip-Hop"],
     socialLinks: [
-      { platform: "spotify", url: "https://open.spotify.com" },
-      { platform: "instagram", url: "https://instagram.com" },
+      { platform: "instagram", url: "https://instagram.com/dajahvamour" },
     ],
     featured: true,
     order: 4,
@@ -74,8 +74,8 @@ export const artists: Artist[] = [
     portraitUrl: "/images/roster/servuscrew6.png",
     genres: ["Hip-Hop", "Rap"],
     socialLinks: [
-      { platform: "spotify", url: "https://open.spotify.com" },
-      { platform: "instagram", url: "https://instagram.com" },
+      { platform: "spotify", url: "https://open.spotify.com/artist/7qysbTs4X3OTuJTgvdDqKX" },
+      { platform: "instagram", url: "https://instagram.com/ayoletreez" },
     ],
     featured: true,
     order: 5,
@@ -87,8 +87,8 @@ export const artists: Artist[] = [
     portraitUrl: "/images/roster/servuscrew7.png",
     genres: ["Trap", "Hip-Hop"],
     socialLinks: [
-      { platform: "spotify", url: "https://open.spotify.com" },
-      { platform: "instagram", url: "https://instagram.com" },
+      { platform: "spotify", url: "https://open.spotify.com/artist/6oSxt5PKotmgf7XywZ7c4I" },
+      { platform: "instagram", url: "https://instagram.com/gankgaank36" },
     ],
     featured: true,
     order: 6,
@@ -100,8 +100,9 @@ export const artists: Artist[] = [
     portraitUrl: "/images/roster/servuscrew8.png",
     genres: ["Hip-Hop", "R&B"],
     socialLinks: [
-      { platform: "spotify", url: "https://open.spotify.com" },
-      { platform: "instagram", url: "https://instagram.com" },
+      { platform: "youtube", url: "https://www.youtube.com/nitrosetheprodigy" },
+      { platform: "instagram", url: "instagram.com/nitrose.beats" },
+      { platform: "soundcloud", url: "https://soundcloud.com/nitroseiv" },
     ],
     featured: true,
     order: 7,
@@ -113,8 +114,7 @@ export const artists: Artist[] = [
     portraitUrl: "/images/roster/servuscrew9.png",
     genres: ["Pop", "R&B", "Hip-Hop"],
     socialLinks: [
-      { platform: "spotify", url: "https://open.spotify.com" },
-      { platform: "instagram", url: "https://instagram.com" },
+      { platform: "instagram", url: "https://instagram.com/rainn_babii" },
     ],
     featured: true,
     order: 8,

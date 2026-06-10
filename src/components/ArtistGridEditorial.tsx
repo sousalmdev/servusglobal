@@ -6,24 +6,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 import { artists } from "@/data/artists";
 import Link from "next/link";
-import FleurIcon from "@/components/FleurIcon";
+import Image from "next/image";
 import type { Dictionary } from "@/i18n/getDictionary";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const formatArtistName = (name: string) => {
-  if (!name.includes(" ") && name.length > 7) {
-    const splitIndex = name.toLowerCase().startsWith("chris") ? 5 : Math.ceil(name.length / 2);
-    return (
-      <>
-        {name.slice(0, splitIndex)}
-        <br />
-        {name.slice(splitIndex)}
-      </>
-    );
-  }
-  return name;
-};
 
 export default function ArtistGridEditorial({ dict, lang = "en" }: { dict?: Dictionary; lang?: string }) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -68,18 +54,19 @@ export default function ArtistGridEditorial({ dict, lang = "en" }: { dict?: Dict
         });
       });
 
-      // Name reveals
-      gsap.from(".artist-name-reveal", {
-        y: 20,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.08,
-        ease: "expo.out",
-        scrollTrigger: {
-          trigger: ".artist-names-group",
-          start: "top 85%",
-          once: true,
-        },
+      // Parallax drift on card images — staggered depth per card
+      gsap.utils.toArray<HTMLElement>(".artist-card-img").forEach((img, i) => {
+        const yAmount = 20 + (i % 3) * 10; // Vary parallax depth per column
+        gsap.to(img, {
+          y: -yAmount,
+          ease: "none",
+          scrollTrigger: {
+            trigger: img.closest(".artist-card-editorial"),
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
       });
     }, sectionRef);
     return () => ctx.revert();
@@ -139,60 +126,23 @@ export default function ArtistGridEditorial({ dict, lang = "en" }: { dict?: Dict
             href={`/${lang}/artists/${artist.slug}`}
             className="artist-card-editorial group block relative overflow-hidden"
             style={{ aspectRatio: "3/4" }}
+            data-cursor="hover"
           >
-            {/* Grayscale base */}
+            {/* Base image with subtle zoom hover + parallax drift */}
             <div
-              className="absolute inset-0 bg-cover bg-center transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:!filter-none"
+              className="artist-card-img absolute inset-0 transition-transform duration-[1000ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
               style={{
-                backgroundImage: `url(${artist.portraitUrl})`,
-              
+                transform: "scale(1.08)",
               }}
-            />
-
-            {/* Overlay — always on for touch, hover-revealed on desktop */}
-            <div
-              className="absolute inset-0 transition-opacity duration-700 opacity-100 md:opacity-0 md:group-hover:opacity-100"
-              style={{
-                background:
-                  "linear-gradient(180deg, transparent 40%, rgba(10,10,10,0.8) 100%)",
-              }}
-            />
-
-            {/* Name */}
-            <div className="artist-names-group absolute bottom-0 left-0 right-0 p-5 md:p-6 z-10 translate-y-0 opacity-100 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]">
-              <h3
-                className="artist-name-reveal font-display"
-                style={{
-                  color: "var(--color-off-white)",
-                  fontSize: "clamp(1.25rem, 2vw, 2rem)",
-                  lineHeight: 1,
-                  letterSpacing: "-0.02em",
-                  fontWeight: 600,
-                }}
-              >
-                {formatArtistName(artist.name)}
-              </h3>
-              <span
-                className="artist-name-reveal font-body text-eyebrow eyebrow mt-2 inline-flex items-center gap-2"
-                style={{ color: "var(--color-gold)", fontSize: "0.625rem" }}
-              >
-                {artist.genres.join(" · ")}
-              </span>
-            </div>
-
-            {/* Arrow indicator */}
-            <div className="absolute top-4 right-4 z-10 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-500 translate-x-0 md:translate-x-2 md:group-hover:translate-x-0">
-              <span
-                className="font-body text-eyebrow eyebrow"
-                style={{ color: "var(--color-gold)" }}
-              >
-                →
-              </span>
-            </div>
-
-            {/* Fleur tag */}
-            <div className="absolute bottom-5 right-5 z-10 w-6 h-6 md:w-8 md:h-8 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-700 translate-y-0 md:translate-y-4 md:group-hover:translate-y-0">
-              <FleurIcon style={{ color: "var(--color-gold)" }} />
+            >
+              <Image
+                src={artist.portraitUrl}
+                alt={artist.name}
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover object-center"
+                loading="lazy"
+              />
             </div>
           </Link>
         ))}

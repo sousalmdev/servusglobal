@@ -93,7 +93,7 @@
     "direct": "Direct",
     "pathwaysTitle": "Select a pathway",
     "pathways": {
-      "artist": "Become a Client",
+      "artist": "Become an Artist",
       "investor": "Partnership",
       "other": "General"
     },
@@ -104,7 +104,7 @@
       "messageOther": "What's on your mind?",
       "send": "Send message",
       "sending": "Sending…",
-      "title": "Client Onboarding & Service Request Form",
+      "title": "Artist Onboarding & Service Request Form",
       "subtitle": "Welcome to Servus Global. Please complete the form below. Our team will review your needs and connect you with the right services. All information is confidential.",
       "fullName": "Full Name *",
       "artistName": "Artist / Producer / Brand Name *",
@@ -162,7 +162,6 @@
     "titlesCount": "titles"
   },
   "showcase": {
-    "stats": "850M+ Streams · 47 Countries · 24 Artists",
     "heading1": "The sound is yours.",
     "heading2": "We amplify.",
     "desc": "Build the team, the rollout and the business around the music you're already making."
@@ -170,7 +169,7 @@
   "whyServus": {
     "eyebrow": "Why Servus Global",
     "title": "Built for Enduring Legacy.",
-    "badgeNumber": "15+",
+    "badgeNumber": "3+",
     "badgeText": "Years of Excellence",
     "pillars": [
       {
@@ -194,7 +193,11 @@
   },
   "founders": {
     "word1": "THE",
-    "word2": "founders"
+    "word2": "founders",
+    "seppeTitle": "Founder | Music Executive | A&R | Artist Management",
+    "seppeBio": "An Italo-Australian who unites sophistication and drive in his art, Seppe combines creative intuition with strategic industry insight. Raised within the world of music and entertainment, and a drummer since the age of five with foundations in rock, jazz, and hip hop, he has built his career around supporting artists in their growth, differentiation, and long-term success. Today, Seppe serves as an Artist Manager, A&R, and Music Executive dedicated to discovering talent, developing careers, and creating opportunities beyond conventional music industry pathways.",
+    "nitroseTitle": "Founder | Billboard Producer | Music Executive | Creative Development",
+    "nitroseBio": "Born in Florida and raised in Miami, Nitrose developed an early passion for music through piano and guitar before establishing himself as both an artist and Billboard producer. Since beginning his production career in 2012, he has earned recognition for his versatile sound and sophisticated approach to creative development. At Servus Global, Nitrose integrates production expertise with creative vision to shape records, elevate artists, and foster impactful careers through sound, strategy, and innovation."
   },
   "faq": {
     "word1": "FREQUENTLY",
@@ -208,18 +211,18 @@
       },
       {
         "q": "How can I submit my music to the A&R team?",
-        "a": "You can submit your portfolio and tracks directly through our onboarding form in the Contact section. Select \"Become a Client\" to begin."
+        "a": "You can submit your portfolio and tracks directly through our onboarding form in the Contact section. Select \"Become an Artist\" to begin."
       },
       {
-        "q": "Do you work with independent artists or signed artists?",
-        "a": "Both. We build tailored infrastructure for each artist, offering everything from co-management partnerships to global distribution and label services."
+        "q": "Do you work with independent or label-signed artists?",
+        "a": "Both. We construct a bespoke infrastructure for each artist, offering everything from co-management partnerships to global distribution and label services."
       },
       {
         "q": "Where is Servus Global based?",
-        "a": "We operate globally, with roots and primary hubs in Perth, Australia, and Miami/New York, USA, connecting artists to worldwide markets."
+        "a": "We operate globally with roots and main hubs in Perth, Australia, and Miami/New York, USA, connecting artists to world markets."
       },
       {
-        "q": "What are the criteria for becoming a Servus Global client?",
+        "q": "What are the criteria for becoming a Servus Global artist?",
         "a": "We look for dedicated artists, brands, and labels with a unique creative vision, professional drive, and a commitment to long-term career growth."
       }
     ]

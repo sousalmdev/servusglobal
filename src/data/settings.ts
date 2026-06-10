@@ -3,7 +3,7 @@ import { SiteSettings, Milestone } from "@/types";
 export const settings: SiteSettings = {
   heroHeadline: "Where artists become legacies.",
   heroHeadlineLines: ["Where artists", "become", "legacies."],
-  heroEyebrow: "Est. 2019 · Perth · USA",
+  heroEyebrow: "Est. 2022 · Perth · USA",
   heroLocation: "Now broadcasting",
   heroSubline:
     "Talent management for musicians building long careers. Releases, brand, touring, business.",
@@ -12,10 +12,10 @@ export const settings: SiteSettings = {
   heroPosterUrl:
     "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=2400&q=80&auto=format&fit=crop",
   stats: [
-    { label: "Streams", value: 850, suffix: "M+" },
-    { label: "Countries", value: 47 },
-    { label: "Artists", value: 24 },
-    { label: "Releases", value: 120, suffix: "+" },
+    { label: "Streams", value: 2, suffix: "M+" },
+    { label: "Countries", value: 10 },
+    { label: "Artists", value: 10  },
+    { label: "Releases", value: 60, suffix: "+" },
   ],
 };
 

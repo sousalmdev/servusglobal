@@ -25,15 +25,15 @@ export default function FAQ({ dict }: { dict: Dictionary }) {
       if (reducedMotion) {
         // Static positioning for reduced motion
         gsap.set(".faq-eyebrow", { opacity: 0.5, y: 0 });
-        gsap.set(".faq-heading", { opacity: 1, y: 0 });
-        gsap.set(".faq-item", { opacity: 1, y: 0 });
+        gsap.set(".faq-heading", { opacity: 1, y: 0, filter: "blur(0px)" });
+        gsap.set(".faq-item", { opacity: 1, clipPath: "inset(0 0% 0 0)" });
         return;
       }
 
       // Initial state
       gsap.set(".faq-eyebrow", { opacity: 0, y: 15 });
-      gsap.set(".faq-heading", { opacity: 0, y: 30 });
-      gsap.set(".faq-item", { opacity: 0, y: 40 });
+      gsap.set(".faq-heading", { opacity: 0, y: 30, filter: "blur(6px)" });
+      gsap.set(".faq-item", { opacity: 0, clipPath: "inset(0 100% 0 0)" });
 
       // Main entrance timeline
       ScrollTrigger.create({
@@ -44,11 +44,13 @@ export default function FAQ({ dict }: { dict: Dictionary }) {
           const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
 
           tl.to(".faq-eyebrow", { opacity: 0.5, y: 0, duration: 1.0 }, 0);
-          tl.to(".faq-heading", { opacity: 1, y: 0, duration: 1.4 }, 0.15);
+          tl.to(".faq-heading", { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.4 }, 0.15);
+          
+          // Items "unfold" from left — clip-path wipe
           tl.to(
             ".faq-item",
-            { opacity: 1, y: 0, duration: 1.2, stagger: 0.1 },
-            0.3
+            { opacity: 1, clipPath: "inset(0 0% 0 0)", duration: 1.0, stagger: 0.12 },
+            0.4
           );
         },
       });

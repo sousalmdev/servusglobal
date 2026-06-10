@@ -12,6 +12,12 @@ export default function FooterEditorial({ dict }: { dict: Dictionary }) {
   const footerRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
 
+  const scrollToTop = () => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   useEffect(() => {
     if (reducedMotion || !footerRef.current) return;
     const ctx = gsap.context(() => {
@@ -36,6 +42,18 @@ export default function FooterEditorial({ dict }: { dict: Dictionary }) {
             ease: "expo.out",
             delay: 0.4,
           });
+        },
+      });
+
+      // Parallax drift on the giant wordmark
+      gsap.to(".footer-brand", {
+        yPercent: -15,
+        ease: "none",
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: "top bottom",
+          end: "bottom bottom",
+          scrub: true,
         },
       });
     }, footerRef);
@@ -175,7 +193,6 @@ export default function FooterEditorial({ dict }: { dict: Dictionary }) {
         </div>
       </div>
 
-      {/* Bottom bar */}
       <div
         className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pt-8"
         style={{ borderTop: "1px solid rgba(245, 242, 235, 0.06)" }}
@@ -186,6 +203,14 @@ export default function FooterEditorial({ dict }: { dict: Dictionary }) {
         >
           © {new Date().getFullYear()} Servus Global · Perth · USA · Worldwide
         </span>
+        <button
+          onClick={scrollToTop}
+          className="back-to-top-btn group font-body text-eyebrow eyebrow transition-all duration-300 flex items-center gap-2 cursor-pointer"
+          style={{ color: "var(--color-gold)", opacity: 0.7, background: "none", border: "none" }}
+        >
+          BACK TO TOP
+          <span className="transition-transform duration-300 group-hover:-translate-y-1">↑</span>
+        </button>
         <span
           className="footer-link font-body text-eyebrow eyebrow"
           style={{ color: "var(--color-off-white)", opacity: 0.2 }}
