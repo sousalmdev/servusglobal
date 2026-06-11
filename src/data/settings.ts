@@ -6,7 +6,7 @@ export const settings: SiteSettings = {
   heroEyebrow: "Est. 2022 · Perth · USA",
   heroLocation: "Now broadcasting",
   heroSubline:
-    "Talent management for musicians building long careers. Releases, brand, touring, business.",
+    "Music distribution for musicians building long careers. Releases, brand, touring, business.",
   heroVideoUrl:
     "https://videos.pexels.com/video-files/3045163/3045163-hd_1920_1080_25fps.mp4",
   heroPosterUrl:

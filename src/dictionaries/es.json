@@ -1,6 +1,6 @@
 {
   "nav": {
-    "tagline": "A&R / MANAGEMENT / AGENCIA",
+    "tagline": "A&R / DISTRIBUCIÓN / AGENCIA",
     "roster": "Artistas",
     "services": "Servicios",
     "story": "Historia",
@@ -9,11 +9,11 @@
     "workWithUs": "Trabaja con nosotros"
   },
   "hero": {
-    "eyebrow": "Gestión de Artistas y Talentos",
+    "eyebrow": "Distribución Musical y Servicios de Sello",
     "word1": "ARTISTAS",
     "word2": "crean",
     "word3": "CULTURA",
-    "subtitle": "Gestión de talentos para músicos construyendo carreras largas. Lanzamientos, marcas, giras y negocios."
+    "subtitle": "Distribución musical para músicos construyendo carreras largas. Lanzamientos, marcas, giras y negocios."
   },
   "services": {
     "word1": "NUESTROS",
@@ -31,7 +31,7 @@
       },
       {
         "number": "03",
-        "title": "Gestión de Giras",
+        "title": "Logística de Giras",
         "description": "Rutas, logística, contratos. Desde el circuito de clubes hasta los grandes festivales."
       },
       {
@@ -55,7 +55,7 @@
     "word1": "NUESTRA",
     "word2": "historia",
     "eyebrow": "Por qué existimos",
-    "copy": "Creamos Servus porque la música increíble no debería estancarse por falta de infraestructura. La industria está llena de artistas con la visión y la ética de trabajo para triunfar, pero sin la estrategia de lanzamiento, los canales de distribución y la representación dedicada necesarias para transformar el impulso en una carrera duradera. Servus se encarga de la gestión, el marketing, la distribución y la dirección creativa, permitiendo a los artistas dirigir sus carreras como empresas para que puedan concentrarse en lo que realmente importa: el arte."
+    "copy": "Creamos Servus porque la música increíble no debería estancarse por falta de infraestructura. La industria está llena de artistas con la visión y la ética de trabajo para triunfar, pero sin la estrategia de lanzamiento, los canales de distribución y la representación dedicada necesarias para transformar el impulso en una carrera duradera. Servus se encarga de la distribución, el marketing y la dirección creativa, permitiendo a los artistas dirigir sus carreras como empresas para que puedan concentrarse en lo que realmente importa: el arte."
   },
   "roles": {
     "word1": "LOS",
@@ -138,7 +138,7 @@
   },
   "footer": {
     "about": "Acerca de",
-    "aboutText": "Gestión de talentos. Arraigado en Perth y EE. UU., trabajando con artistas mundialmente.",
+    "aboutText": "Distribución musical. Arraigado en Perth y EE. UU., trabajando con artistas mundialmente.",
     "navigate": "Navegar",
     "direct": "Directo",
     "social": "Social",
@@ -194,8 +194,8 @@
   "founders": {
     "word1": "LOS",
     "word2": "fundadores",
-    "seppeTitle": "Fundador | Ejecutivo de Música | A&R | Gestión Artística",
-    "seppeBio": "Un ítalo-australiano que une sofisticación y ambición, Seppe combina intuición creativa con visión estratégica de la industria. Criado en el mundo de la música y el entretenimiento, ha sido baterista desde los cinco años, desarrollando una base sólida en rock, jazz y hip hop. Ha construido su carrera apoyando a los artistas en su desarrollo, posicionamiento y éxito a largo plazo. Hoy, Seppe se desempeña como manager de artistas, ejecutivo de A&R y ejecutivo musical dedicado a descubrir talentos, desarrollar carreras y crear oportunidades más allá de las vías convencionales de la industria.",
+    "seppeTitle": "Fundador | Ejecutivo de Música | A&R | Distribución Musical",
+    "seppeBio": "Un ítalo-australiano que une sofisticación y ambición, Seppe combina intuición creativa con visión estratégica de la industria. Criado en el mundo de la música y el entretenimiento, ha sido baterista desde los cinco años, desarrollando una base sólida en rock, jazz y hip hop. Ha construido su carrera apoyando a los artistas en su desarrollo, posicionamiento y éxito a largo plazo. Hoy, Seppe se desempeña como ejecutivo de A&R y ejecutivo musical dedicado a descubrir talentos, desarrollar carreras y crear oportunidades más allá de las vías convencionales de la industria.",
     "nitroseTitle": "Fundador | Productor de Billboard | Ejecutivo de Música | Desarrollo Creativo",
     "nitroseBio": "Nacido en Florida y criado en Miami, Nitrose desarrolló una pasión temprana por la música a través del piano y la guitarra antes de establecerse como artista y productor de Billboard. Desde que comenzó su carrera como productor en 2012, ha ganado reconocimiento por su sonido versátil y su enfoque sofisticado del desarrollo creativo. En Servus Global, Nitrose integra la experiencia de producción con la visión creativa para dar forma a discos, elevar artistas y fomentar carreras de gran impacto a través del sonido, la estrategia y la innovación."
   },
@@ -207,7 +207,7 @@
     "questions": [
       {
         "q": "¿Qué servicios ofrece Servus Global?",
-        "a": "Ofrecemos servicios artísticos integrales que incluyen estrategia de lanzamiento, distribución global (digital y física), licencias de sincronización, gestión de giras, desarrollo de marca y dirección creativa de A&R."
+        "a": "Ofrecemos servicios artísticos integrales que incluyen estrategia de lanzamiento, distribución global (digital y física), licencias de sincronización, logística de giras, desarrollo de marca y dirección creativa de A&R."
       },
       {
         "q": "¿Cómo puedo enviar mi música al equipo de A&R?",
@@ -215,7 +215,7 @@
       },
       {
         "q": "¿Trabajan con artistas independientes o firmados por sellos?",
-        "a": "Ambos. Construimos una infraestructura a la medida para cada artista, ofreciendo desde alianzas de co-gestión hasta distribución global y servicios de sello discográfico."
+        "a": "Ambos. Construimos una infraestructura a la medida para cada artista, ofreciendo desde alianzas de distribución global hasta servicios de sello discográfico."
       },
       {
         "q": "¿Dónde tiene su sede Servus Global?",

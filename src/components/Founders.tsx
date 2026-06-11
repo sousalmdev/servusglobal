@@ -20,8 +20,8 @@ interface Founder {
 const founders: Founder[] = [
   {
     name: "Seppe",
-    title: "Founder | Music Executive | A&R | Artist Management",
-    bio: "An Italo-Australian who combines sophistication with ambition, Seppe blends creative intuition with strategic industry insight. Raised within the world of music and entertainment, he has been a drummer since the age of five, developing a strong foundation in rock, jazz, and hip hop. He has built his career around supporting artists in their development, positioning, and long-term success. Today, Seppe serves as an Artist Manager, A&R Executive, and Music Executive dedicated to discovering talent, developing careers, and creating opportunities beyond conventional music industry pathways.",
+    title: "Founder | Music Executive | A&R | Music Distribution",
+    bio: "An Italo-Australian who combines sophistication with ambition, Seppe blends creative intuition with strategic industry insight. Raised within the world of music and entertainment, he has been a drummer since the age of five, developing a strong foundation in rock, jazz, and hip hop. He has built his career around supporting artists in their development, positioning, and long-term success. Today, Seppe serves as an A&R Executive, and Music Executive dedicated to discovering talent, developing careers, and creating opportunities beyond conventional music industry pathways.",
     imageUrl: "/images/team/seppe.jpg",
     align: "left",
   },

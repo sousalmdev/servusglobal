@@ -37,22 +37,22 @@ export async function generateMetadata({
   // High-value SEO keywords primarily in English, targeted at global search queries
   const seoKeywords = [
     "Servus Global",
-    "music management agency",
-    "artist management group",
+    "music distribution agency",
+    "music distribution group",
     "music talent agency",
     "music artist rollout strategy",
     "global music distribution",
     "independent artist representation",
     "music A&R consulting",
     "music licensing and sync",
-    "tour management logistics",
+    "tour logistics",
     "brand development for musicians",
     "independent music marketing",
     "artists worldwide representation"
   ];
 
-  const title = "Servus Global | Global Music Management & Artist Rollouts";
-  const description = "Servus Global is a premium global music management and artist talent agency. Representing elite international musical talent and directing high-impact rollouts.";
+  const title = "Servus Global | Worldwide Music Distribution & Artist Development";
+  const description = "Servus Global is a worldwide music distribution and artist development company. Guiding the greatest musical talent to global success.";
 
   return {
     title: {
@@ -83,7 +83,7 @@ export async function generateMetadata({
           url: "/servusabout.png",
           width: 1200,
           height: 630,
-          alt: "Servus Global Artist & Talent Management",
+          alt: "Servus Global Music Distribution",
         },
       ],
     },
@@ -107,7 +107,7 @@ export async function generateMetadata({
     verification: {
       google: "google-site-verification-placeholder-change-this-in-layout",
     },
-    category: "Music Agency & Talent Management",
+    category: "Music Distribution Agency",
   };
 }
 
@@ -130,7 +130,7 @@ export default async function RootLayout({
         "https://instagram.com/servusglobal",
         "https://youtube.com/servusglobal"
       ],
-      "description": "Premium artist and talent management agency working with artists worldwide."
+      "description": "Premium music distribution agency working with artists worldwide."
     };
 
     return (

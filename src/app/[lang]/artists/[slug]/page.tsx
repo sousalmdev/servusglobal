@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!artist) return { title: dict.artistPage.notFound };
   
   const title = `${artist.name} | Servus Global Artist Roster`;
-  const description = `${artist.name} - official artist profile. ${artist.bio.substring(0, 120)}... Represented by Servus Global, premier music management agency.`;
+  const description = `${artist.name} - official artist profile. ${artist.bio.substring(0, 120)}... Represented by Servus Global, premier music distribution agency.`;
   const genresString = artist.genres.join(", ");
   
   return {
@@ -38,8 +38,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       artist.name.toLowerCase(),
       genresString,
       "Servus Global roster",
-      "music management roster",
-      "artist management profile"
+      "music distribution roster",
+      "music distribution profile"
     ],
     alternates: {
       canonical: `/${lang}/artists/${slug}`,

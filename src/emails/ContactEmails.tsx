@@ -315,7 +315,7 @@ export const ConfirmationEmail = ({ name, pathway, lang }: { name: string; pathw
   let greeting = `Hi ${name},`;
   let bodyP1 = "Thank you for reaching out to Servus Global.";
   let bodyP2 = "";
-  let bodyP3 = "Our management team will carefully review your details and get back to you shortly.";
+  let bodyP3 = "Our team will carefully review your details and get back to you shortly.";
   let signoff = "Best regards,";
   let team = "The Servus Global Team";
 
@@ -328,7 +328,7 @@ export const ConfirmationEmail = ({ name, pathway, lang }: { name: string; pathw
     greeting = `Olá ${name},`;
     bodyP1 = "Obrigado por entrar em contato com a Servus Global.";
     bodyP2 = `Recebemos com sucesso a sua candidatura para o canal de ${pathwayMap[pathway] || "geral"}.`;
-    bodyP3 = "A nossa equipe de gestão analisará os seus dados e entrará em contato com você o mais breve possível.";
+    bodyP3 = "A nossa equipe analisará os seus dados e entrará em contato com você o mais breve possível.";
     signoff = "Atenciosamente,";
     team = "Equipe Servus Global";
   } else if (cleanLang === "es") {
@@ -338,7 +338,7 @@ export const ConfirmationEmail = ({ name, pathway, lang }: { name: string; pathw
     greeting = `Hola ${name},`;
     bodyP1 = "Gracias por ponerte en contacto con Servus Global.";
     bodyP2 = `Hemos recibido con éxito tu solicitud para el canal de ${pathwayMap[pathway] || "general"}.`;
-    bodyP3 = "Nuestro equipo de gestión revisará tus datos y se pondrá en contacto contigo lo antes posible.";
+    bodyP3 = "Nuestro equipo revisará tus datos y se pondrá en contacto contigo lo antes posible.";
     signoff = "Atentamente,";
     team = "El equipo de Servus Global";
   } else if (cleanLang === "ja") {
@@ -348,7 +348,7 @@ export const ConfirmationEmail = ({ name, pathway, lang }: { name: string; pathw
     greeting = `${name} 様`;
     bodyP1 = "Servus Globalにお問い合わせいただきありがとうございます。";
     bodyP2 = `${pathwayMap[pathway] || "一般"}パスへの申請を正常に受け付けました。`;
-    bodyP3 = "当社のマネジメントチームが内容を確認の上、できるだけ早くご連絡いたします。";
+    bodyP3 = "当社のチームが内容を確認の上、できるだけ早くご連絡いたします。";
     signoff = "敬具";
     team = "Servus Global チーム";
   } else {
