@@ -88,7 +88,9 @@ export default function Contact({ dict }: { dict: Dictionary }) {
     setLoading(true);
     setError(false);
     const data = new FormData(e.currentTarget);
-    const payload: Record<string, any> = { pathway };
+    const pathname = typeof window !== "undefined" ? window.location.pathname : "";
+    const lang = pathname.split("/")[1] || "en";
+    const payload: Record<string, any> = { pathway, lang };
     
     // Properly collect multiple checkboxes with the same name into an array
     for (const [key, value] of Array.from(data.entries())) {

@@ -21,7 +21,7 @@ const founders: Founder[] = [
   {
     name: "Seppe",
     title: "Founder | Music Executive | A&R | Artist Management",
-    bio: "An Italo-Australian who unites sophistication and drive in his art, Seppe combines creative intuition with strategic industry insight. Raised within the world of music and entertainment, and a drummer since the age of five with foundations in rock, jazz, and hip hop, he has built his career around supporting artists in their growth, differentiation, and long-term success. Today, Seppe serves as an Artist Manager, A&R, and Music Executive dedicated to discovering talent, developing careers, and creating opportunities beyond conventional music industry pathways.",
+    bio: "An Italo-Australian who combines sophistication with ambition, Seppe blends creative intuition with strategic industry insight. Raised within the world of music and entertainment, he has been a drummer since the age of five, developing a strong foundation in rock, jazz, and hip hop. He has built his career around supporting artists in their development, positioning, and long-term success. Today, Seppe serves as an Artist Manager, A&R Executive, and Music Executive dedicated to discovering talent, developing careers, and creating opportunities beyond conventional music industry pathways.",
     imageUrl: "/images/team/seppe.jpg",
     align: "left",
   },
