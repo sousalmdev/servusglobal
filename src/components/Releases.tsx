@@ -78,22 +78,31 @@ function ReleaseCard({
         className="release-cover-mask block relative aspect-square overflow-hidden z-10"
       >
         <div
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.03]"
-          style={{
-            backgroundImage: `url(${release.coverArtUrl})`,
-            backgroundColor: "#1a1a1a",
-            filter: "saturate(0.95) contrast(1.04)",
-          }}
-        />
+          className="absolute inset-0 transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.03]"
+        >
+          <Image
+            src={release.coverArtUrl}
+            alt={release.title}
+            fill
+            sizes={isFeatured ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 50vw, 25vw"}
+            className="object-cover object-center"
+            style={{
+              filter: "saturate(0.95) contrast(1.04)",
+            }}
+            loading={isFeatured ? "eager" : "lazy"}
+          />
+        </div>
         {/* Plastic wrap overlay */}
-        <div
-          className="absolute inset-0 pointer-events-none mix-blend-screen opacity-45 z-20"
-          style={{
-            backgroundImage: "url(/plasticwrap.png)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
+        <div className="absolute inset-0 pointer-events-none mix-blend-screen opacity-45 z-20">
+          <Image
+            src="/plasticwrap.png"
+            alt=""
+            fill
+            sizes="25vw"
+            className="object-cover object-center"
+            loading="lazy"
+          />
+        </div>
        
       </a>
     </div>
@@ -465,14 +474,16 @@ export default function Releases({ dict }: { dict?: Dictionary }) {
                       />
                     </div>
                     {/* Plastic wrap overlay */}
-                    <div
-                      className="absolute inset-0 pointer-events-none mix-blend-screen opacity-45 z-20"
-                      style={{
-                        backgroundImage: "url(/plasticwrap.png)",
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                      }}
-                    />
+                    <div className="absolute inset-0 pointer-events-none mix-blend-screen opacity-45 z-20">
+                      <Image
+                        src="/plasticwrap.png"
+                        alt=""
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-cover object-center"
+                        loading="lazy"
+                      />
+                    </div>
                   
                   </a>
                 </div>
@@ -689,16 +700,16 @@ function SmallReleaseCard({
             />
           </div>
           {/* Plastic wrap overlay */}
-          <div
-            className="absolute inset-0 pointer-events-none mix-blend-screen opacity-45 z-20"
-            style={{
-              backgroundImage: "url(/plasticwrap.png)",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          />
-          {/* Glass shine flare overlay */}
-          <div className="glass-shine" />
+          <div className="absolute inset-0 pointer-events-none mix-blend-screen opacity-45 z-20">
+            <Image
+              src="/plasticwrap.png"
+              alt=""
+              fill
+              sizes="(max-width: 768px) 50vw, 25vw"
+              className="object-cover object-center"
+              loading="lazy"
+            />
+          </div>
         </a>
       </div>
 

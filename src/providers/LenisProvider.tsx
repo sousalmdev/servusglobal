@@ -40,9 +40,11 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
 
     // Refresh ScrollTrigger when document body size changes (lazy images, dynamic imports, etc.)
     let resizeObserver: ResizeObserver | undefined;
+    let resizeTimer: ReturnType<typeof setTimeout> | undefined;
     if (typeof ResizeObserver !== "undefined" && typeof document !== "undefined") {
       resizeObserver = new ResizeObserver(() => {
-        ScrollTrigger.refresh();
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => ScrollTrigger.refresh(), 250);
       });
       resizeObserver.observe(document.body);
     }
@@ -53,6 +55,7 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
       if (resizeObserver) {
         resizeObserver.disconnect();
       }
+      clearTimeout(resizeTimer);
     };
   }, []);
 

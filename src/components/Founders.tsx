@@ -29,7 +29,7 @@ const founders: Founder[] = [
     name: "Nitrose",
     title: "Founder | Billboard Producer | Music Executive | Creative Development",
     bio: "Born in Florida and raised in Miami, Nitrose developed an early passion for music through piano and guitar before establishing himself as both an artist and Billboard producer. Since beginning his production career in 2012, he has earned recognition for his versatile sound and sophisticated approach to creative development. At Servus Global, Nitrose integrates production expertise with creative vision to shape records, elevate artists, and foster impactful careers through sound, strategy, and innovation.",
-    imageUrl: "/images/team/nitrose.png",
+    imageUrl: "/images/team/nitrose.webp",
     align: "right",
   },
 ];

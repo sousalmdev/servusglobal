@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
+import Image from "next/image";
 import type { Dictionary } from "@/i18n/getDictionary";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -122,12 +123,20 @@ export default function OurStory({ dict }: { dict: Dictionary }) {
             }}
           >
             <div
-              className="story-image-inner absolute inset-0 bg-cover bg-center"
+              className="story-image-inner absolute inset-0"
               style={{
-                backgroundImage: "url(/servusabout.png)",
                 transform: "scale(1.05)",
               }}
-            />
+            >
+              <Image
+                src="/servusabout.webp"
+                alt="Servus Global team"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover object-center"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </div>

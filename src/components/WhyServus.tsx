@@ -234,7 +234,7 @@ export default function WhyServus({ dict }: { dict: Dictionary }) {
                className="absolute inset-0 w-full h-full img-editorial"
              >
                <Image
-                 src="/servusabout.png"
+                 src="/servusabout.webp"
                  alt="About Servus"
                  fill
                  sizes="(max-width: 768px) 100vw, 50vw"

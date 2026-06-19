@@ -221,7 +221,7 @@ export default function LoadingSequence() {
         <div ref={svgContainerRef} />
         <img
           ref={pngRef}
-          src="/servuslogo.png"
+          src="/servuslogo.webp"
           alt="Servus Global"
           style={{
             width: "min(70vw, 560px)",

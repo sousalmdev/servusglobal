@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { artists } from "@/data/artists";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://servusglobal.com";
+  const base = "https://servusglobalinc.com";
   const langs = ["en", "pt", "es", "ja"];
   const routes: MetadataRoute.Sitemap = [];
 

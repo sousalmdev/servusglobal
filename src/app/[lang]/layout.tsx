@@ -1,16 +1,22 @@
+
+
 import type { Metadata } from "next";
 import { Syne, Inter, Playfair_Display } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { LenisProvider } from "@/providers/LenisProvider";
 import { ReducedMotionProvider } from "@/providers/ReducedMotionProvider";
-import CustomCursor from "@/components/CustomCursor";
+import dynamic from "next/dynamic";
 import "../globals.css";
+
+const CustomCursor = dynamic(() => import("@/components/CustomCursor"), {
+  ssr: true,
+});
 
 const syne = Syne({
   subsets: ["latin"],
   variable: "--font-syne",
   display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["600", "700", "800"],
 });
 
 const inter = Inter({
@@ -24,7 +30,7 @@ const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
   display: "swap",
-  style: ["normal", "italic"],
+  style: ["italic"],
 });
 
 export async function generateMetadata({
@@ -136,16 +142,12 @@ export default async function RootLayout({
     return (
       <html lang={lang} className={`${syne.variable} ${inter.variable} ${playfair.variable}`}>
         <head>
-          <link rel="preload" href="/servuslogo.svg" as="fetch" crossOrigin="anonymous" />
-          <link rel="preload" href="/servuslogo.png" as="image" />
-          <link rel="preload" href="/fleursunset.png" as="image" />
-          <link rel="preload" href="/fleur.mp4" as="video" type="video/mp4" />
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
           />
         </head>
-      <body className={`min-h-full overflow-x-hidden grain-overlay`}>
+      <body className={`min-h-full overflow-x-hidden`}>
         <ReducedMotionProvider>
           <LenisProvider>{children}</LenisProvider>
         </ReducedMotionProvider>

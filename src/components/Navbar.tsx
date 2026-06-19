@@ -191,10 +191,11 @@ export default function Navbar({ dict }: { dict: Dictionary }) {
           }}
         >
           <Image 
-            src='/servuslogo.png' 
+            src='/servuslogo.webp' 
             width={130} 
             height={60} 
-            alt='Servus Logo'
+            alt='Servus Global Logo'
+            priority
             style={{ height: 'auto' }}
           />
         </a>

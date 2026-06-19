@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/api/",
     },
-    sitemap: "https://servusglobal.com/sitemap.xml",
+    sitemap: "https://servusglobalinc.com/sitemap.xml",
   };
 }

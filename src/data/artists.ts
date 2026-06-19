@@ -5,7 +5,7 @@ export const artists: Artist[] = [
     name: "Solis",
     slug: "solis",
     bio: "Born in Ireland, raised in Australia, Solis enters the Servus ecosystem with a clear artistic identity and global potential. Focused, refined, and built for long-term creative expansion.",
-    portraitUrl: "/images/roster/solis_new.png",
+    portraitUrl: "/images/roster/solis_new.webp",
     genres: ["Hip-Hop", "R&B"],
     socialLinks: [
       { platform: "spotify", url: "https://open.spotify.com/artist/4j4UVI50ysUAEwetmoEW1X" },
@@ -19,7 +19,7 @@ export const artists: Artist[] = [
     name: "Lola Redd",
     slug: "lola-redd",
     bio: "One of the hottest upcoming artists reigning from Chicago. Antisocial, Blunt and Versatile. She is truly something you NEVER want to underestimate.",
-    portraitUrl: "/images/roster/servuscrew1.png",
+    portraitUrl: "/images/roster/servuscrew1.webp",
     genres: ["Hip-Hop", "Rap"],
     socialLinks: [
       { platform: "spotify", url: "https://open.spotify.com/artist/6rW8Vn8nN8J6vJ3W5kGZ5w" },
@@ -33,7 +33,7 @@ export const artists: Artist[] = [
     name: "Dez Stacks",
     slug: "dez-stacks",
     bio: "The Mastermind from Miramar. Dez Stackz surprises her listeners with witty wordplay, addictive hooks and numerous flows for days. It is safe to say she is on pace to claim to be one of the top recording artists in the United States.",
-    portraitUrl: "/images/roster/dezstacks.png",
+    portraitUrl: "/images/roster/dezstacks.webp",
     genres: ["Hip-Hop", "R&B", "Reggae"],
     socialLinks: [
       { platform: "spotify", url: "https://open.spotify.com/artist/7frjCOZmXai7pzATdxeuwf" },
@@ -46,7 +46,7 @@ export const artists: Artist[] = [
     name: "ChrisHndrixx",
     slug: "chrishndrixx",
     bio: "Florida's own. Smooth with the melodies. Sharp with the vision. ChrisHndrixx is building a name that speaks for itself, turning ambition into momentum with every release.",
-    portraitUrl: "/images/roster/chrishndrixx.png",
+    portraitUrl: "/images/roster/chrishndrixx.webp",
     genres: ["R&B", "Hip-Hop"],
     socialLinks: [
       { platform: "spotify", url: "https://open.spotify.com/artist/0k8nInix9kFrUZTKtj7wEx" },
@@ -59,7 +59,7 @@ export const artists: Artist[] = [
     name: "Dajah Vamour",
     slug: "dajah-vamour",
     bio: "A Holistic Fashionista hailing from the Polk N' Beans of Dade County. Elegant in expression. Fearless in vision. Blending style, emotion, and artistry, Dajah V Amour carries a presence that's impossible to ignore. A Rising Star.",
-    portraitUrl: "/images/roster/servuscrew5.png",
+    portraitUrl: "/images/roster/servuscrew5.webp",
     genres: ["R&B", "Hip-Hop"],
     socialLinks: [
       { platform: "instagram", url: "https://instagram.com/dajahvamour" },
@@ -71,7 +71,7 @@ export const artists: Artist[] = [
     name: "Letreez",
     slug: "letreez",
     bio: "Filipino-American artist Letreez brings a global perspective to modern hip-hop. Rooted in hustle and heritage, his sound blends sharp bars with cinematic production—music made for city lights and late nights.",
-    portraitUrl: "/images/roster/servuscrew6.png",
+    portraitUrl: "/images/roster/servuscrew6.webp",
     genres: ["Hip-Hop", "Rap"],
     socialLinks: [
       { platform: "spotify", url: "https://open.spotify.com/artist/7qysbTs4X3OTuJTgvdDqKX" },
@@ -84,7 +84,7 @@ export const artists: Artist[] = [
     name: "Gank Gaank",
     slug: "gank-gaank",
     bio: "A Powerhouse from Pompano Beach. Resilient, Especially through pain & pressure. The Legacy Continues…",
-    portraitUrl: "/images/roster/servuscrew7.png",
+    portraitUrl: "/images/roster/servuscrew7.webp",
     genres: ["Trap", "Hip-Hop"],
     socialLinks: [
       { platform: "spotify", url: "https://open.spotify.com/artist/6oSxt5PKotmgf7XywZ7c4I" },
@@ -97,7 +97,7 @@ export const artists: Artist[] = [
     name: "Nitrose",
     slug: "nitrose",
     bio: "Born in Florida and raised in Miami, Nitrose developed an early passion for music through piano and guitar before establishing himself as both an artist and Billboard producer.",
-    portraitUrl: "/images/roster/servuscrew8.png",
+    portraitUrl: "/images/roster/servuscrew8.webp",
     genres: ["Hip-Hop", "R&B"],
     socialLinks: [
       { platform: "youtube", url: "https://www.youtube.com/nitrosetheprodigy" },
@@ -111,7 +111,7 @@ export const artists: Artist[] = [
     name: "Heaven Rainwater",
     slug: "heaven-rainwater",
     bio: "Dynamic Songstress From Muskegon, Michigan. Covering Love Ballads to Anthems for the Nightlife there is no territory sonically that she can't touch. Are you ready for the flood?",
-    portraitUrl: "/images/roster/servuscrew9.png",
+    portraitUrl: "/images/roster/servuscrew9.webp",
     genres: ["Pop", "R&B", "Hip-Hop"],
     socialLinks: [
       { platform: "instagram", url: "https://instagram.com/rainn_babii" },

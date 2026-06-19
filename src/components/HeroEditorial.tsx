@@ -93,7 +93,8 @@ export default function HeroEditorial({ dict }: { dict: Dictionary }) {
           muted
           loop
           playsInline
-          poster="/fleursunset.png"
+          preload="none"
+          poster="/fleursunset.webp"
           className="absolute scale-110 inset-0 opacity-40 w-full h-full object-cover pointer-events-none"
         >
           <source src="/fleur.mp4" type="video/mp4" />

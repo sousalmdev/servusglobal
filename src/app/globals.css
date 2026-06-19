@@ -204,37 +204,8 @@ body {
   .cursor-ring { display: none; }
 }
 
-/* ── Film Grain Overlay ──────────────────── */
-@keyframes noise-flicker {
-  0% { transform: translate(0, 0); }
-  10% { transform: translate(-0.5%, -0.5%); }
-  20% { transform: translate(0.5%, 0.5%); }
-  30% { transform: translate(-0.5%, 0.5%); }
-  40% { transform: translate(0.5%, -0.5%); }
-  50% { transform: translate(-0.5%, 0.5%); }
-  60% { transform: translate(0.5%, 0.5%); }
-  70% { transform: translate(-0.5%, -0.5%); }
-  80% { transform: translate(0.5%, 0.5%); }
-  90% { transform: translate(-0.5%, 0.5%); }
-  100% { transform: translate(0, 0); }
-}
 
-.grain-overlay::after {
-  content: "";
-  position: fixed;
-  top: -10%;
-  left: -10%;
-  right: -10%;
-  bottom: -10%;
-  width: 120%;
-  height: 120%;
-  z-index: 9998;
-  pointer-events: none;
-  opacity: 0.025; /* Highly refined, subtle editorial physical film texture */
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
-  animation: noise-flicker 0.12s steps(2) infinite;
-}
+
 
 /* ── Gradient Overlay ─────────────────────── */
 .gradient-overlay {
@@ -452,11 +423,7 @@ body {
 }
 
 
-.release-cover-mask:hover .glass-shine,
-.feature-cover-mask:hover .glass-shine,
-.aspect-square:hover .glass-shine {
-  background-position: -50% -50%;
-}
+
 @keyframes vinyl-spin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
@@ -530,24 +497,7 @@ h6,
   box-shadow: 0 4px 20px rgba(212, 165, 65, 0.25);
 }
 
-/* ── Glass Shine Flare (diagonal sweep) ── */
-.glass-shine {
-  position: absolute;
-  inset: 0;
-  z-index: 15;
-  pointer-events: none;
-  background: linear-gradient(
-    115deg,
-    transparent 40%,
-    rgba(255, 255, 255, 0.06) 45%,
-    rgba(255, 255, 255, 0.12) 50%,
-    rgba(255, 255, 255, 0.06) 55%,
-    transparent 60%
-  );
-  background-size: 250% 250%;
-  background-position: 150% 150%;
-  transition: background-position 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-}
+
 
 /* ── Artist Card Minimal Hover Overlay ──── */
 .artist-card-overlay {

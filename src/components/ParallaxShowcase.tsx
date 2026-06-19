@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
+import Image from "next/image";
 import { artists } from "@/data/artists";
 import type { Dictionary } from "@/i18n/getDictionary";
 
@@ -101,16 +102,22 @@ export default function ParallaxShowcase({ dict }: { dict?: Dictionary }) {
       <div className="showcase-clip absolute inset-0 overflow-hidden">
         {/* Image */}
         <div
-          className="showcase-img absolute inset-0 w-full bg-cover bg-center img-bw"
+          className="showcase-img absolute inset-0 w-full img-bw"
           style={{
-            backgroundImage: `url(${showcaseArtist.portraitUrl})`,
-            backgroundColor: "#0a0a0a",
-            backgroundBlendMode: "screen",
             opacity: 0.25,
             height: "130%",
             top: "-15%",
           }}
-        />
+        >
+          <Image
+            src={showcaseArtist.portraitUrl}
+            alt={showcaseArtist.name}
+            fill
+            sizes="100vw"
+            loading="lazy"
+            className="object-cover object-center"
+          />
+        </div>
 
 
        
