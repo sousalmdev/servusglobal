@@ -118,7 +118,7 @@ export default function Navbar({ dict }: { dict: Dictionary }) {
         scaleX: 1,
         ease: "none",
         scrollTrigger: {
-          trigger: "html",
+          trigger: document.documentElement,
           start: "top top",
           end: "bottom bottom",
           scrub: true,
@@ -196,7 +196,7 @@ export default function Navbar({ dict }: { dict: Dictionary }) {
             height={60} 
             alt='Servus Global Logo'
             priority
-            style={{ height: 'auto' }}
+            style={{ width: 'auto', height: 'auto' }}
           />
         </a>
 

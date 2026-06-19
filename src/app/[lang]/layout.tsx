@@ -8,9 +8,6 @@ import { ReducedMotionProvider } from "@/providers/ReducedMotionProvider";
 import dynamic from "next/dynamic";
 import "../globals.css";
 
-const CustomCursor = dynamic(() => import("@/components/CustomCursor"), {
-  ssr: true,
-});
 
 const syne = Syne({
   subsets: ["latin"],
@@ -151,7 +148,6 @@ export default async function RootLayout({
         <ReducedMotionProvider>
           <LenisProvider>{children}</LenisProvider>
         </ReducedMotionProvider>
-        <CustomCursor />
         <Analytics />
       </body>
     </html>

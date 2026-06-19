@@ -4,6 +4,11 @@ import { ReactLenis } from "lenis/react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import dynamic from "next/dynamic";
+
+const CustomCursor = dynamic(() => import("@/components/CustomCursor"), {
+  ssr: false,
+});
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -71,6 +76,7 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
       }}
     >
       {children}
+      <CustomCursor />
     </ReactLenis>
   );
 }

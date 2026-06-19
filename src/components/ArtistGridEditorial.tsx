@@ -131,7 +131,7 @@ export default function ArtistGridEditorial({ dict, lang = "en" }: { dict?: Dict
             <div className="artist-card-img-wrap absolute inset-0 overflow-hidden">
               {/* Inner image container (handles hover zoom with CSS) */}
               <div
-                className="w-full h-full"
+                className="w-full h-full relative"
               >
                 <Image
                   src={artist.portraitUrl}

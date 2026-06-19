@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
@@ -13,9 +13,14 @@ export default function DiagonalMarquee({ dict }: { dict: Dictionary }) {
   const items = Array(10).fill(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
+  const [useCss, setUseCss] = useState(false);
 
   useEffect(() => {
-    if (reducedMotion || !trackRef.current) return;
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const shouldFallback = reducedMotion || isMobile;
+    setUseCss(shouldFallback);
+
+    if (shouldFallback || !trackRef.current) return;
 
     gsap.registerPlugin(ScrollTrigger);
 
@@ -72,8 +77,8 @@ export default function DiagonalMarquee({ dict }: { dict: Dictionary }) {
         <div className="overflow-hidden">
           <div
             ref={trackRef}
-            className={`marquee-track ${reducedMotion ? "marquee-forward" : ""}`}
-            style={reducedMotion ? {} : { animation: "none" }}
+            className={`marquee-track ${useCss ? "marquee-forward" : ""}`}
+            style={useCss ? {} : { animation: "none" }}
           >
             {[0, 1].map((copy) => (
               <div

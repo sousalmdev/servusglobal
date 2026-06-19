@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
 import type { Dictionary } from "@/i18n/getDictionary";
 import { artists } from "@/data/artists";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -87,6 +88,14 @@ export default function HeroEditorial({ dict }: { dict: Dictionary }) {
     >
       {/* Background Image */}
       <div className="hero-bg absolute inset-0 w-full h-full">
+        <Image
+          src="/fleursunset.webp"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="absolute inset-0 opacity-40 w-full h-full object-cover pointer-events-none"
+        />
         <video
           ref={videoRef}
           autoPlay
@@ -94,7 +103,6 @@ export default function HeroEditorial({ dict }: { dict: Dictionary }) {
           loop
           playsInline
           preload="none"
-          poster="/fleursunset.webp"
           className="absolute scale-110 inset-0 opacity-40 w-full h-full object-cover pointer-events-none"
         >
           <source src="/fleur.mp4" type="video/mp4" />
