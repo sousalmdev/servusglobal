@@ -40,7 +40,7 @@ export function middleware(request: NextRequest) {
     }
 
     const locale = getLocale(request);
-    return NextResponse.redirect(
+    return NextResponse.rewrite(
       new URL(`/${locale}${pathname.startsWith("/") ? "" : "/"}${pathname}`, request.url)
     );
   }
