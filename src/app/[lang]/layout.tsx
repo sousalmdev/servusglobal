@@ -61,7 +61,7 @@ export async function generateMetadata({
     },
     description: description,
     keywords: seoKeywords,
-    metadataBase: new URL("https://servusglobal.com"),
+    metadataBase: new URL("https://servusglobalinc.com"),
     alternates: {
       canonical: `/${lang}`,
       languages: {
@@ -77,7 +77,7 @@ export async function generateMetadata({
       siteName: "Servus Global",
       locale: lang === "pt" ? "pt_BR" : lang === "es" ? "es_ES" : lang === "ja" ? "ja_JP" : "en_US",
       type: "website",
-      url: `https://servusglobal.com/${lang}`,
+      url: `https://servusglobalinc.com/${lang}`,
       images: [
         {
           url: "/servusabout.png",
@@ -124,8 +124,8 @@ export default async function RootLayout({
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "Servus Global",
-      "url": "https://servusglobal.com",
-      "logo": "https://servusglobal.com/servuslogo.png",
+      "url": "https://servusglobalinc.com",
+      "logo": "https://servusglobalinc.com/servuslogo.png",
       "sameAs": [
         "https://instagram.com/servusglobal",
         "https://youtube.com/servusglobal"
