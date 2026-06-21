@@ -196,10 +196,10 @@ export default function Navbar({ dict }: { dict: Dictionary }) {
             height={60} 
             alt='Servus Global Logo'
             priority
-            style={{ width: 'auto', height: 'auto' }}
+            className="md:w-36 w-24 h-auto"
           />
         </a>
-
+ 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map((link) => {

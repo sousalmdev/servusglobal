@@ -94,8 +94,7 @@
     "pathwaysTitle": "Select a pathway",
     "pathways": {
       "artist": "Become an Artist",
-      "investor": "Partnership",
-      "other": "General"
+      "other": "Other Subjects"
     },
     "form": {
       "name": "Your name",
@@ -131,8 +130,7 @@
     },
     "pathwaysDesc": {
       "artist": "Submit your portfolio and music for A&R consideration.",
-      "investor": "Partnership and label inquiries.",
-      "other": "General questions and press.",
+      "other": "Collaboration, talent pool, general inquiries, and partnerships.",
       "back": "← Change Option"
     }
   },
@@ -159,7 +157,8 @@
   "releases": {
     "title1": "Selected",
     "title2": "releases",
-    "titlesCount": "titles"
+    "titlesCount": "titles",
+    "rightNowDesc": "The magnetic new single from Heaven Rainwater, showcasing powerful vocals and dark R&B rhythms under Servus Global."
   },
   "showcase": {
     "heading1": "The sound is yours.",

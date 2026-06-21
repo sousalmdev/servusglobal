@@ -2,6 +2,21 @@ import { Release } from "@/types";
 
 export const releases: Release[] = [
   {
+    title: "Right Now",
+    slug: "right-now",
+    artistSlug: "heaven-rainwater",
+    artistName: "Heaven Rainwater",
+    coverArtUrl: "/images/releases/right-now.png",
+    releaseDate: "2026-06-19",
+    year: 2026,
+    streamingLinks: [
+      { platform: "YouTube", url: "https://www.youtube.com/watch?v=s-KkIgBU8r4&list=OLAK5uy_k1Q3YVFn2_dc7L1yBPyWNWmkgLyvNjaM8&index=1", icon: "youtube" },
+      { platform: "Apple Music", url: "https://music.apple.com/us/album/right-now-single/6781366960", icon: "apple" },
+    ],
+    productionCredits: "℗ 2026 Servus Global",
+    featured: true,
+  },
+  {
     title: "Mood",
     slug: "mood",
     artistSlug: "solis",
@@ -15,7 +30,7 @@ export const releases: Release[] = [
       { platform: "YouTube", url: "https://www.youtube.com/watch?v=mUnPSLgXl1I&list=OLAK5uy_kj0qI4UaXdvtjaLZFJ4FUL1zrnPPXH17Y", icon: "youtube" },
     ],
     productionCredits: "Latest single from Solis, tune in and get in the mood",
-    featured: true,
+    featured: false,
   },
   {
     title: "Freaky",

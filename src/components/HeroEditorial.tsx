@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/providers/ReducedMotionProvider";
@@ -68,6 +68,7 @@ export default function HeroEditorial({ dict }: { dict: Dictionary }) {
     return () => ctx.revert();
   }, [reducedMotion]);
 
+  const [videoPlaying, setVideoPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -94,7 +95,9 @@ export default function HeroEditorial({ dict }: { dict: Dictionary }) {
           fill
           priority
           sizes="100vw"
-          className="absolute inset-0 opacity-40 w-full h-full object-cover pointer-events-none"
+          className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-700 ${
+            videoPlaying ? "opacity-0" : "opacity-100"
+          }`}
         />
         <video
           ref={videoRef}
@@ -103,7 +106,8 @@ export default function HeroEditorial({ dict }: { dict: Dictionary }) {
           loop
           playsInline
           preload="none"
-          className="absolute scale-110 inset-0 opacity-40 w-full h-full object-cover pointer-events-none"
+          onPlaying={() => setVideoPlaying(true)}
+          className="absolute scale-110 inset-0 opacity-80 w-full h-full object-cover pointer-events-none"
         >
           <source src="/fleur.mp4" type="video/mp4" />
         </video>

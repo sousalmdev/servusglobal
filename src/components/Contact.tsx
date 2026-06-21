@@ -8,13 +8,12 @@ import type { Dictionary } from "@/i18n/getDictionary";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const pathwaysKeys = ["artist", "investor", "other"] as const;
+const pathwaysKeys = ["artist", "other"] as const;
 type Pathway = typeof pathwaysKeys[number] | null;
 
 export default function Contact({ dict }: { dict: Dictionary }) {
   const pathways = [
     { key: "artist" as const, label: dict.contact.pathways.artist },
-    { key: "investor" as const, label: dict.contact.pathways.investor },
     { key: "other" as const, label: dict.contact.pathways.other },
   ];
   const [pathway, setPathway] = useState<Pathway>(null);
@@ -289,73 +288,61 @@ export default function Contact({ dict }: { dict: Dictionary }) {
               />
             )}
 
-            {(pathway === "investor" || pathway === "other") && (
+            {pathway === "other" && (
               <form
                 ref={formRef}
                 onSubmit={handleSubmit}
-                className="flex flex-col gap-8"
+                className="flex flex-col gap-8 bg-[rgba(245,242,235,0.02)] p-6 md:p-10 border border-[rgba(245,242,235,0.08)]"
               >
-                <input
-                  name="name"
+                <div className="flex flex-col gap-3 mb-4 field-anim">
+                  <h3 className="font-display text-2xl md:text-3xl" style={{ color: "var(--color-gold)" }}>
+                    {dict.contact.pathways.other}
+                  </h3>
+                  <p className="font-body text-body" style={{ color: "var(--color-off-white)", opacity: 0.6 }}>
+                    {dict.contact.pathwaysDesc.other}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <InputField name="name" label={dict.contact.form.name} placeholder="" required />
+                  <InputField name="email" label={dict.contact.form.email} type="email" placeholder="" required />
+                </div>
+
+                <RadioGroup
+                  name="subject"
+                  label={
+                    dict.contact.form.send === "Enviar mensagem"
+                      ? "Assunto de interesse"
+                      : dict.contact.form.send === "Enviar Solicitud"
+                      ? "Asunto de interés"
+                      : dict.contact.form.send === "メッセージを送信"
+                      ? "ご用件"
+                      : "Subject of interest"
+                  }
+                  options={
+                    dict.contact.form.send === "Enviar mensagem"
+                      ? ["Colaboração", "Banco de Talentos", "Parcerias", "Outro"]
+                      : dict.contact.form.send === "Enviar Solicitud"
+                      ? ["Colaboración", "Bolsa de Trabajo", "Alianzas", "Otro"]
+                      : dict.contact.form.send === "メッセージを送信"
+                      ? ["コラボレーション", "人材プール", "パートナーシップ", "その他"]
+                      : ["Collaboration", "Talent Pool", "Partnership", "Other"]
+                  }
                   required
-                  placeholder={dict.contact.form.name}
-                  className="field-anim w-full bg-transparent font-body text-body-lg py-3 outline-none placeholder:opacity-30 transition-colors"
-                  style={{
-                    color: "var(--color-off-white)",
-                    borderBottom: "1px solid rgba(245,242,235,0.15)",
-                  }}
-                  onFocus={(e) =>
-                    (e.target.style.borderBottomColor = "var(--color-gold)")
-                  }
-                  onBlur={(e) =>
-                    (e.target.style.borderBottomColor =
-                      "rgba(245,242,235,0.15)")
-                  }
                 />
-                <input
-                  name="email"
-                  type="email"
-                  required
-                  placeholder={dict.contact.form.email}
-                  className="field-anim w-full bg-transparent font-body text-body-lg py-3 outline-none placeholder:opacity-30 transition-colors"
-                  style={{
-                    color: "var(--color-off-white)",
-                    borderBottom: "1px solid rgba(245,242,235,0.15)",
-                  }}
-                  onFocus={(e) =>
-                    (e.target.style.borderBottomColor = "var(--color-gold)")
-                  }
-                  onBlur={(e) =>
-                    (e.target.style.borderBottomColor =
-                      "rgba(245,242,235,0.15)")
-                  }
-                />
-                <textarea
+
+                <TextareaField
                   name="message"
                   required
-                  placeholder={
-                    pathway === "investor"
-                      ? dict.contact.form.messageInvestor
-                      : dict.contact.form.messageOther
-                  }
+                  label={dict.contact.form.messageOther}
+                  placeholder=""
                   rows={4}
-                  className="field-anim w-full bg-transparent font-body text-body-lg py-3 outline-none placeholder:opacity-30 resize-none transition-colors"
-                  style={{
-                    color: "var(--color-off-white)",
-                    borderBottom: "1px solid rgba(245,242,235,0.15)",
-                  }}
-                  onFocus={(e) =>
-                    (e.target.style.borderBottomColor = "var(--color-gold)")
-                  }
-                  onBlur={(e) =>
-                    (e.target.style.borderBottomColor =
-                      "rgba(245,242,235,0.15)")
-                  }
                 />
+
                 <button
                   type="submit"
                   disabled={loading}
-                  className="field-anim self-start font-body text-eyebrow eyebrow inline-flex items-center gap-3 px-8 py-4 mt-2 cursor-pointer disabled:opacity-50 transition-all duration-300"
+                  className="field-anim self-start font-body text-eyebrow eyebrow inline-flex items-center gap-3 px-8 py-4 mt-2 cursor-pointer disabled:opacity-50 transition-all duration-300 hover:opacity-80"
                   style={{
                     color: "var(--color-black)",
                     background: "var(--color-gold)",
@@ -389,6 +376,7 @@ function ClientOnboardingForm({
 }) {
   const [step, setStep] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
+  const prevStepRef = useRef(1);
 
   const handleNext = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -432,14 +420,28 @@ function ClientOnboardingForm({
 
   const handlePrev = (e: React.MouseEvent) => {
     e.preventDefault();
-    setStep((s) => s - 1);
+    if (containerRef.current) {
+      gsap.to(containerRef.current.querySelector(`#step-${step}`), {
+        opacity: 0,
+        y: 10,
+        duration: 0.3,
+        onComplete: () => {
+          setStep((s) => s - 1);
+        }
+      });
+    } else {
+      setStep((s) => s - 1);
+    }
   };
 
   useEffect(() => {
-    // Animate in new step
+    // Animate in new step based on direction
     if (containerRef.current) {
+      const isForward = step > prevStepRef.current;
+      prevStepRef.current = step;
+
       gsap.fromTo(containerRef.current.querySelector(`#step-${step}`), 
-        { opacity: 0, y: 10 },
+        { opacity: 0, y: isForward ? 10 : -10 },
         { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }
       );
     }
@@ -515,11 +517,10 @@ function ClientOnboardingForm({
               ]}
             />
 
-            <RadioGroup
+            <CheckboxGroup
               name="platform"
               label={dict.contact.form.platform}
               options={["Spotify", "Apple Music", "YouTube", "SoundCloud", "Instagram", "Other"]}
-              required
             />
 
             <RadioGroup
@@ -599,39 +600,48 @@ function ClientOnboardingForm({
   );
 }
 
-function InputField({ label, ...props }: any) {
+function InputField({ label, name, required, type = "text", ...props }: any) {
   return (
-    <div className="flex flex-col gap-2">
-      <label className="font-body text-caption text-[var(--color-off-white)] opacity-70">{label}</label>
+    <div className="relative flex flex-col pt-6 group">
       <input
+        name={name}
+        type={type}
+        required={required}
+        placeholder=" "
         {...props}
-        className="w-full bg-transparent font-body text-body-lg py-2 outline-none placeholder:opacity-30 transition-colors"
-        style={{
-          color: "var(--color-off-white)",
-          borderBottom: "1px solid rgba(245,242,235,0.15)",
-        }}
-        onFocus={(e) => (e.target.style.borderBottomColor = "var(--color-gold)")}
-        onBlur={(e) => (e.target.style.borderBottomColor = "rgba(245,242,235,0.15)")}
+        className="peer w-full bg-transparent font-body text-body-lg py-2 outline-none border-b border-[rgba(245,242,235,0.15)] focus:border-[var(--color-gold)] text-[var(--color-off-white)] transition-colors duration-300"
       />
+      <label
+        className="absolute left-0 transition-all duration-300 pointer-events-none font-body
+                   top-1 text-xs opacity-70 text-[var(--color-gold)]
+                   peer-placeholder-shown:top-7 peer-placeholder-shown:text-body-lg peer-placeholder-shown:text-[var(--color-off-white)] peer-placeholder-shown:opacity-40
+                   peer-focus:top-1 peer-focus:text-xs peer-focus:text-[var(--color-gold)] peer-focus:opacity-100"
+      >
+        {label}
+      </label>
     </div>
   );
 }
 
-function TextareaField({ label, ...props }: any) {
+function TextareaField({ label, name, required, rows = 4, ...props }: any) {
   return (
-    <div className="flex flex-col gap-2">
-      <label className="font-body text-caption text-[var(--color-off-white)] opacity-70">{label}</label>
+    <div className="relative flex flex-col pt-6 group">
       <textarea
+        name={name}
+        required={required}
+        rows={rows}
+        placeholder=" "
         {...props}
-        rows={4}
-        className="w-full bg-transparent font-body text-body-lg py-2 outline-none placeholder:opacity-30 resize-none transition-colors"
-        style={{
-          color: "var(--color-off-white)",
-          borderBottom: "1px solid rgba(245,242,235,0.15)",
-        }}
-        onFocus={(e) => (e.target.style.borderBottomColor = "var(--color-gold)")}
-        onBlur={(e) => (e.target.style.borderBottomColor = "rgba(245,242,235,0.15)")}
+        className="peer w-full bg-transparent font-body text-body-lg py-2 outline-none border-b border-[rgba(245,242,235,0.15)] focus:border-[var(--color-gold)] text-[var(--color-off-white)] resize-none transition-colors duration-300"
       />
+      <label
+        className="absolute left-0 transition-all duration-300 pointer-events-none font-body
+                   top-1 text-xs opacity-70 text-[var(--color-gold)]
+                   peer-placeholder-shown:top-7 peer-placeholder-shown:text-body-lg peer-placeholder-shown:text-[var(--color-off-white)] peer-placeholder-shown:opacity-40
+                   peer-focus:top-1 peer-focus:text-xs peer-focus:text-[var(--color-gold)] peer-focus:opacity-100"
+      >
+        {label}
+      </label>
     </div>
   );
 }
@@ -642,7 +652,7 @@ function RadioGroup({ name, label, options, required, className = "" }: any) {
       <label className="font-body text-caption text-[var(--color-off-white)] opacity-70">{label}</label>
       <div className="flex flex-wrap gap-2">
         {options.map((opt: string) => (
-          <label key={opt} className="cursor-pointer group select-none">
+          <label key={opt} className="cursor-pointer group select-none transition-transform duration-300 active:scale-95">
             <input type="radio" name={name} value={opt} required={required} className="peer sr-only" />
             <div className="font-body text-caption px-4 py-3 transition-all duration-300 border border-[rgba(245,242,235,0.15)] text-[var(--color-off-white)] group-hover:border-[rgba(245,242,235,0.4)] peer-checked:!border-[var(--color-gold)] peer-checked:bg-[var(--color-gold)] peer-checked:text-[var(--color-black)]">
               {opt}
@@ -660,11 +670,11 @@ function CheckboxGroup({ name, label, options, className = "" }: any) {
       <label className="font-body text-caption text-[var(--color-off-white)] opacity-70">{label}</label>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
         {options.map((opt: string) => (
-          <label key={opt} className="cursor-pointer group select-none h-full">
+          <label key={opt} className="cursor-pointer group select-none h-full transition-transform duration-300 active:scale-95">
             <input type="checkbox" name={name} value={opt} className="peer sr-only" />
-            <div className="flex items-start gap-3 font-body text-caption px-4 py-3 transition-all duration-300 border border-[rgba(245,242,235,0.15)] text-[var(--color-off-white)] group-hover:border-[rgba(245,242,235,0.4)] peer-checked:!border-[var(--color-gold)] peer-checked:bg-[var(--color-gold)] peer-checked:text-[var(--color-black)] h-full">
-              {/* Checkmark icon for extra visual clarity */}
-              <div className="mt-0.5 flex-shrink-0 opacity-0 peer-checked:opacity-100 transition-opacity">
+            <div className="flex items-start gap-3 font-body text-caption px-4 py-3 transition-all duration-300 border border-[rgba(245,242,235,0.15)] text-[var(--color-off-white)] group-hover:border-[rgba(245,242,235,0.4)] peer-checked:!border-[var(--color-gold)] peer-checked:bg-[var(--color-gold)] peer-checked:text-[var(--color-black)] peer-checked:[&_.checkmark]:opacity-100 peer-checked:[&_.checkmark]:scale-100 h-full">
+              {/* Checkmark icon with scale and opacity animations */}
+              <div className="checkmark mt-0.5 flex-shrink-0 opacity-0 scale-50 transition-all duration-300">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>

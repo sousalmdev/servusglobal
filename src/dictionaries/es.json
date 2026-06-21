@@ -94,8 +94,7 @@
     "pathwaysTitle": "Selecciona un camino",
     "pathways": {
       "artist": "Convertirse en Artista",
-      "investor": "Asociación",
-      "other": "General"
+      "other": "Otros Asuntos"
     },
     "form": {
       "name": "Tu nombre",
@@ -131,8 +130,7 @@
     },
     "pathwaysDesc": {
       "artist": "Envía tu portafolio y música para consideración de A&R.",
-      "investor": "Consultas sobre asociaciones y sellos discográficos.",
-      "other": "Preguntas generales y prensa.",
+      "other": "Colaboración, bolsa de trabajo, alianzas y consultas generales.",
       "back": "← Cambiar Opción"
     }
   },
@@ -159,7 +157,8 @@
   "releases": {
     "title1": "Lanzamientos",
     "title2": "seleccionados",
-    "titlesCount": "títulos"
+    "titlesCount": "títulos",
+    "rightNowDesc": "El nuevo sencillo magnético de Heaven Rainwater, que presenta voces potentes y ritmos de R&B envolventes bajo Servus Global."
   },
   "showcase": {
     "heading1": "El sonido es tuyo.",
