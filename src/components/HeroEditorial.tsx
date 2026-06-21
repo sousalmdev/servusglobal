@@ -107,7 +107,7 @@ export default function HeroEditorial({ dict }: { dict: Dictionary }) {
           playsInline
           preload="none"
           onPlaying={() => setVideoPlaying(true)}
-          className="absolute scale-110 inset-0 opacity-80 w-full h-full object-cover pointer-events-none"
+          className="absolute scale-110 inset-0 opacity-30 w-full h-full object-cover pointer-events-none"
         >
           <source src="/fleur.mp4" type="video/mp4" />
         </video>
