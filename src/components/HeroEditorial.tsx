@@ -96,7 +96,7 @@ export default function HeroEditorial({ dict }: { dict: Dictionary }) {
           priority
           sizes="100vw"
           className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-700 ${
-            videoPlaying ? "opacity-0" : "opacity-100"
+            videoPlaying ? "opacity-0" : "opacity-30"
           }`}
         />
         <video
