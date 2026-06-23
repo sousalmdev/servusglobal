@@ -16,6 +16,31 @@ export const artists: Artist[] = [
     order: 0,
   },
   {
+    name: "Gank Gaank",
+    slug: "gank-gaank",
+    bio: "A Powerhouse from Pompano Beach. Resilient, Especially through pain & pressure. The Legacy Continues…",
+    portraitUrl: "/images/roster/servuscrew7.webp",
+    genres: ["Trap", "Hip-Hop"],
+    socialLinks: [
+      { platform: "spotify", url: "https://open.spotify.com/artist/6oSxt5PKotmgf7XywZ7c4I" },
+      { platform: "instagram", url: "https://instagram.com/gankgaank36" },
+    ],
+    featured: true,
+    order: 1,
+  },
+  {
+    name: "Dajah Vamour",
+    slug: "dajah-vamour",
+    bio: "A Holistic Fashionista hailing from the Polk N' Beans of Dade County. Elegant in expression. Fearless in vision. Blending style, emotion, and artistry, Dajah V Amour carries a presence that's impossible to ignore. A Rising Star.",
+    portraitUrl: "/images/roster/servuscrew5.webp",
+    genres: ["R&B", "Hip-Hop"],
+    socialLinks: [
+      { platform: "instagram", url: "https://instagram.com/dajahvamour" },
+    ],
+    featured: true,
+    order: 2,
+  },
+  {
     name: "Lola Redd",
     slug: "lola-redd",
     bio: "One of the hottest upcoming artists reigning from Chicago. Antisocial, Blunt and Versatile. She is truly something you NEVER want to underestimate.",
@@ -27,7 +52,7 @@ export const artists: Artist[] = [
       { platform: "soundcloud", url: "https://soundcloud.com/lolaredd" },
     ],
     featured: true,
-    order: 1,
+    order: 3,
   },
   {
     name: "Dez Stacks",
@@ -40,7 +65,7 @@ export const artists: Artist[] = [
       { platform: "instagram", url: "https://instagram.com/official_dezstackz" },
     ],
     featured: true,
-    order: 2,
+    order: 4,
   },
   {
     name: "ChrisHndrixx",
@@ -53,20 +78,9 @@ export const artists: Artist[] = [
       { platform: "instagram", url: "https://instagram.com/chrishndrixx" },
     ],
     featured: true,
-    order: 3,
+    order: 5,
   },
-  {
-    name: "Dajah Vamour",
-    slug: "dajah-vamour",
-    bio: "A Holistic Fashionista hailing from the Polk N' Beans of Dade County. Elegant in expression. Fearless in vision. Blending style, emotion, and artistry, Dajah V Amour carries a presence that's impossible to ignore. A Rising Star.",
-    portraitUrl: "/images/roster/servuscrew5.webp",
-    genres: ["R&B", "Hip-Hop"],
-    socialLinks: [
-      { platform: "instagram", url: "https://instagram.com/dajahvamour" },
-    ],
-    featured: true,
-    order: 4,
-  },
+  
   {
     name: "Letreez",
     slug: "letreez",
@@ -78,21 +92,9 @@ export const artists: Artist[] = [
       { platform: "instagram", url: "https://instagram.com/ayoletreez" },
     ],
     featured: true,
-    order: 5,
-  },
-  {
-    name: "Gank Gaank",
-    slug: "gank-gaank",
-    bio: "A Powerhouse from Pompano Beach. Resilient, Especially through pain & pressure. The Legacy Continues…",
-    portraitUrl: "/images/roster/servuscrew7.webp",
-    genres: ["Trap", "Hip-Hop"],
-    socialLinks: [
-      { platform: "spotify", url: "https://open.spotify.com/artist/6oSxt5PKotmgf7XywZ7c4I" },
-      { platform: "instagram", url: "https://instagram.com/gankgaank36" },
-    ],
-    featured: true,
     order: 6,
   },
+  
   {
     name: "Nitrose",
     slug: "nitrose",
