@@ -7,7 +7,7 @@ import { getDictionary } from "@/i18n/getDictionary";
 import dynamic from "next/dynamic";
 
 const Releases = dynamic(() => import("@/components/Releases"));
-const WhyServus = dynamic(() => import("@/components/WhyServus"));
+const Collaborators = dynamic(() => import("@/components/Collaborators"));
 const Founders = dynamic(() => import("@/components/Founders"));
 const Services = dynamic(() => import("@/components/Services"));
 const ParallaxShowcase = dynamic(() => import("@/components/ParallaxShowcase"));
@@ -31,7 +31,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <ArtistGridEditorial dict={dict} lang={lang} />
         <Releases dict={dict} />
         <Services dict={dict} />
-        <WhyServus dict={dict} />
+        <Collaborators dict={dict} />
         <Founders dict={dict} />
         <FAQ dict={dict} />
         <ParallaxShowcase dict={dict} />

@@ -165,25 +165,10 @@
     "heading2": "We amplify.",
     "desc": "Build the team, the rollout and the business around the music you're already making."
   },
-  "whyServus": {
-    "eyebrow": "Why Servus Global",
-    "title": "Built for Enduring Legacy.",
-    "badgeNumber": "3+",
-    "badgeText": "Years of Excellence",
-    "pillars": [
-      {
-        "title": "Trusted Representation",
-        "desc": "Artists trust us to protect their brand and sustainably grow their careers with unwavering integrity."
-      },
-      {
-        "title": "Strategic Growth",
-        "desc": "Data-driven insights combined with cultural intuition to expand reach and elevate influence."
-      },
-      {
-        "title": "Unmatched Network",
-        "desc": "Deep-rooted relationships across premier record labels, venues, and media globally."
-      }
-    ]
+  "collaborators": {
+    "eyebrow": "Trusted By The Best",
+    "title": "Industry Connections.",
+    "subtitle": "Working alongside leading labels, collectives, and creative forces shaping the future of music."
   },
   "artistPage": {
     "back": "← Back",
