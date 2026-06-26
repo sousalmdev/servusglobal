@@ -8,6 +8,7 @@ import dynamic from "next/dynamic";
 
 const Releases = dynamic(() => import("@/components/Releases"));
 const Collaborators = dynamic(() => import("@/components/Collaborators"));
+const Testimonials = dynamic(() => import("@/components/Testimonials"));
 const Founders = dynamic(() => import("@/components/Founders"));
 const Services = dynamic(() => import("@/components/Services"));
 const ParallaxShowcase = dynamic(() => import("@/components/ParallaxShowcase"));
@@ -34,6 +35,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <Collaborators dict={dict} />
         <Founders dict={dict} />
         <FAQ dict={dict} />
+        <Testimonials dict={dict} />
         <ParallaxShowcase dict={dict} />
         <WorkWithUsMarquee dict={dict} />
         <Roles dict={dict} />
