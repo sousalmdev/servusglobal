@@ -84,7 +84,7 @@ export const artists: Artist[] = [
   {
     name: "Letreez",
     slug: "letreez",
-    bio: "St. Martin artist Letreez brings a global perspective to modern hip-hop. Rooted in hustle and heritage, his sound blends sharp bars with cinematic production—music made for city lights and late nights.",
+    bio: "St. Martin artist Letreez brings a global perspective to modern hip-hop. Rooted in hustle and heritage, his sound blends sharp bars with cinematic production, music made for city lights and late nights.",
     portraitUrl: "/images/roster/letreez.jpg",
     genres: ["Hip-Hop", "Rap"],
     socialLinks: [
