@@ -121,4 +121,18 @@ export const artists: Artist[] = [
     featured: true,
     order: 8,
   },
+  {
+    name: "N.E.M.",
+    slug: "n-e-m",
+    bio: "Miami's own N.E.M. brings an unyielding energy and seasoned lyricism to the forefront of modern hip-hop. Known for his blunt delivery and storytelling, his music reflects the raw hustle of the 305. A prolific creator with an extensive catalog, N.E.M. continues to push creative boundaries, delivering tracks that resonate with authentic street energy.",
+    portraitUrl: "/nem.webp",
+    genres: ["Hip-Hop", "Rap"],
+    socialLinks: [
+      { platform: "spotify", url: "https://open.spotify.com/artist/32CnQeg9BISwonTJr6m7jY?si=tqqYzEyxR1OiRzyQtLH4aA" },
+      { platform: "instagram", url: "https://www.instagram.com/nemthebest" },
+      { platform: "apple", url: "https://music.apple.com/us/artist/n-e-m/1536023704" },
+    ],
+    featured: true,
+    order: 9,
+  },
 ];

@@ -17,6 +17,21 @@ export const releases: Release[] = [
     featured: true,
   },
   {
+    title: "Numb",
+    slug: "numb",
+    artistSlug: "n-e-m",
+    artistName: "N.E.M.",
+    coverArtUrl: "/images/releases/numb.webp",
+    releaseDate: "2026-03-08",
+    year: 2026,
+    streamingLinks: [
+      { platform: "Spotify", url: "https://open.spotify.com/album/10rCvhoGCXlgeFTu8M6EN2", icon: "spotify" },
+      { platform: "Apple Music", url: "https://music.apple.com/us/album/numb-single/1882298211", icon: "apple" },
+    ],
+    productionCredits: "℗ 2026 N.E.M.",
+    featured: false,
+  },
+  {
     title: "Mood",
     slug: "mood",
     artistSlug: "solis",
