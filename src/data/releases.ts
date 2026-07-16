@@ -2,6 +2,22 @@ import { Release } from "@/types";
 
 export const releases: Release[] = [
   {
+    title: "On My Own",
+    slug: "on-my-own",
+    artistSlug: "nitrose",
+    artistName: "Nitrose",
+    coverArtUrl: "/images/releases/onmyown.webp",
+    releaseDate: "2026-07-10",
+    year: 2026,
+    streamingLinks: [
+      { platform: "Spotify", url: "https://open.spotify.com/album/0KikkXUc66arx9TRIcqmcp", icon: "spotify" },
+      { platform: "Apple Music", url: "https://music.apple.com/us/album/on-my-own-single/6788491908", icon: "apple" },
+      { platform: "YouTube", url: "https://music.youtube.com/browse/MPREb_YTylLIN9FDW", icon: "youtube" },
+    ],
+    productionCredits: "A song about love and money. Nitrose brings dilemma with a smooth melody and catchy hooks.",
+    featured: true,
+  },
+  {
     title: "Right Now",
     slug: "right-now",
     artistSlug: "heaven-rainwater",
