@@ -8,14 +8,9 @@ import type { Dictionary } from "@/i18n/getDictionary";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const pathwaysKeys = ["artist", "other"] as const;
-type Pathway = typeof pathwaysKeys[number] | null;
+type Pathway = "artist" | "consultation" | null;
 
 export default function Contact({ dict }: { dict: Dictionary }) {
-  const pathways = [
-    { key: "artist" as const, label: dict.contact.pathways.artist },
-    { key: "other" as const, label: dict.contact.pathways.other },
-  ];
   const [pathway, setPathway] = useState<Pathway>(null);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -23,6 +18,11 @@ export default function Contact({ dict }: { dict: Dictionary }) {
   const sectionRef = useRef<HTMLElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const reducedMotion = useReducedMotion();
+
+  const pathways = [
+    { key: "artist" as const, label: dict.contact.pathways.artist, desc: dict.contact.pathwaysDesc.artist },
+    { key: "consultation" as const, label: dict.contact.pathways.consultation, desc: dict.contact.pathwaysDesc.consultation },
+  ];
 
   useEffect(() => {
     if (reducedMotion || !sectionRef.current) return;
@@ -42,29 +42,19 @@ export default function Contact({ dict }: { dict: Dictionary }) {
             ease: "expo.out",
           });
 
-          // Pathway cards — float up with subtle rotation (cards landing on table)
           gsap.fromTo(
             ".contact-content .pathway-card",
-            { y: 80, opacity: 0, rotation: -3, scale: 0.95 },
+            { y: 60, opacity: 0, scale: 0.96 },
             {
               y: 0,
               opacity: 1,
-              rotation: 0,
               scale: 1,
-              duration: 1.2,
-              stagger: 0.1,
+              duration: 1.1,
+              stagger: 0.12,
               ease: "expo.out",
-              delay: 0.5,
+              delay: 0.4,
             }
           );
-
-          gsap.from(".contact-content", {
-            y: 40,
-            opacity: 0,
-            duration: 1,
-            ease: "expo.out",
-            delay: 0.4,
-          });
         },
       });
     }, sectionRef);
@@ -89,7 +79,7 @@ export default function Contact({ dict }: { dict: Dictionary }) {
     const data = new FormData(e.currentTarget);
     const pathname = typeof window !== "undefined" ? window.location.pathname : "";
     const lang = pathname.split("/")[1] || "en";
-    const payload: Record<string, any> = { pathway, lang };
+    const payload: Record<string, any> = { pathway: pathway || "artist", lang };
     
     // Properly collect multiple checkboxes with the same name into an array
     for (const [key, value] of Array.from(data.entries())) {
@@ -190,12 +180,12 @@ export default function Contact({ dict }: { dict: Dictionary }) {
             >
               {dict.contact.pathwaysTitle}
             </span>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {pathways.map((p) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {pathways.map((p, idx) => (
                 <button
                   key={p.key}
                   onClick={() => setPathway(p.key)}
-                  className="pathway-card group relative flex flex-col text-left p-8 md:p-10 transition-all duration-500 overflow-hidden cursor-pointer hover:border-[rgba(212,175,55,0.3)] hover:-translate-y-1.5"
+                  className="pathway-card group relative flex flex-col text-left p-8 md:p-10 transition-all duration-500 overflow-hidden cursor-pointer hover:border-[rgba(212,175,55,0.4)] hover:-translate-y-1.5"
                   style={{
                     background: "rgba(20,20,20,0.4)",
                     border: "1px solid rgba(245,242,235,0.08)",
@@ -204,14 +194,17 @@ export default function Contact({ dict }: { dict: Dictionary }) {
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                     style={{
-                      background: "linear-gradient(135deg, rgba(212,165,65,0.1) 0%, transparent 100%)",
+                      background: "linear-gradient(135deg, rgba(212,165,65,0.12) 0%, transparent 100%)",
                     }}
                   />
+                  <span className="font-body text-caption text-[var(--color-gold)] uppercase tracking-wider mb-2 inline-block opacity-80">
+                    0{idx + 1} / {p.key === "artist" ? "Artist Pathway" : "Business & Executive"}
+                  </span>
                   <h3
                     className="font-display mb-4 relative z-10 transition-colors duration-300 group-hover:!text-[var(--color-gold)]"
                     style={{
                       color: "var(--color-off-white)",
-                      fontSize: "clamp(1.5rem, 2vw, 2rem)",
+                      fontSize: "clamp(1.5rem, 2.5vw, 2.2rem)",
                       lineHeight: 1.1,
                       letterSpacing: "-0.02em",
                       fontWeight: 600,
@@ -221,9 +214,9 @@ export default function Contact({ dict }: { dict: Dictionary }) {
                   </h3>
                   <p
                     className="font-body text-caption relative z-10"
-                    style={{ color: "var(--color-off-white)", opacity: 0.5 }}
+                    style={{ color: "var(--color-off-white)", opacity: 0.6 }}
                   >
-                    {dict.contact.pathwaysDesc?.[p.key]}
+                    {p.desc}
                   </p>
                   
                   <div className="mt-12 flex justify-end relative z-10 w-full">
@@ -263,97 +256,31 @@ export default function Contact({ dict }: { dict: Dictionary }) {
                 </span>
               </div>
             )}
-            <div className="mb-12 flex flex-col md:flex-row md:items-center justify-between gap-6">
+
+            <div className="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-6" style={{ borderColor: "rgba(245,242,235,0.08)" }}>
               <span
                 className="font-body text-eyebrow eyebrow inline-block"
-                style={{ color: "var(--color-off-white)", opacity: 0.4 }}
+                style={{ color: "var(--color-off-white)", opacity: 0.5 }}
               >
                 {dict.contact.pathwaysTitle} / <span style={{ color: "var(--color-gold)", opacity: 1 }}>{pathways.find(p => p.key === pathway)?.label}</span>
               </span>
               <button
+                type="button"
                 onClick={() => setPathway(null)}
                 className="font-body text-eyebrow eyebrow hover:text-[var(--color-gold)] transition-colors duration-300 cursor-pointer flex items-center gap-2"
                 style={{ color: "var(--color-off-white)", opacity: 0.6 }}
               >
-                {dict.contact.pathwaysDesc?.back || "← Change Option"}
+                {dict.contact.pathwaysDesc?.back || "← Change Pathway"}
               </button>
             </div>
 
-            {pathway === "artist" && (
-              <ClientOnboardingForm
-                formRef={formRef}
-                loading={loading}
-                onSubmit={handleSubmit}
-                dict={dict}
-              />
-            )}
-
-            {pathway === "other" && (
-              <form
-                ref={formRef}
-                onSubmit={handleSubmit}
-                className="flex flex-col gap-8 bg-[rgba(245,242,235,0.02)] p-6 md:p-10 border border-[rgba(245,242,235,0.08)]"
-              >
-                <div className="flex flex-col gap-3 mb-4 field-anim">
-                  <h3 className="font-display text-2xl md:text-3xl" style={{ color: "var(--color-gold)" }}>
-                    {dict.contact.pathways.other}
-                  </h3>
-                  <p className="font-body text-body" style={{ color: "var(--color-off-white)", opacity: 0.6 }}>
-                    {dict.contact.pathwaysDesc.other}
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <InputField name="name" label={dict.contact.form.name} placeholder="" required />
-                  <InputField name="email" label={dict.contact.form.email} type="email" placeholder="" required />
-                </div>
-
-                <RadioGroup
-                  name="subject"
-                  label={
-                    dict.contact.form.send === "Enviar mensagem"
-                      ? "Assunto de interesse"
-                      : dict.contact.form.send === "Enviar Solicitud"
-                      ? "Asunto de interés"
-                      : dict.contact.form.send === "メッセージを送信"
-                      ? "ご用件"
-                      : "Subject of interest"
-                  }
-                  options={
-                    dict.contact.form.send === "Enviar mensagem"
-                      ? ["Colaboração", "Banco de Talentos", "Parcerias", "Outro"]
-                      : dict.contact.form.send === "Enviar Solicitud"
-                      ? ["Colaboración", "Bolsa de Trabajo", "Alianzas", "Otro"]
-                      : dict.contact.form.send === "メッセージを送信"
-                      ? ["コラボレーション", "人材プール", "パートナーシップ", "その他"]
-                      : ["Collaboration", "Talent Pool", "Partnership", "Other"]
-                  }
-                  required
-                />
-
-                <TextareaField
-                  name="message"
-                  required
-                  label={dict.contact.form.messageOther}
-                  placeholder=""
-                  rows={4}
-                />
-
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="field-anim self-start font-body text-eyebrow eyebrow inline-flex items-center gap-3 px-8 py-4 mt-2 cursor-pointer disabled:opacity-50 transition-all duration-300 hover:opacity-80"
-                  style={{
-                    color: "var(--color-black)",
-                    background: "var(--color-gold)",
-                    fontWeight: 700,
-                  }}
-                >
-                  {loading ? dict.contact.form.sending : dict.contact.form.send}
-                  <span aria-hidden>→</span>
-                </button>
-              </form>
-            )}
+            <ClientMultiStepForm
+              pathway={pathway}
+              formRef={formRef}
+              loading={loading}
+              onSubmit={handleSubmit}
+              dict={dict}
+            />
           </div>
         )}
       </div>
@@ -361,14 +288,16 @@ export default function Contact({ dict }: { dict: Dictionary }) {
   );
 }
 
-// Sub-components for Onboarding Form
+// Sub-component for Unified Multi-Step Form
 
-function ClientOnboardingForm({
+function ClientMultiStepForm({
+  pathway,
   formRef,
   loading,
   onSubmit,
   dict,
 }: {
+  pathway: "artist" | "consultation";
   formRef: React.RefObject<HTMLFormElement | null>;
   loading: boolean;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -378,11 +307,12 @@ function ClientOnboardingForm({
   const containerRef = useRef<HTMLDivElement>(null);
   const prevStepRef = useRef(1);
 
+  const isArtist = pathway === "artist";
+
   const handleNext = (e: React.MouseEvent) => {
     e.preventDefault();
     const form = formRef.current;
     if (form) {
-      // Get all inputs within the current step
       const currentStepContainer = form.querySelector(`#step-${step}`);
       if (currentStepContainer) {
         const inputs = currentStepContainer.querySelectorAll("input, textarea, select");
@@ -403,7 +333,6 @@ function ClientOnboardingForm({
       }
     }
     
-    // Fade out current step, then change step
     if (containerRef.current) {
       gsap.to(containerRef.current.querySelector(`#step-${step}`), {
         opacity: 0,
@@ -435,7 +364,6 @@ function ClientOnboardingForm({
   };
 
   useEffect(() => {
-    // Animate in new step based on direction
     if (containerRef.current) {
       const isForward = step > prevStepRef.current;
       prevStepRef.current = step;
@@ -450,9 +378,11 @@ function ClientOnboardingForm({
   return (
     <form ref={formRef} onSubmit={onSubmit} className="flex flex-col gap-10 bg-[rgba(245,242,235,0.02)] p-6 md:p-10 border border-[rgba(245,242,235,0.08)]">
       <div className="flex flex-col gap-3 mb-4 field-anim">
-        <h3 className="font-display text-2xl md:text-3xl" style={{ color: "var(--color-gold)" }}>{dict.contact.form.title}</h3>
+        <h3 className="font-display text-2xl md:text-3xl" style={{ color: "var(--color-gold)" }}>
+          {isArtist ? dict.contact.form.titleArtist : dict.contact.form.titleConsultation}
+        </h3>
         <p className="font-body text-body" style={{ color: "var(--color-off-white)", opacity: 0.6 }}>
-          {dict.contact.form.subtitle}
+          {isArtist ? dict.contact.form.subtitleArtist : dict.contact.form.subtitleConsultation}
         </p>
 
         {/* Step Indicator */}
@@ -469,23 +399,37 @@ function ClientOnboardingForm({
       </div>
 
       <div ref={containerRef}>
+        {/* STEP 1 */}
         <div id="step-1" style={{ display: step === 1 ? "block" : "none" }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <InputField name="fullName" label={dict.contact.form.fullName} placeholder="" required />
-            <InputField name="artistName" label={dict.contact.form.artistName} placeholder="" required />
+            
+            {isArtist ? (
+              <InputField name="artistName" label={dict.contact.form.artistName} placeholder="" required />
+            ) : (
+              <InputField name="companyName" label={dict.contact.form.companyName} placeholder="" required />
+            )}
+
             <InputField name="email" label={dict.contact.form.email} type="email" placeholder="" required />
             <InputField name="phone" label={dict.contact.form.phone} type="tel" placeholder="" required />
-            <InputField name="instagram" label={dict.contact.form.instagram} placeholder="" required />
+            
+            {isArtist ? (
+              <InputField name="instagram" label={dict.contact.form.instagram} placeholder="" required />
+            ) : (
+              <InputField name="role" label={dict.contact.form.role} placeholder="" required />
+            )}
+
             <InputField name="links" label={dict.contact.form.links} placeholder="" required />
           </div>
         </div>
 
+        {/* STEP 2 */}
         <div id="step-2" style={{ display: step === 2 ? "block" : "none" }}>
           <div className="flex flex-col gap-8">
             <RadioGroup
               name="contactMethod"
               label={dict.contact.form.contactMethod}
-              options={["Email", "Phone", "Instagram DM"]}
+              options={isArtist ? ["Email", "Phone", "Instagram DM"] : ["Email", "Phone", "Virtual Meeting (Zoom / Meet)"]}
               required
             />
 
@@ -496,44 +440,83 @@ function ClientOnboardingForm({
               required
             />
 
-            <div className="">
+            <div>
               <InputField name="country" label={dict.contact.form.country} placeholder="" required />
             </div>
           </div>
         </div>
 
+        {/* STEP 3 */}
         <div id="step-3" style={{ display: step === 3 ? "block" : "none" }}>
           <div className="flex flex-col gap-8">
-            <CheckboxGroup
-              name="services"
-              label={dict.contact.form.servicesReq}
-              options={[
-                "Streaming Campaigns",
-                "Press & Exposure",
-                "Consultations",
-                "Creative Services",
-                "Visuals & Media",
-                "Rollout Strategies",
-              ]}
-            />
+            {isArtist ? (
+              <>
+                <CheckboxGroup
+                  name="services"
+                  label={dict.contact.form.servicesReq}
+                  options={[
+                    "Streaming Campaigns",
+                    "Press & Exposure",
+                    "Consultations",
+                    "Creative Services",
+                    "Visuals & Media",
+                    "Rollout Strategies",
+                  ]}
+                />
 
-            <CheckboxGroup
-              name="platform"
-              label={dict.contact.form.platform}
-              options={["Spotify", "Apple Music", "YouTube", "SoundCloud", "Instagram", "Other"]}
-            />
+                <CheckboxGroup
+                  name="platform"
+                  label={dict.contact.form.platform}
+                  options={["Spotify", "Apple Music", "YouTube", "SoundCloud", "Instagram", "Other"]}
+                />
 
-            <RadioGroup
-              name="budget"
-              label={dict.contact.form.budget}
-              options={["$200 – $500", "$500 – $1,000", "$1,000 – $2,500", "$2,500+"]}
-              required
-            />
+                <RadioGroup
+                  name="budget"
+                  label={dict.contact.form.budget}
+                  options={["$200 – $500", "$500 – $1,000", "$1,000 – $2,500", "$2,500+"]}
+                  required
+                />
 
-            <div className="flex flex-col gap-8">
-              <TextareaField name="shortTermGoals" label={dict.contact.form.shortTerm} placeholder="" required />
-              <TextareaField name="longTermVision" label={dict.contact.form.longTerm} placeholder="" required />
-            </div>
+                <div className="flex flex-col gap-8">
+                  <TextareaField name="shortTermGoals" label={dict.contact.form.shortTerm} placeholder="" required />
+                  <TextareaField name="longTermVision" label={dict.contact.form.longTerm} placeholder="" required />
+                </div>
+              </>
+            ) : (
+              <>
+                <CheckboxGroup
+                  name="services"
+                  label={dict.contact.form.servicesConsultation}
+                  options={[
+                    "Executive A&R Consulting",
+                    "Distribution Infrastructure",
+                    "Label Services & Partnerships",
+                    "Brand Strategy & Sync",
+                    "Tour & Event Operations",
+                    "General Business Consultation",
+                  ]}
+                />
+
+                <RadioGroup
+                  name="timeline"
+                  label={dict.contact.form.timeline}
+                  options={["Immediate / This Month", "Next Quarter (1–3 mos)", "6+ Months", "Exploratory / Flexible"]}
+                  required
+                />
+
+                <RadioGroup
+                  name="budget"
+                  label={dict.contact.form.budgetConsultation}
+                  options={["Under $1,000", "$1,000 – $5,000", "$5,000 – $20,000", "$20,000+"]}
+                  required
+                />
+
+                <div className="flex flex-col gap-8">
+                  <TextareaField name="shortTermGoals" label={dict.contact.form.shortTermConsultation} placeholder="" required />
+                  <TextareaField name="longTermVision" label={dict.contact.form.longTermConsultation} placeholder="" required />
+                </div>
+              </>
+            )}
 
             <label className="group flex items-start gap-4 cursor-pointer mt-4 max-w-xl">
               <div className="relative flex-shrink-0 w-6 h-6 border border-[rgba(245,242,235,0.3)] transition-colors group-hover:border-[var(--color-gold)] mt-0.5">

@@ -88,36 +88,48 @@
     "word1": "START",
     "word2": "the right ",
     "word3": "conversation.",
-    "successMsg": "Application received. Our team will review and get back to you soon.",
+    "successMsg": "Submission received. Our team will review your details and get back to you soon.",
     "errorMsg": "Something went wrong. Please check your connection and try again.",
     "direct": "Direct",
-    "pathwaysTitle": "Select a pathway",
+    "pathwaysTitle": "Select a inquiry type",
     "pathways": {
-      "artist": "Become an Artist",
-      "other": "Other Subjects"
+      "artist": "Artist Onboarding",
+      "consultation": "Consultation & Inquiry"
+    },
+    "pathwaysDesc": {
+      "artist": "Submit your portfolio and music for A&R, rollout, and distribution consideration.",
+      "consultation": "Schedule executive consulting, label infrastructure, partnerships, or general business inquiries.",
+      "back": "← Change Pathway"
     },
     "form": {
       "name": "Your name",
-      "email": "Email",
-      "messageInvestor": "Tell us about your vision…",
-      "messageOther": "What's on your mind?",
+      "email": "Email *",
       "send": "Send message",
       "sending": "Sending…",
-      "title": "Artist Onboarding & Service Request Form",
-      "subtitle": "Welcome to Servus Global. Please complete the form below. Our team will review your needs and connect you with the right services. All information is confidential.",
+      "titleArtist": "Artist Onboarding & Service Request Form",
+      "subtitleArtist": "Welcome to Servus Global. Please complete the form below. Our team will review your needs and connect you with the right services.",
+      "titleConsultation": "Executive Consultation & Business Inquiry Form",
+      "subtitleConsultation": "Schedule a consultation or explore strategic label services, distribution infrastructure, and partnership opportunities.",
       "fullName": "Full Name *",
       "artistName": "Artist / Producer / Brand Name *",
+      "companyName": "Company / Brand / Label Name *",
+      "role": "Role / Position *",
       "phone": "Phone Number *",
       "instagram": "Instagram Handle *",
-      "links": "Other Links *",
+      "links": "Portfolio / Website Links *",
       "contactMethod": "Preferred Contact Method *",
       "bestTime": "Best time to contact you *",
       "country": "Country of Residence *",
       "servicesReq": "Services Required *",
+      "servicesConsultation": "Focus Areas / Consultation Topics *",
+      "timeline": "Target Timeline / Urgency *",
       "platform": "Which platform do you consider most important for your growth? *",
       "budget": "Budget Range *",
+      "budgetConsultation": "Budget / Capital Allocated *",
       "shortTerm": "What are your short-term goals? *",
+      "shortTermConsultation": "Consultation Overview & Primary Objectives *",
       "longTerm": "What is your long-term vision as an artist/brand? *",
+      "longTermConsultation": "Long-Term Strategic Vision *",
       "consentTitle": "Consent to Contact *",
       "consentDesc": "I agree that Servus Global may review my submission and contact me regarding services.",
       "back": "← Back",
@@ -126,12 +138,7 @@
       "submitting": "Submitting…",
       "step1": "Step 1 of 3: Basic Info",
       "step2": "Step 2 of 3: Contact Preferences",
-      "step3": "Step 3 of 3: Service Details"
-    },
-    "pathwaysDesc": {
-      "artist": "Submit your portfolio and music for A&R consideration.",
-      "other": "Collaboration, talent pool, general inquiries, and partnerships.",
-      "back": "← Change Option"
+      "step3": "Step 3 of 3: Scope & Details"
     }
   },
   "footer": {

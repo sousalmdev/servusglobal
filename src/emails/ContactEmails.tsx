@@ -267,6 +267,138 @@ export const ArtistOnboardingEmail = ({
   );
 };
 
+export const ConsultationInquiryEmail = ({
+  fullName,
+  companyName,
+  email,
+  phone,
+  role,
+  links,
+  contactMethod,
+  bestTime,
+  country,
+  services,
+  timeline,
+  budget,
+  shortTermGoals,
+  longTermVision,
+}: any) => {
+  const focusAreasText = Array.isArray(services) ? services.join(", ") : services || "—";
+
+  return (
+    <Html>
+      <Head />
+      <Preview>New Consultation Inquiry: {companyName ? `${fullName} (${companyName})` : fullName}</Preview>
+      <Body style={main}>
+        <Container style={container}>
+          <div style={goldLine} />
+          
+          <Section style={header}>
+            <Text style={headerTitle}>SERVUS GLOBAL</Text>
+            <div style={{ marginTop: "14px", display: "inline-block", padding: "5px 14px", fontSize: "10px", fontWeight: "600", color: "#d4a537", letterSpacing: "0.18em", textTransform: "uppercase", border: "1px solid #d4a537" }}>
+              CONSULTATION & INQUIRY
+            </div>
+            <Text style={{ marginTop: "16px", fontSize: "22px", fontWeight: "300", color: "#f5f2eb", letterSpacing: "-0.01em", margin: "16px 0 0 0" }}>
+              {fullName} {companyName ? `— ${companyName}` : ""}
+            </Text>
+          </Section>
+
+          <Section style={{ backgroundColor: "#0e0e0e" }}>
+            <table width="100%" cellPadding="0" cellSpacing="0" border={0}>
+              <tr>
+                <td width="33%" style={{ padding: "18px 12px", textAlign: "center", borderRight: "1px solid #1e1e1e" }}>
+                  <Text style={{ fontSize: "9px", color: "#6e6e73", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "4px", margin: "0" }}>Country</Text>
+                  <Text style={{ fontSize: "13px", color: "#f5f2eb", fontWeight: "500", margin: "0" }}>{country || "—"}</Text>
+                </td>
+                <td width="34%" style={{ padding: "18px 12px", textAlign: "center", borderRight: "1px solid #1e1e1e" }}>
+                  <Text style={{ fontSize: "9px", color: "#6e6e73", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "4px", margin: "0" }}>Budget</Text>
+                  <Text style={{ fontSize: "13px", color: "#d4a537", fontWeight: "600", margin: "0" }}>{budget || "—"}</Text>
+                </td>
+                <td width="33%" style={{ padding: "18px 12px", textAlign: "center" }}>
+                  <Text style={{ fontSize: "9px", color: "#6e6e73", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "4px", margin: "0" }}>Timeline</Text>
+                  <Text style={{ fontSize: "13px", color: "#f5f2eb", fontWeight: "500", margin: "0" }}>{timeline || "—"}</Text>
+                </td>
+              </tr>
+            </table>
+          </Section>
+
+          <Section>
+            <div style={sectionTitleContainer}><Text style={sectionTitleText}>Client Information</Text></div>
+            <div style={fieldContainer}>
+              <Text style={fieldLabel}>Full Name</Text>
+              <Text style={fieldValue}>{fullName || "—"}</Text>
+            </div>
+            {companyName && (
+              <div style={fieldContainer}>
+                <Text style={fieldLabel}>Company / Brand / Entity</Text>
+                <Text style={fieldValue}>{companyName}</Text>
+              </div>
+            )}
+            {role && (
+              <div style={fieldContainer}>
+                <Text style={fieldLabel}>Role / Title</Text>
+                <Text style={fieldValue}>{role}</Text>
+              </div>
+            )}
+            <div style={fieldContainer}>
+              <Text style={fieldLabel}>Email</Text>
+              <Link href={`mailto:${email}`} style={fieldLink}>{email || "—"}</Link>
+            </div>
+            <div style={fieldContainer}>
+              <Text style={fieldLabel}>Phone</Text>
+              <Text style={fieldValue}>{phone || "—"}</Text>
+            </div>
+            <div style={fieldContainer}>
+              <Text style={fieldLabel}>Website & Links</Text>
+              <Text style={fieldValue}>{links || "—"}</Text>
+            </div>
+
+            <div style={sectionTitleContainer}><Text style={sectionTitleText}>Contact Preferences</Text></div>
+            <div style={fieldContainer}>
+              <Text style={fieldLabel}>Preferred Method</Text>
+              <Text style={fieldValue}>{contactMethod || "—"}</Text>
+            </div>
+            <div style={fieldContainer}>
+              <Text style={fieldLabel}>Best Time</Text>
+              <Text style={fieldValue}>{bestTime || "—"}</Text>
+            </div>
+
+            <div style={sectionTitleContainer}><Text style={sectionTitleText}>Consultation Scope</Text></div>
+            <div style={fieldContainer}>
+              <Text style={fieldLabel}>Focus Areas</Text>
+              <Text style={fieldValue}>{focusAreasText}</Text>
+            </div>
+            {timeline && (
+              <div style={fieldContainer}>
+                <Text style={fieldLabel}>Target Timeline</Text>
+                <Text style={fieldValue}>{timeline}</Text>
+              </div>
+            )}
+            <div style={fieldContainer}>
+              <Text style={fieldLabel}>Budget Range</Text>
+              <Text style={fieldValue}>{budget || "—"}</Text>
+            </div>
+
+            <div style={sectionTitleContainer}><Text style={sectionTitleText}>Overview & Objectives</Text></div>
+            <div style={{ padding: "12px 20px" }}>
+              <Text style={fieldLabel}>Overview / Immediate Objectives</Text>
+              <Text style={blockquote}>{shortTermGoals || "—"}</Text>
+            </div>
+            <div style={{ padding: "12px 20px 24px 20px" }}>
+              <Text style={fieldLabel}>Long-Term Strategic Vision</Text>
+              <Text style={blockquote}>{longTermVision || "—"}</Text>
+            </div>
+          </Section>
+
+          <Section style={footer}>
+            <Text style={footerText}>&copy; {new Date().getFullYear()} SERVUS GLOBAL &middot; Submitted via Platform Portal</Text>
+          </Section>
+        </Container>
+      </Body>
+    </Html>
+  );
+};
+
 export const GeneralInquiryEmail = ({ name, email, message, pathway }: any) => {
   const isPartnership = pathway === "investor";
   const typeLabel = isPartnership ? "PARTNERSHIP INQUIRY" : "GENERAL INQUIRY";
@@ -322,38 +454,38 @@ export const ConfirmationEmail = ({ name, pathway, lang }: { name: string; pathw
   const cleanLang = (lang || "en").toLowerCase();
 
   if (cleanLang === "pt") {
-    const pathwayMap: Record<string, string> = { artist: "integração de artista", investor: "parcerias", other: "consulta geral" };
+    const pathwayMap: Record<string, string> = { artist: "integração de artista", consultation: "consulta & parceria executiva", investor: "parcerias", other: "consulta geral" };
     subject = "Recebemos a sua candidatura — Servus Global";
     headerText = "CANDIDATURA RECEBIDA";
     greeting = `Olá ${name},`;
     bodyP1 = "Obrigado por entrar em contato com a Servus Global.";
-    bodyP2 = `Recebemos com sucesso a sua candidatura para o canal de ${pathwayMap[pathway] || "geral"}.`;
+    bodyP2 = `Recebemos com sucesso a sua solicitação para ${pathwayMap[pathway] || "consulta"}.`;
     bodyP3 = "A nossa equipe analisará os seus dados e entrará em contato com você o mais breve possível.";
     signoff = "Atenciosamente,";
     team = "Equipe Servus Global";
   } else if (cleanLang === "es") {
-    const pathwayMap: Record<string, string> = { artist: "integración de artistas", investor: "asociación", other: "consulta general" };
+    const pathwayMap: Record<string, string> = { artist: "integración de artistas", consultation: "consulta y alianza ejecutiva", investor: "asociación", other: "consulta general" };
     subject = "Hemos recibido tu solicitud — Servus Global";
     headerText = "SOLICITUD RECIBIDA";
     greeting = `Hola ${name},`;
     bodyP1 = "Gracias por ponerte en contacto con Servus Global.";
-    bodyP2 = `Hemos recibido con éxito tu solicitud para el canal de ${pathwayMap[pathway] || "general"}.`;
+    bodyP2 = `Hemos recibido con éxito tu solicitud para ${pathwayMap[pathway] || "consulta"}.`;
     bodyP3 = "Nuestro equipo revisará tus datos y se pondrá en contacto contigo lo antes posible.";
     signoff = "Atentamente,";
     team = "El equipo de Servus Global";
   } else if (cleanLang === "ja") {
-    const pathwayMap: Record<string, string> = { artist: "アーティスト・オンボーディング", investor: "パートナーシップ", other: "一般的なお問い合わせ" };
+    const pathwayMap: Record<string, string> = { artist: "アーティスト・オンボーディング", consultation: "ビジネス相談・コンサルティング", investor: "パートナーシップ", other: "一般的なお問い合わせ" };
     subject = "申請を受け付けました — Servus Global";
     headerText = "申請受領";
     greeting = `${name} 様`;
     bodyP1 = "Servus Globalにお問い合わせいただきありがとうございます。";
-    bodyP2 = `${pathwayMap[pathway] || "一般"}パスへの申請を正常に受け付けました。`;
+    bodyP2 = `${pathwayMap[pathway] || "コンサルティング"}パスへの申請を正常に受け付けました。`;
     bodyP3 = "当社のチームが内容を確認の上、できるだけ早くご連絡いたします。";
     signoff = "敬具";
     team = "Servus Global チーム";
   } else {
-    const pathwayMap: Record<string, string> = { artist: "artist onboarding", investor: "partnership", other: "general inquiry" };
-    bodyP2 = `We have successfully received your submission for the ${pathwayMap[pathway] || "general"} pathway.`;
+    const pathwayMap: Record<string, string> = { artist: "artist onboarding", consultation: "consultation & business inquiry", investor: "partnership", other: "general inquiry" };
+    bodyP2 = `We have successfully received your submission for ${pathwayMap[pathway] || "consultation"}.`;
   }
 
   return (
@@ -379,10 +511,7 @@ export const ConfirmationEmail = ({ name, pathway, lang }: { name: string; pathw
             <Text style={{ fontSize: "15px", color: "#a1a1a6", lineHeight: "1.75", marginBottom: "16px", margin: "0 0 16px 0" }}>{bodyP1}</Text>
             {bodyP2 && (
               <Text style={{ fontSize: "15px", color: "#a1a1a6", lineHeight: "1.75", marginBottom: "16px", margin: "0 0 16px 0" }}>
-                {bodyP2.split(bodyP2.includes('strong') ? /<strong[^>]*>(.*?)<\/strong>/ : /(.*)/).map((part, i) => {
-                  if (bodyP2.includes('strong') && i % 2 !== 0) return <strong key={i} style={{ color: "#f5f2eb" }}>{part}</strong>;
-                  return part;
-                })}
+                {bodyP2}
               </Text>
             )}
             <Text style={{ fontSize: "15px", color: "#a1a1a6", lineHeight: "1.75", marginBottom: "32px", margin: "0 0 32px 0" }}>{bodyP3}</Text>

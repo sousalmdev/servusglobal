@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
-import { ArtistOnboardingEmail, GeneralInquiryEmail, ConfirmationEmail } from "../../../emails/ContactEmails";
+import { ArtistOnboardingEmail, ConsultationInquiryEmail, GeneralInquiryEmail, ConfirmationEmail } from "../../../emails/ContactEmails";
 
 export async function POST(request: NextRequest) {
   try {
@@ -38,11 +38,15 @@ export async function POST(request: NextRequest) {
     let reactComponent: React.ReactElement | null = null;
 
     if (pathway === "artist") {
-      const artistName = rest.artistName || "Unknown Artist";
+      const artistName = rest.artistName || rest.fullName || "Unknown Artist";
       subject = `[Onboarding] Submission from ${artistName}`;
       reactComponent = ArtistOnboardingEmail({ email, ...rest });
+    } else if (pathway === "consultation") {
+      const clientName = rest.companyName ? `${rest.fullName} (${rest.companyName})` : rest.fullName || "Inquirer";
+      subject = `[Consultation] Inquiry from ${clientName}`;
+      reactComponent = ConsultationInquiryEmail({ email, ...rest });
     } else {
-      const name = rest.name || "Anonymous Partner";
+      const name = rest.fullName || rest.name || "Anonymous Partner";
       const subjectPrefix = pathway === "investor" ? "Partnership" : "General";
       subject = `[${subjectPrefix}] Inquiry from ${name}`;
       reactComponent = GeneralInquiryEmail({ email, ...rest, pathway });
