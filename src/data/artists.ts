@@ -47,7 +47,7 @@ export const artists: Artist[] = [
     portraitUrl: "/images/roster/servuscrew1.webp",
     genres: ["Hip-Hop", "Rap"],
     socialLinks: [
-      { platform: "spotify", url: "https://open.spotify.com/artist/6rW8Vn8nN8J6vJ3W5kGZ5w" },
+      { platform: "spotify", url: "https://open.spotify.com/artist/24lALS6fdN2YC6b89Gf69m" },
       { platform: "instagram", url: "https://www.instagram.com/officiallolaredd/" },
       { platform: "soundcloud", url: "https://soundcloud.com/lolaredd" },
     ],
