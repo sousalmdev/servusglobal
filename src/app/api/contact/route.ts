@@ -1,16 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
-import { ArtistOnboardingEmail, ConsultationInquiryEmail, GeneralInquiryEmail, ConfirmationEmail } from "../../../emails/ContactEmails";
+import { ArtistOnboardingEmail, ConfirmationEmail } from "../../../emails/ContactEmails";
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { pathway, email, ...rest } = body;
-
-    // Validate required generic fields
-    if (!pathway) {
-      return NextResponse.json({ error: "Pathway is required" }, { status: 400 });
-    }
+    const { email, ...rest } = body;
 
     // Basic email validation if email exists in the payload
     if (email) {
@@ -34,23 +29,9 @@ export async function POST(request: NextRequest) {
     }
 
     const resend = new Resend(apiKey);
-    let subject = "";
-    let reactComponent: React.ReactElement | null = null;
-
-    if (pathway === "artist") {
-      const artistName = rest.artistName || rest.fullName || "Unknown Artist";
-      subject = `[Onboarding] Submission from ${artistName}`;
-      reactComponent = ArtistOnboardingEmail({ email, ...rest });
-    } else if (pathway === "consultation") {
-      const clientName = rest.companyName ? `${rest.fullName} (${rest.companyName})` : rest.fullName || "Inquirer";
-      subject = `[Consultation] Inquiry from ${clientName}`;
-      reactComponent = ConsultationInquiryEmail({ email, ...rest });
-    } else {
-      const name = rest.fullName || rest.name || "Anonymous Partner";
-      const subjectPrefix = pathway === "investor" ? "Partnership" : "General";
-      subject = `[${subjectPrefix}] Inquiry from ${name}`;
-      reactComponent = GeneralInquiryEmail({ email, ...rest, pathway });
-    }
+    const artistName = rest.artistName || rest.fullName || "Unknown Artist";
+    const subject = `[Onboarding] Submission from ${artistName}`;
+    const reactComponent = ArtistOnboardingEmail({ email, ...rest });
 
     // Send notification report email to admin
     const adminMailPromise = resend.emails.send({
@@ -64,7 +45,7 @@ export async function POST(request: NextRequest) {
     // Send confirmation email to the submitter
     let userMailPromise = Promise.resolve<{ data: any; error: any }>({ data: null, error: null });
     if (email) {
-      const userName = rest.fullName || rest.name || rest.artistName || "there";
+      const userName = rest.fullName || rest.artistName || "there";
       let userSubject = "We've received your submission — Servus Global";
       
       const cleanLang = (rest.lang || "en").toLowerCase();
@@ -76,7 +57,7 @@ export async function POST(request: NextRequest) {
         from: fromEmail,
         to: email,
         subject: userSubject,
-        react: ConfirmationEmail({ name: userName, pathway, lang: rest.lang || "en" }),
+        react: ConfirmationEmail({ name: userName, pathway: "artist", lang: rest.lang || "en" }),
       });
     }
 

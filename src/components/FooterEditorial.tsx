@@ -111,7 +111,7 @@ export default function FooterEditorial({ dict }: { dict: Dictionary }) {
               { label: dict.nav.services, href: "#services" },
               { label: dict.nav.story, href: "#story" },
               { label: dict.roles.word2, href: "#roles" },
-              { label: dict.nav.contact, href: "#contact" },
+              { label: dict.nav.contact, href: "/contact" },
             ].map((link) => (
               <a
                 key={link.label}

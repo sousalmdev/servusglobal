@@ -5,6 +5,7 @@ import ArtistGridEditorial from "@/components/ArtistGridEditorial";
 import DiagonalMarquee from "@/components/DiagonalMarquee";
 import { getDictionary } from "@/i18n/getDictionary";
 import dynamic from "next/dynamic";
+import ContactCTA from "@/components/ContactCTA";
 
 const Releases = dynamic(() => import("@/components/Releases"));
 const Collaborators = dynamic(() => import("@/components/Collaborators"));
@@ -15,7 +16,6 @@ const ParallaxShowcase = dynamic(() => import("@/components/ParallaxShowcase"));
 const WorkWithUsMarquee = dynamic(() => import("@/components/WorkWithUsMarquee"));
 const Roles = dynamic(() => import("@/components/Roles"));
 const FAQ = dynamic(() => import("@/components/FAQ"));
-const Contact = dynamic(() => import("@/components/Contact"));
 const FooterEditorial = dynamic(() => import("@/components/FooterEditorial"));
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
@@ -39,7 +39,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <ParallaxShowcase dict={dict} />
         <WorkWithUsMarquee dict={dict} />
         <Roles dict={dict} />
-        <Contact dict={dict} />
+        <ContactCTA dict={dict} /> 
       </main>
       <FooterEditorial dict={dict} />
     </>

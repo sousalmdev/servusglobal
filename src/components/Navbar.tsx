@@ -39,7 +39,7 @@ export default function Navbar({ dict }: { dict: Dictionary }) {
     { label: dict.nav.services, href: `/${currentLocale}#services` },
     { label: dict.nav.story, href: `/${currentLocale}#story` },
     { label: dict.nav.faq || "FAQ", href: `/${currentLocale}#faq` },
-    { label: dict.nav.contact, href: `/${currentLocale}#contact` },
+    { label: dict.nav.contact, href: `/${currentLocale}/contact` },
   ];
 
   useEffect(() => {
@@ -70,7 +70,7 @@ export default function Navbar({ dict }: { dict: Dictionary }) {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const sections = ["artists", "services", "story", "faq", "contact"];
+    const sections = ["artists", "services", "story", "faq"];
     const observers = sections.map((id) => {
       const el = document.getElementById(id);
       if (!el) return null;
@@ -217,7 +217,7 @@ export default function Navbar({ dict }: { dict: Dictionary }) {
             );
           })}
           <a
-            href={`/${currentLocale}#contact`}
+            href={`/${currentLocale}/contact`}
             className="nav-item font-body text-eyebrow eyebrow px-5 py-2.5 transition-all duration-300 cta-pulse"
             style={{
               color: "var(--color-black)",
@@ -342,7 +342,7 @@ export default function Navbar({ dict }: { dict: Dictionary }) {
             );
           })}
           <a
-            href={`/${currentLocale}#contact`}
+            href={`/${currentLocale}/contact`}
             onClick={() => setMenuOpen(false)}
             className="mobile-nav-link font-body text-eyebrow eyebrow px-6 py-3.5 mt-4 text-center transition-all duration-300 hover:scale-105"
             style={{

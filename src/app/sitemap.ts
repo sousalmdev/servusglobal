@@ -21,6 +21,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
         },
       },
     });
+
+    routes.push({
+      url: `${base}/${lang}/contact`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+      alternates: {
+        languages: {
+          en: `${base}/en/contact`,
+          pt: `${base}/pt/contact`,
+          es: `${base}/es/contact`,
+          ja: `${base}/ja/contact`,
+        },
+      },
+    });
     
     for (const a of artists) {
       routes.push({
